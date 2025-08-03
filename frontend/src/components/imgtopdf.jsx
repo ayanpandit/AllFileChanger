@@ -77,23 +77,45 @@ export default function ImgToPdf() {
         formData.append('images', file);
       });
 
-      // Try dev tunnel first, fallback to Render
+      console.log('Attempting to convert images to PDF...');
+      console.log('Number of files:', files.length);
+
       let res;
-      try {
-        res = await fetch('https://qxdqllrg-5173.inc1.devtunnels.ms/image-to-pdf', {
-          method: 'POST',
-          body: formData,
-        });
-      } catch (devError) {
-        console.log('Dev tunnel failed, trying Render:', devError);
-        res = await fetch('https://allfilechanger-backend.onrender.com/', {
-          method: 'POST',
-          body: formData,
-        });
+      let success = false;
+      
+      // Try endpoints in order: localhost first, then dev tunnel, then render
+      const endpoints = [
+        'http://localhost:5000/',
+        'http://localhost:5000/image-to-pdf',
+        'https://qxdqllrg-5173.inc1.devtunnels.ms/image-to-pdf',
+        'https://qxdqllrg-5173.inc1.devtunnels.ms/',
+        'https://allfilechanger.onrender.com/',
+        'https://allfilechanger.onrender.com/image-to-pdf'
+      ];
+
+      for (const endpoint of endpoints) {
+        try {
+          console.log(`Trying endpoint: ${endpoint}`);
+          res = await fetch(endpoint, {
+            method: 'POST',
+            body: formData,
+          });
+          
+          if (res.ok) {
+            console.log(`✅ Success with endpoint: ${endpoint}`);
+            success = true;
+            break;
+          } else {
+            console.log(`❌ Failed with ${endpoint}: ${res.status}`);
+          }
+        } catch (error) {
+          console.log(`❌ Error with ${endpoint}:`, error.message);
+          continue;
+        }
       }
 
-      if (!res.ok) {
-        throw new Error('Failed to generate PDF');
+      if (!success || !res.ok) {
+        throw new Error('All endpoints failed');
       }
 
       const blob = await res.blob();
