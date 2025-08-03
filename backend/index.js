@@ -24,31 +24,38 @@ app.post('/', upload.array('images'), async (req, res) => {
   try {
     const doc = new PDFDocument({ autoFirstPage: false });
 
+    // Set headers to return PDF as a download
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', 'attachment; filename=converted.pdf');
 
+    // Pipe PDF stream to response
     doc.pipe(res);
 
     for (const file of files) {
       const imagePath = path.join(__dirname, file.path);
-      const img = doc.openImage(imagePath);
 
-      // Create a new page with image size or fallback to A4
-      doc.addPage({ size: [img.width, img.height] });
-      doc.image(imagePath, 0, 0);
+      // Add a new page and draw the image (scaled)
+      doc.addPage();
+      doc.image(imagePath, {
+        fit: [500, 700], // Adjust to page size
+        align: 'center',
+        valign: 'center'
+      });
 
-      // Delete temp file
-      fs.unlink(imagePath, () => {});
+      // Clean up uploaded temp file
+      fs.unlink(imagePath, (err) => {
+        if (err) console.error('Error deleting temp file:', err);
+      });
     }
 
-    doc.end();
+    doc.end(); // Finalize PDF
   } catch (err) {
     console.error('Error generating PDF:', err);
     res.status(500).send('Error generating PDF');
   }
 });
 
+// IMPORTANT for Render: listen on 0.0.0.0
 app.listen(port, '0.0.0.0', () => {
   console.log(`Server running on http://0.0.0.0:${port}`);
 });
-
