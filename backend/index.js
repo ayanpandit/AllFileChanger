@@ -1,62 +1,53 @@
 const express = require('express');
 const multer = require('multer');
+const PDFDocument = require('pdfkit');
 const cors = require('cors');
-const { PDFDocument } = require('pdf-lib');
+const fs = require('fs');
+const path = require('path');
 
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
 
+// Enable CORS for frontend
 app.use(cors());
-app.use(express.json());
 
-// Multer setup for memory storage (no file saved to disk)
-const storage = multer.memoryStorage();
-const upload = multer({ storage });
+// Configure multer for image uploads
+const upload = multer({ dest: 'uploads/' });
 
-// Route to upload multiple images and return merged PDF
-app.post('/upload', upload.array('images', 10), async (req, res) => {
+app.post('/', upload.array('images'), async (req, res) => {
+  const files = req.files;
+
+  if (!files || files.length === 0) {
+    return res.status(400).send('No images uploaded');
+  }
+
   try {
-    const pdfDoc = await PDFDocument.create();
-
-    for (const file of req.files) {
-      const imageBuffer = file.buffer;
-      let image;
-      let page;
-
-      if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/jpg') {
-        image = await pdfDoc.embedJpg(imageBuffer);
-        page = pdfDoc.addPage([image.width, image.height]);
-        page.drawImage(image, {
-          x: 0,
-          y: 0,
-          width: image.width,
-          height: image.height,
-        });
-      } else if (file.mimetype === 'image/png') {
-        image = await pdfDoc.embedPng(imageBuffer);
-        page = pdfDoc.addPage([image.width, image.height]);
-        page.drawImage(image, {
-          x: 0,
-          y: 0,
-          width: image.width,
-          height: image.height,
-        });
-      } else {
-        return res.status(400).json({ error: 'Unsupported file type' });
-      }
-    }
-
-    const pdfBytes = await pdfDoc.save();
+    const doc = new PDFDocument({ autoFirstPage: false });
 
     res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', 'attachment; filename=merged.pdf');
-    res.send(pdfBytes);
+    res.setHeader('Content-Disposition', 'attachment; filename=converted.pdf');
+
+    doc.pipe(res);
+
+    for (const file of files) {
+      const imagePath = path.join(__dirname, file.path);
+      const img = doc.openImage(imagePath);
+
+      // Create a new page with image size or fallback to A4
+      doc.addPage({ size: [img.width, img.height] });
+      doc.image(imagePath, 0, 0);
+
+      // Delete temp file
+      fs.unlink(imagePath, () => {});
+    }
+
+    doc.end();
   } catch (err) {
-    console.error(err);
-    res.status(500).send('Failed to convert images to PDF');
+    console.error('Error generating PDF:', err);
+    res.status(500).send('Error generating PDF');
   }
 });
 
 app.listen(port, () => {
-  console.log(`Backend running on http://localhost:${port}`);
+  console.log(`Server running on http://localhost:${port}`);
 });
