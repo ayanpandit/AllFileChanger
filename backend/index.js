@@ -2,9 +2,9 @@ const express = require('express');
 const multer = require('multer');
 const cors = require('cors');
 const fs = require('fs');
+const fs = require('fs');
 const path = require('path');
 const { PDFDocument } = require('pdf-lib');
-const { image } = require('image-js');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -31,23 +31,23 @@ app.post('/', upload.array('images'), async (req, res) => {
     const pdfDoc = await PDFDocument.create();
 
     for (const file of files) {
-      const img = await image.load(fs.readFileSync(file.path));
-      const { width, height } = img;
-
-      const page = pdfDoc.addPage([width, height]);
       const imageBytes = fs.readFileSync(file.path);
-
-      let embeddedImage;
+      let embeddedImage, width, height;
       const extension = path.extname(file.originalname).toLowerCase();
 
       if (extension === '.jpg' || extension === '.jpeg') {
         embeddedImage = await pdfDoc.embedJpg(imageBytes);
+        width = embeddedImage.width;
+        height = embeddedImage.height;
       } else if (extension === '.png') {
         embeddedImage = await pdfDoc.embedPng(imageBytes);
+        width = embeddedImage.width;
+        height = embeddedImage.height;
       } else {
         throw new Error('Unsupported file type');
       }
 
+      const page = pdfDoc.addPage([width, height]);
       page.drawImage(embeddedImage, {
         x: 0,
         y: 0,
