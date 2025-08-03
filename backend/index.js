@@ -1,70 +1,77 @@
 const express = require('express');
 const multer = require('multer');
-const PDFDocument = require('pdfkit');
+const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
-const cors = require('cors');
+const { PDFDocument } = require('pdf-lib');
+const { image } = require('image-js');
 
 const app = express();
 const port = process.env.PORT || 5000;
 
-// Enable CORS
-app.use(cors());
+// ✅ Allow CORS for local dev and Render deployment
+app.use(cors({
+  origin: ['http://localhost:5173', 'https://allfilechanger.onrender.com'], // <-- Add your frontend URL here
+  methods: ['POST'],
+  allowedHeaders: ['Content-Type']
+}));
 
-// Set up multer for file uploads
+app.use(express.json());
+
 const upload = multer({ dest: 'uploads/' });
 
-app.get('/', (req, res) => {
-  res.send('API is running...');
-});
-
 app.post('/', upload.array('images'), async (req, res) => {
-  console.log("POST / called");
-
-  const files = req.files;
-  console.log("Received files:", files?.map(f => f.originalname) || 'No files');
-
-  if (!files || files.length === 0) {
-    console.log("No files uploaded");
-    return res.status(400).send('No images uploaded');
-  }
-
   try {
-    const doc = new PDFDocument({ autoFirstPage: false });
+    const files = req.files;
 
-    res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', 'attachment; filename=converted.pdf');
-
-    doc.pipe(res);
-
-    for (const file of files) {
-      const imagePath = path.join(__dirname, file.path);
-      console.log(`Adding image to PDF: ${imagePath}`);
-
-      // Add a new page and place the image
-      doc.addPage();
-      doc.image(imagePath, {
-        fit: [500, 700],
-        align: 'center',
-        valign: 'center'
-      });
-
-      // Delete file after use
-      fs.unlink(imagePath, (err) => {
-        if (err) console.error(`Error deleting temp file ${imagePath}:`, err);
-      });
+    if (!files || files.length === 0) {
+      return res.status(400).json({ error: 'No images uploaded' });
     }
 
-    doc.end();
-    console.log("PDF generation completed");
+    const pdfDoc = await PDFDocument.create();
 
-  } catch (err) {
-    console.error('Error generating PDF:', err);
-    res.status(500).send('Error generating PDF');
+    for (const file of files) {
+      const img = await image.load(fs.readFileSync(file.path));
+      const { width, height } = img;
+
+      const page = pdfDoc.addPage([width, height]);
+      const imageBytes = fs.readFileSync(file.path);
+
+      let embeddedImage;
+      const extension = path.extname(file.originalname).toLowerCase();
+
+      if (extension === '.jpg' || extension === '.jpeg') {
+        embeddedImage = await pdfDoc.embedJpg(imageBytes);
+      } else if (extension === '.png') {
+        embeddedImage = await pdfDoc.embedPng(imageBytes);
+      } else {
+        throw new Error('Unsupported file type');
+      }
+
+      page.drawImage(embeddedImage, {
+        x: 0,
+        y: 0,
+        width,
+        height,
+      });
+
+      fs.unlinkSync(file.path);
+    }
+
+    const pdfBytes = await pdfDoc.save();
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'attachment; filename=converted.pdf');
+    res.send(Buffer.from(pdfBytes));
+  } catch (error) {
+    console.error('Error while converting images to PDF:', error);
+    res.status(500).json({ error: 'Failed to convert images to PDF.' });
   }
 });
 
-// Start server
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+app.get('/', (req, res) => {
+  res.send('Image to PDF backend is running!');
+});
+
+app.listen(port, '0.0.0.0', () => {
+  console.log(`Server running on http://0.0.0.0:${port}`);
 });
