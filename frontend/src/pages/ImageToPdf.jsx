@@ -66,7 +66,7 @@ export default function ImageToPdf() {
       const formData = new FormData();
       files.forEach(file => formData.append('images', file));
       
-      const response = await fetch('https://allfilechanger-backend.onrender.com/api/images-to-pdf', {
+      const response = await fetch('https://allfilechanger-backend.onrender.com/', {
         method: 'POST',
         body: formData,
       });

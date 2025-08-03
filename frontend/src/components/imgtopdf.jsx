@@ -77,10 +77,20 @@ export default function ImgToPdf() {
         formData.append('images', file);
       });
 
-      const res = await fetch('https://allfilechanger.onrender.com', {
-        method: 'POST',
-        body: formData,
-      });
+      // Try dev tunnel first, fallback to Render
+      let res;
+      try {
+        res = await fetch('https://qxdqllrg-5173.inc1.devtunnels.ms/image-to-pdf', {
+          method: 'POST',
+          body: formData,
+        });
+      } catch (devError) {
+        console.log('Dev tunnel failed, trying Render:', devError);
+        res = await fetch('https://allfilechanger-backend.onrender.com/', {
+          method: 'POST',
+          body: formData,
+        });
+      }
 
       if (!res.ok) {
         throw new Error('Failed to generate PDF');
@@ -171,10 +181,13 @@ export default function ImgToPdf() {
         {files.length > 0 && (
           <div className="mt-8 bg-white rounded-xl shadow-lg p-6">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
-              <h3 className="text-lg font-semibold text-gray-800 mb-2 sm:mb-0">
-                Selected Images ({files.length})
-              </h3>
-              <div className="flex space-x-3">
+              <div>
+                <h3 className="text-lg font-semibold text-gray-800 mb-1">
+                  Selected Images ({files.length})
+                </h3>
+                <p className="text-sm text-gray-500">Drag images to reorder them • Click ✕ to remove</p>
+              </div>
+              <div className="flex space-x-3 mt-3 sm:mt-0">
                 <button
                   onClick={clearAll}
                   className="px-4 py-2 text-sm text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors duration-200"
@@ -194,16 +207,28 @@ export default function ImgToPdf() {
               {files.map((fileObj, index) => (
                 <div
                   key={fileObj.id}
-                  className="relative group bg-gray-50 rounded-lg overflow-hidden border-2 border-transparent hover:border-blue-300 transition-all duration-200"
+                  className="relative group bg-gray-50 rounded-lg overflow-hidden border-2 border-transparent hover:border-blue-300 transition-all duration-200 cursor-move"
                   draggable
                   onDragStart={(e) => {
                     e.dataTransfer.setData('text/plain', index.toString());
+                    e.currentTarget.style.opacity = '0.5';
+                  }}
+                  onDragEnd={(e) => {
+                    e.currentTarget.style.opacity = '1';
                   }}
                   onDragOver={(e) => {
                     e.preventDefault();
+                    e.currentTarget.style.transform = 'scale(1.05)';
+                    e.currentTarget.style.boxShadow = '0 8px 25px rgba(59, 130, 246, 0.3)';
+                  }}
+                  onDragLeave={(e) => {
+                    e.currentTarget.style.transform = 'scale(1)';
+                    e.currentTarget.style.boxShadow = '';
                   }}
                   onDrop={(e) => {
                     e.preventDefault();
+                    e.currentTarget.style.transform = 'scale(1)';
+                    e.currentTarget.style.boxShadow = '';
                     const dragIndex = parseInt(e.dataTransfer.getData('text/plain'));
                     if (dragIndex !== index) {
                       moveFile(dragIndex, index);
@@ -217,12 +242,18 @@ export default function ImgToPdf() {
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <div className="absolute top-2 left-2 bg-blue-600 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center">
+                  {/* Drag handle indicator */}
+                  <div className="absolute top-2 left-1/2 transform -translate-x-1/2 bg-white bg-opacity-80 rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                    <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+                    </svg>
+                  </div>
+                  <div className="absolute top-2 left-2 bg-blue-600 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center shadow-lg">
                     {index + 1}
                   </div>
                   <button
                     onClick={() => removeFile(fileObj.id)}
-                    className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                    className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 shadow-lg z-10"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -230,6 +261,7 @@ export default function ImgToPdf() {
                   </button>
                   <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-75 text-white text-xs p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                     <p className="truncate">{fileObj.name}</p>
+                    <p className="text-xs text-gray-300">Drag to reorder</p>
                   </div>
                 </div>
               ))}
