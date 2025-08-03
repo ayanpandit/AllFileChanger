@@ -24,7 +24,8 @@ const Home = () => {
 
     try {
       setLoading(true);
-      const response = await axios.post('http://localhost:5000', formData, {
+      const response = await axios.post('https://allfilechanger.onrender.com', formData, {
+
         responseType: 'blob', // Because we expect a binary PDF
         headers: {
           'Content-Type': 'multipart/form-data',
