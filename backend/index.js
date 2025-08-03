@@ -10,7 +10,7 @@ const port = process.env.PORT || 5000;
 
 // ✅ Allow CORS for local dev and Render deployment
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://qxdqllrg-5173.inc1.devtunnels.ms/image-to-pdf','https://allfilechanger.onrender.com'], // <-- Add your frontend URL here
+  origin: ['http://localhost:5173', 'https://allfilechanger.onrender.com'], // <-- Add your frontend URL here
   methods: ['POST'],
   allowedHeaders: ['Content-Type']
 }));
