@@ -71,67 +71,93 @@ export default function ImgToPdf() {
     }
 
     setIsLoading(true);
+    console.log('🚀 Starting PDF conversion...');
+    console.log('📁 Number of files:', files.length);
+    
     try {
       const formData = new FormData();
       files.forEach(({ file }) => {
         formData.append('images', file);
+        console.log('📎 Added file:', file.name, 'Size:', file.size);
       });
 
-      console.log('Attempting to convert images to PDF...');
-      console.log('Number of files:', files.length);
-
-      let res;
-      let success = false;
+      // Try Render backend first (since it's deployed and working)
+      let response;
+      let successfulEndpoint = null;
       
-      // Try endpoints in order: localhost first, then dev tunnel, then render
-      const endpoints = [
-        'http://localhost:5000/',
-        'http://localhost:5000/image-to-pdf',
-        'https://qxdqllrg-5173.inc1.devtunnels.ms/image-to-pdf',
-        'https://qxdqllrg-5173.inc1.devtunnels.ms/',
-        'https://allfilechanger.onrender.com/',
-        'https://allfilechanger.onrender.com/image-to-pdf'
-      ];
-
-      for (const endpoint of endpoints) {
+      console.log('🔄 Trying Render endpoint...');
+      try {
+        response = await fetch('https://allfilechanger.onrender.com/', {
+          method: 'POST',
+          mode: 'cors',
+          headers: {
+            // Don't set Content-Type, let browser set it for FormData
+          },
+          body: formData,
+        });
+        
+        if (response.ok) {
+          console.log('✅ Render success!');
+          successfulEndpoint = 'https://allfilechanger.onrender.com/';
+        } else {
+          console.log('❌ Render failed:', response.status);
+          throw new Error('Render failed');
+        }
+      } catch (renderError) {
+        console.log('❌ Render error:', renderError.message);
+        
+        // Try localhost as fallback
+        console.log('🔄 Trying localhost endpoint...');
         try {
-          console.log(`Trying endpoint: ${endpoint}`);
-          res = await fetch(endpoint, {
+          response = await fetch('http://localhost:5000/', {
             method: 'POST',
             body: formData,
           });
           
-          if (res.ok) {
-            console.log(`✅ Success with endpoint: ${endpoint}`);
-            success = true;
-            break;
+          if (response.ok) {
+            console.log('✅ Localhost success!');
+            successfulEndpoint = 'http://localhost:5000/';
           } else {
-            console.log(`❌ Failed with ${endpoint}: ${res.status}`);
+            console.log('❌ Localhost failed:', response.status);
+            throw new Error('Localhost failed');
           }
-        } catch (error) {
-          console.log(`❌ Error with ${endpoint}:`, error.message);
-          continue;
+        } catch (localError) {
+          console.log('❌ Localhost error:', localError.message);
+          throw new Error('All endpoints failed');
         }
       }
 
-      if (!success || !res.ok) {
-        throw new Error('All endpoints failed');
+      if (!response || !response.ok) {
+        throw new Error('No successful response received');
       }
 
-      const blob = await res.blob();
+      console.log('📄 Converting response to blob...');
+      const blob = await response.blob();
+      console.log('📄 Blob size:', blob.size, 'Type:', blob.type);
+      
+      if (blob.size === 0) {
+        throw new Error('Received empty PDF file');
+      }
+
+      console.log('💾 Starting download...');
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'converted.pdf';
+      a.download = `converted-images-${Date.now()}.pdf`;
       document.body.appendChild(a);
       a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+      
+      console.log('✅ Download completed successfully!');
+      alert('PDF conversion completed! Check your downloads folder.');
+      
     } catch (error) {
-      alert('Failed to convert images to PDF. Please try again.');
-      console.error(error);
+      console.error('💥 Error during conversion:', error);
+      alert(`Failed to convert images to PDF: ${error.message}`);
     } finally {
       setIsLoading(false);
+      console.log('🏁 Process finished');
     }
   };
 
