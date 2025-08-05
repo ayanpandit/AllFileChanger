@@ -20,7 +20,8 @@ export default defineConfig({
   },
   server: {
     port: 3000,
-    host: true
+    host: true,
+    historyApiFallback: true  // Enable client-side routing fallback
   },
   preview: {
     port: 3000,

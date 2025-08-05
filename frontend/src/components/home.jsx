@@ -78,16 +78,24 @@ export default function Home() {
               <strong className="text-white"> 25+ tools</strong> in one powerful platform.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center px-4">
-              <Link 
-                to="/image-to-pdf"
-                className="group inline-flex items-center px-6 sm:px-8 py-3 sm:py-4 bg-yellow-400 hover:bg-yellow-300 dark:bg-yellow-500 dark:hover:bg-yellow-400 text-gray-900 font-bold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 w-full sm:w-auto justify-center"
+              <button 
+                onClick={() => {
+                  const imageToolsSection = document.getElementById('image-tools-section');
+                  if (imageToolsSection) {
+                    imageToolsSection.scrollIntoView({ 
+                      behavior: 'smooth',
+                      block: 'start'
+                    });
+                  }
+                }}
+                className="group inline-flex items-center px-6 sm:px-8 py-3 sm:py-4 bg-yellow-400 hover:bg-yellow-300 dark:bg-yellow-500 dark:hover:bg-yellow-400 text-gray-900 font-bold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 w-full sm:w-auto justify-center cursor-pointer"
               >
                 <span className="mr-2 text-lg sm:text-xl">🚀</span>
                 Start Converting Now
                 <svg className="ml-2 w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
-              </Link>
+              </button>
               <div className="text-blue-100 dark:text-gray-300 text-xs sm:text-sm transition-colors duration-500 text-center">
                 ✓ Free Forever  ✓ No Registration  ✓ Secure Processing
               </div>
@@ -121,7 +129,7 @@ export default function Home() {
       </section>
 
       {/* Image Tools Section */}
-      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-blue-50 dark:bg-black transition-all duration-500">
+      <section id="image-tools-section" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-blue-50 dark:bg-black transition-all duration-500">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12 sm:mb-16">
             <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-2xl mb-6 shadow-lg transition-all duration-300 hover:scale-110">
