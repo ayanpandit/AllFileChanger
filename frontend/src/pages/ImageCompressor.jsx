@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 
 export default function ImageCompressor() {
   // Backend URL - Update this after deploying your compression backend
-  const COMPRESSION_API_URL = 'http://localhost:5000'; // Change to your Render URL: https://allfilechanger-imgcompress-api.onrender.com
+  const COMPRESSION_API_URL = 'https://imagecompressor-fryf.onrender.com'; // Production URL
   
   const [file, setFile] = useState(null);
   const [quality, setQuality] = useState(70);
