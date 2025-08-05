@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+
+# Important pages for indexing
+Allow: /image-to-pdf
+Allow: /image-compressor
+
+# Block specific patterns that shouldn't be indexed
+Disallow: /api/
+Disallow: /uploads/
+Disallow: /_redirects
+Disallow: /assets/
+
+# Sitemap location
+Sitemap: https://allfilechanger.com/sitemap.xml
+
+# Crawl-delay (optional, in seconds)
+Crawl-delay: 1

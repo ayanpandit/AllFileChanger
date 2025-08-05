@@ -6,6 +6,7 @@ import Navbar from './components/navbar';
 import Home from './components/home';
 import ImageToPdf from './pages/ImageToPdf';
 import ImageCompressor from './pages/ImageCompressor';
+import NotFound from './pages/NotFound';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -40,7 +41,14 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/image-to-pdf" element={<ImageToPdf />} />
               <Route path="/image-compressor" element={<ImageCompressor />} />
-              {/* Add more routes here as you create more tools */}
+              
+              {/* Future routes - ready for expansion */}
+              <Route path="/pdf-to-image" element={<NotFound />} />
+              <Route path="/pdf-compressor" element={<NotFound />} />
+              <Route path="/image-converter" element={<NotFound />} />
+              
+              {/* Catch all 404 route */}
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
         </div>

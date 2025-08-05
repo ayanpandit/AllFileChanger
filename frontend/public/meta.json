@@ -1,0 +1,29 @@
+{
+  "name": "AllFileChanger",
+  "description": "Free online file conversion tools. Convert images to PDF, compress images, and more. Fast, secure, and easy to use.",
+  "version": "1.0.0",
+  "homepage": "https://allfilechanger.com",
+  "author": "AllFileChanger",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ayanpandit/AllFileChanger"
+  },
+  "keywords": [
+    "file converter",
+    "image to pdf",
+    "image compressor",
+    "online tools",
+    "free tools",
+    "pdf converter",
+    "image optimization"
+  ],
+  "seo": {
+    "siteName": "AllFileChanger",
+    "defaultTitle": "AllFileChanger - Free Online File Conversion Tools",
+    "defaultDescription": "Convert and optimize files online for free. Image to PDF, image compression, and more tools. No registration required.",
+    "canonicalUrl": "https://allfilechanger.com",
+    "themeColor": "#000000",
+    "backgroundColor": "#ffffff"
+  }
+}

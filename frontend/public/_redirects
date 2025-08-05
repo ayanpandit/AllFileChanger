@@ -1,0 +1,10 @@
+# Redirect all routes to index.html for client-side routing
+/*    /index.html   200
+
+# Specific redirects for SEO-friendly URLs
+/image-to-pdf    /index.html   200
+/image-compressor    /index.html   200
+
+# Fallback for any other routes
+/tools/*    /index.html   200
+/pages/*    /index.html   200
