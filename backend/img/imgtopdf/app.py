@@ -5,6 +5,9 @@ import img2pdf
 import io
 from werkzeug.utils import secure_filename
 import logging
+import requests
+import threading
+import time
 
 app = Flask(__name__)
 
@@ -112,6 +115,44 @@ def not_found(error):
 @app.errorhandler(500)
 def internal_error(error):
     return jsonify({"error": "Internal server error"}), 500
+
+# ==================== KEEP-ALIVE FUNCTION START ====================
+# This function prevents Render free tier from sleeping by sending a request every 13 minutes
+def keep_alive():
+    """
+    Sends a keep-alive request to the server every 13 minutes to prevent 
+    Render free tier from going to sleep (15-minute timeout)
+    """
+    def ping_server():
+        while True:
+            try:
+                # Wait 13 minutes (780 seconds)
+                time.sleep(780)
+                
+                # Get the current server URL from environment or use default
+                server_url = os.environ.get('RENDER_EXTERNAL_URL', 'https://imgtopdf-vj4x.onrender.com')
+                
+                # Send a simple GET request to the health endpoint
+                response = requests.get(f"{server_url}/health", timeout=30)
+                
+                if response.status_code == 200:
+                    logger.info("✅ Keep-alive ping successful")
+                else:
+                    logger.warning(f"⚠️ Keep-alive ping returned status: {response.status_code}")
+                    
+            except requests.exceptions.RequestException as e:
+                logger.warning(f"⚠️ Keep-alive ping failed: {str(e)}")
+            except Exception as e:
+                logger.error(f"❌ Keep-alive error: {str(e)}")
+    
+    # Start the keep-alive thread as a daemon so it doesn't prevent app shutdown
+    ping_thread = threading.Thread(target=ping_server, daemon=True)
+    ping_thread.start()
+    logger.info("🔄 Keep-alive service started - pinging every 13 minutes")
+
+# Start keep-alive service when the app starts
+keep_alive()
+# ==================== KEEP-ALIVE FUNCTION END ====================
 
 # Only used for local development
 if __name__ == '__main__':
