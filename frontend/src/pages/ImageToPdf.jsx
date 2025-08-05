@@ -122,16 +122,46 @@ export default function ImageToPdf() {
       
       if (response.ok) {
         const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'converted-images.pdf';
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(a);
         
-        setConvertedFiles([{ name: 'converted-images.pdf', url }]);
+        // Enhanced mobile-friendly download handling
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        
+        if (isMobile) {
+          // For mobile devices, try multiple download methods
+          const url = window.URL.createObjectURL(blob);
+          
+          // Method 1: Try the standard download approach
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'converted-images.pdf';
+          a.style.display = 'none';
+          document.body.appendChild(a);
+          
+          // Trigger click with timeout for mobile compatibility
+          setTimeout(() => {
+            a.click();
+            document.body.removeChild(a);
+            
+            // Method 2: Fallback - open in new tab if download didn't work
+            setTimeout(() => {
+              window.open(url, '_blank');
+            }, 1000);
+            
+            window.URL.revokeObjectURL(url);
+          }, 100);
+        } else {
+          // Desktop download method
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'converted-images.pdf';
+          document.body.appendChild(a);
+          a.click();
+          window.URL.revokeObjectURL(url);
+          document.body.removeChild(a);
+        }
+        
+        setConvertedFiles([{ name: 'converted-images.pdf', url: URL.createObjectURL(blob) }]);
         setShowSuccess(true);
         
         // Clear files after successful conversion

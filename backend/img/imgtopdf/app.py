@@ -74,12 +74,25 @@ def upload():
         
         logger.info(f"Successfully converted {len(image_bytes)} images to PDF")
 
-        return send_file(
-            io.BytesIO(output_pdf),
+        # Create response with mobile-friendly headers
+        pdf_buffer = io.BytesIO(output_pdf)
+        
+        response = send_file(
+            pdf_buffer,
             as_attachment=True,
             download_name="converted_images.pdf",
             mimetype="application/pdf"
         )
+        
+        # Add mobile-friendly headers
+        response.headers['Content-Disposition'] = 'attachment; filename="converted_images.pdf"'
+        response.headers['Content-Type'] = 'application/pdf'
+        response.headers['Content-Length'] = len(output_pdf)
+        response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+        response.headers['Pragma'] = 'no-cache'
+        response.headers['Expires'] = '0'
+        
+        return response
 
     except img2pdf.ImageOpenError as e:
         logger.error(f"Image processing error: {str(e)}")
