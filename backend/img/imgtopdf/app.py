@@ -9,7 +9,7 @@ import logging
 app = Flask(__name__)
 
 # Configure CORS for production
-CORS(app, origins=["https://allfilechanger.com", "http://localhost:3000"])
+CORS(app, origins=["https://allfilechanger.onrender.com/image-to-pdf", "https://allfilechanger.onrender.com/"])
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
