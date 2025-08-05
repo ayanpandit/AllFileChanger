@@ -1,8 +1,9 @@
 import React, { useState, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
 export default function ImageToPdf() {
+  const navigate = useNavigate();
   const [files, setFiles] = useState([]);
   const [isConverting, setIsConverting] = useState(false);
   const [convertedFiles, setConvertedFiles] = useState([]);
@@ -164,11 +165,13 @@ export default function ImageToPdf() {
         setConvertedFiles([{ name: 'converted-images.pdf', url: URL.createObjectURL(blob) }]);
         setShowSuccess(true);
         
-        // Clear files after successful conversion
+        // Clear files and redirect to home after successful conversion
         setTimeout(() => {
           setFiles([]);
           setShowSuccess(false);
-        }, 3000);
+          // Redirect to home page after 2 seconds
+          navigate('/', { replace: true });
+        }, 2000);
       }
     } catch (error) {
       console.error('Conversion failed:', error);
@@ -427,14 +430,19 @@ export default function ImageToPdf() {
               <div className="border-t border-gray-200 dark:border-gray-800 p-4 sm:p-6 lg:p-8">
                 {showSuccess && (
                   <div className="mb-4 p-4 bg-green-50 dark:bg-green-900/50 border border-green-200 dark:border-green-800 rounded-xl">
-                    <div className="flex items-center space-x-2">
-                      <div className="w-5 h-5 text-green-600 dark:text-green-400">
-                        <svg fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                        </svg>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-2">
+                        <div className="w-5 h-5 text-green-600 dark:text-green-400">
+                          <svg fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                          </svg>
+                        </div>
+                        <span className="text-green-800 dark:text-green-200 font-medium">
+                          PDF created successfully! Download started automatically.
+                        </span>
                       </div>
-                      <span className="text-green-800 dark:text-green-200 font-medium">
-                        PDF created successfully! Download started automatically.
+                      <span className="text-green-600 dark:text-green-400 text-sm font-medium">
+                        Redirecting to home...
                       </span>
                     </div>
                   </div>
