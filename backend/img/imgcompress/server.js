@@ -7,7 +7,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(cors({
-  origin: '*',
+  origin: ['https://allfilechanger.onrender.com', 'http://localhost:3000'],
   exposedHeaders: ['Original-Size', 'Compressed-Size', 'Content-Disposition']
 }));
 

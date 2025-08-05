@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
 export default function ImageCompressor() {
+  // Backend URL - Update this after deploying your compression backend
+  const COMPRESSION_API_URL = 'http://localhost:5000'; // Change to your Render URL: https://allfilechanger-imgcompress-api.onrender.com
+  
   const [file, setFile] = useState(null);
   const [quality, setQuality] = useState(70);
   const [targetSize, setTargetSize] = useState('');
@@ -79,7 +82,7 @@ export default function ImageCompressor() {
     }
 
     try {
-      const res = await fetch('http://localhost:5000/compress', {
+      const res = await fetch(`${COMPRESSION_API_URL}/compress`, {
         method: 'POST',
         body: formData,
       });
