@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>🗜️ Smart Image Compressor</title>
+  <style>
+    body { font-family: Arial; padding: 40px; text-align: center; background: #f4f4f4; }
+    input, select, button { margin: 10px; padding: 10px; font-size: 16px; }
+    label { display: block; margin-top: 20px; }
+    #status { margin-top: 20px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h2>🗜️ Smart Image Compressor</h2>
+
+  <input type="file" id="imageInput" accept="image/*" />
+
+  <label>
+    Quality: <span id="qualityVal">70</span>%
+    <input type="range" min="10" max="100" value="70" id="qualitySlider" />
+  </label>
+
+  <label>
+    OR Target Size (KB):
+    <select id="targetSize">
+      <option value="">-- None --</option>
+      <option value="10">10 KB</option>
+      <option value="50">50 KB</option>
+      <option value="100">100 KB</option>
+      <option value="200">200 KB</option>
+      <option value="500">500 KB</option>
+    </select>
+  </label>
+
+  <button onclick="compressImage()">Compress & Download</button>
+
+  <p id="status"></p>
+
+ <script>
+  async function compressImage() {
+    const file = imageInput.files[0];
+    const status = document.getElementById("status");
+
+    if (!file) {
+      alert("Please select an image.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("image", file);
+
+    const target = targetSize.value;
+    const quality = qualitySlider.value;
+
+    if (target) {
+      formData.append("targetSize", target);
+    } else {
+      formData.append("quality", quality);
+    }
+
+    status.textContent = "Compressing...";
+
+    try {
+      const res = await fetch("http://localhost:5000/compress", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!res.ok) throw new Error("Failed to compress");
+
+      const blob = await res.blob();
+
+      const original = res.headers.get("Original-Size") || "Unknown";
+      const compressed = res.headers.get("Compressed-Size") || "Unknown";
+
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "compressed.jpg";
+      a.style.display = "none";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+
+      status.textContent = `✅ Compressed! Original: ${original}, Compressed: ${compressed}`;
+    } catch (err) {
+      console.error(err);
+      status.textContent = "❌ Compression failed.";
+    }
+  }
+</script>
+
+</body>
+</html>

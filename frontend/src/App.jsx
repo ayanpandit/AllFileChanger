@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import './App.css';
 import Navbar from './components/navbar';
 import Home from './components/home';
 import ImageToPdf from './pages/ImageToPdf';
+import ImageCompressor from './pages/ImageCompressor';
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -29,18 +31,21 @@ function App() {
   };
 
   return (
-    <Router>
-      <div className={`min-h-screen transition-colors duration-500 ${darkMode ? 'dark bg-black' : 'bg-white'}`}>
-        <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
-        <main className="pt-24">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/image-to-pdf" element={<ImageToPdf />} />
-            {/* Add more routes here as you create more tools */}
-          </Routes>
-        </main>
-      </div>
-    </Router>
+    <HelmetProvider>
+      <Router>
+        <div className={`min-h-screen transition-colors duration-500 ${darkMode ? 'dark bg-black' : 'bg-white'}`}>
+          <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+          <main className="pt-24">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/image-to-pdf" element={<ImageToPdf />} />
+              <Route path="/image-compressor" element={<ImageCompressor />} />
+              {/* Add more routes here as you create more tools */}
+            </Routes>
+          </main>
+        </div>
+      </Router>
+    </HelmetProvider>
   );
 }
 
