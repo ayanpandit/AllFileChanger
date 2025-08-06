@@ -22,6 +22,7 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
       { name: 'Image Compressor', path: '/image-compressor' },
       { name: 'Image Converter', path: '/image-converter' },
       { name: 'Resize Images', path: '/image-resize' },
+      { name: 'Rotate & Flip', path: '/image-rotate-flip' },
     ]},
     { name: 'PDF Tools', path: '/pdf-tools', dropdown: [
       { name: 'PDF to Image', path: '/pdf-to-image' },

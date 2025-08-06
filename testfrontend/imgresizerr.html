@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Image Resizer & Rotator</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 2rem;
+      background: #f9f9f9;
+    }
+    input, button {
+      margin: 0.5rem 0;
+      padding: 0.5rem;
+    }
+    img {
+      max-width: 100%;
+      margin: 1rem 0;
+    }
+  </style>
+</head>
+<body>
+  <h2>🖼️ Image Resizer & Rotator</h2>
+
+  <input type="file" id="imageInput" accept="image/*"><br>
+  <input type="number" id="widthInput" placeholder="Width (px)">
+  <input type="number" id="heightInput" placeholder="Height (px)">
+  <br>
+  <button onclick="resizeAndShow()">Resize</button>
+  <button onclick="rotateImage('left')">⤺ Rotate Left</button>
+  <button onclick="rotateImage('right')">⤻ Rotate Right</button>
+  <br><br>
+  <button onclick="downloadImage()">⬇️ Download</button>
+
+  <div id="info"></div>
+  <img id="preview" src="">
+
+  <script>
+    let currentImage = null;
+    let originalSize = 0;
+    let currentSize = 0;
+
+    async function resizeAndShow() {
+      const file = document.getElementById("imageInput").files[0];
+      const width = document.getElementById("widthInput").value;
+      const height = document.getElementById("heightInput").value;
+
+      if (!file) return alert("Upload an image first");
+
+      const formData = new FormData();
+      formData.append("image", file);
+      formData.append("width", width);
+      formData.append("height", height);
+
+      const res = await fetch("http://localhost:5000/resize", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await res.json();
+      currentImage = data.image;
+      originalSize = data.originalSize;
+      currentSize = data.currentSize;
+
+      document.getElementById("preview").src = currentImage;
+      updateSizeInfo();
+    }
+
+    async function rotateImage(direction) {
+      if (!currentImage) return alert("Resize first");
+
+      const res = await fetch("http://localhost:5000/rotate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ direction })
+      });
+
+      const data = await res.json();
+      currentImage = data.image;
+      currentSize = data.currentSize;
+
+      document.getElementById("preview").src = currentImage;
+      updateSizeInfo();
+    }
+
+    function updateSizeInfo() {
+      const info = document.getElementById("info");
+      info.innerHTML = `
+        <p>📏 Original Size: ${(originalSize / 1024).toFixed(2)} KB</p>
+        <p>📐 Current Size: ${(currentSize / 1024).toFixed(2)} KB</p>
+      `;
+    }
+
+    function downloadImage() {
+      if (!currentImage) return alert("Resize or rotate an image first.");
+      window.location.href = "http://localhost:5000/download";
+    }
+  </script>
+</body>
+</html>

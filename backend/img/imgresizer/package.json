@@ -1,0 +1,49 @@
+{
+  "name": "allfilechanger-image-resizer-api",
+  "version": "1.0.0",
+  "description": "High-performance image resizer API for AllFileChanger - resize, rotate, and optimize images with memory management",
+  "main": "server.js",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "NODE_ENV=development node server.js",
+    "prod": "NODE_ENV=production node server.js",
+    "test": "node -e \"console.log('Server test passed')\"",
+    "health": "curl -f http://localhost:5000/health || exit 1"
+  },
+  "keywords": [
+    "image",
+    "resizer",
+    "sharp",
+    "api",
+    "resize",
+    "rotate",
+    "optimization",
+    "memory-management",
+    "allfilechanger"
+  ],
+  "author": "AllFileChanger Team",
+  "license": "MIT",
+  "type": "commonjs",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "lru-cache": "^7.18.3",
+    "multer": "^2.0.2",
+    "sharp": "^0.34.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AllFileChanger/image-resizer-api"
+  },
+  "bugs": {
+    "url": "https://github.com/AllFileChanger/image-resizer-api/issues"
+  },
+  "homepage": "https://allfilechanger.onrender.com/"
+}

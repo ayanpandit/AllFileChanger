@@ -7,6 +7,8 @@ import Home from './components/home';
 import ImageToPdf from './pages/ImageToPdf';
 import ImageCompressor from './pages/ImageCompressor';
 import ImageConverter from './pages/ImageConverter';
+import ImageResize from './pages/ImageResize';
+import ImageRotateFlip from './pages/ImageRotateFlip';
 import NotFound from './pages/NotFound';
 
 function App() {
@@ -42,11 +44,13 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/image-to-pdf" element={<ImageToPdf />} />
               <Route path="/image-compressor" element={<ImageCompressor />} />
+              <Route path="/image-converter" element={<ImageConverter />} />
+              <Route path="/image-resize" element={<ImageResize />} />
+              <Route path="/image-rotate-flip" element={<ImageRotateFlip />} />
               
               {/* Future routes - ready for expansion */}
               <Route path="/pdf-to-image" element={<NotFound />} />
               <Route path="/pdf-compressor" element={<NotFound />} />
-              <Route path="/image-converter" element={<ImageConverter />} />
               
               {/* Catch all 404 route */}
               <Route path="*" element={<NotFound />} />

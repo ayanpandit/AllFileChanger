@@ -7,7 +7,7 @@ export default function Home() {
     { name: 'Image Compressor', desc: 'Reduce image file size without quality loss', icon: '🗜️', path: '/image-compressor' },
     { name: 'Image Converter', desc: 'Convert between JPG, PNG, WebP formats', icon: '🔄', path: '/image-converter' },
     { name: 'Resize Images', desc: 'Resize by dimensions or percentage', icon: '📏', path: '/image-resize' },
-    { name: 'Rotate/Flip Images', desc: 'Rotate and flip images easily', icon: '🔄', path: '/image-rotate' },
+    { name: 'Rotate/Flip Images', desc: 'Rotate and flip images easily', icon: '🌀', path: '/image-rotate-flip' },
     { name: 'Crop Images', desc: 'Crop images to perfect dimensions', icon: '✂️', path: '/image-crop' },
     { name: 'Add Watermark', desc: 'Add text or image watermarks', icon: '💧', path: '/image-watermark' },
     { name: 'Remove Background', desc: 'Remove background from images', icon: '🖼️', path: '/remove-background' },
