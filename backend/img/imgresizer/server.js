@@ -41,7 +41,7 @@ const RENDER_CONFIG = {
     KEEP_ALIVE: {
         enabled: isProduction,
         interval: 13 * 60 * 1000,  // 13 minutes (Render sleeps after 15min)
-        selfUrl: process.env.RENDER_EXTERNAL_URL || 'https://your-imageresizer.onrender.com'
+        selfUrl: process.env.RENDER_EXTERNAL_URL || 'https://imgresizer-qkp0.onrender.com'
     }
 };
 

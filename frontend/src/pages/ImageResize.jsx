@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 
 // API Configuration - Production backend URL
 const IMAGE_RESIZER_API_URL = process.env.NODE_ENV === 'production' 
-  ? 'https://allfilechangerimageresizer.onrender.com' 
+  ? 'https://imgresizer-qkp0.onrender.com' 
   : 'http://localhost:5000';
 
 export default function ImageResize() {
