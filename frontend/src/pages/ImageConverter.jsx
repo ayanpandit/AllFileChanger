@@ -2,9 +2,9 @@ import React, { useState, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
-// API Configuration - can be updated for production
+// API Configuration - Production backend URL
 const IMAGE_CONVERTER_API_URL = process.env.NODE_ENV === 'production' 
-  ? 'https://your-image-converter-api.onrender.com' 
+  ? 'https://imageconverter-4r1c.onrender.com' 
   : 'http://localhost:3000';
 
 export default function ImageConverter() {

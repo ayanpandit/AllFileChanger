@@ -6,7 +6,7 @@ import Navbar from './components/navbar';
 import Home from './components/home';
 import ImageToPdf from './pages/ImageToPdf';
 import ImageCompressor from './pages/ImageCompressor';
-import ImageConverter from './pages/imageConverter';
+import ImageConverter from './pages/ImageConverter';
 import NotFound from './pages/NotFound';
 
 function App() {

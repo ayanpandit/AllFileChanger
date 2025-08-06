@@ -25,19 +25,21 @@ const RENDER_CONFIG = {
     
     // Frontend URLs for CORS (your AllFileChanger frontend)
     FRONTEND_URLS: [
-        'https://allfilechanger.netlify.app',     // Your main frontend URL
-        'https://allfilechanger.com',              // Your custom domain (if any)
-        'http://localhost:5173',                   // Local Vite dev server
-        'http://localhost:3000',                   // Local dev server
-        'http://127.0.0.1:5173',                  // Alternative local
-        'http://127.0.0.1:3000'                   // Alternative local
+        'https://allfilechanger.onrender.com',    // Your main frontend URL (Render)
+        'https://allfilechanger.netlify.app',     // Your secondary frontend URL  
+        'https://allfilechanger.com',             // Your custom domain (if any)
+        'http://localhost:5173',                  // Local Vite dev server
+        'http://localhost:3000',                  // Local dev server
+        'http://127.0.0.1:5173',                 // Alternative local
+        'http://127.0.0.1:5173',                 // Alternative local
+        'http://127.0.0.1:3000'                  // Alternative local
     ],
     
     // Keep-alive settings for Render
     KEEP_ALIVE: {
         enabled: isProduction,
         interval: 14 * 60 * 1000,  // 14 minutes (Render sleeps after 15min)
-        selfUrl: process.env.RENDER_EXTERNAL_URL || 'https://your-image-converter.onrender.com'
+        selfUrl: process.env.RENDER_EXTERNAL_URL || 'https://imageconverter-4r1c.onrender.com'
     },
     
     // Production optimizations
