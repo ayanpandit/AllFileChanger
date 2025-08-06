@@ -6,6 +6,7 @@ import Navbar from './components/navbar';
 import Home from './components/home';
 import ImageToPdf from './pages/ImageToPdf';
 import ImageCompressor from './pages/ImageCompressor';
+import ImageConverter from './pages/imageConverter';
 import NotFound from './pages/NotFound';
 
 function App() {
@@ -45,7 +46,7 @@ function App() {
               {/* Future routes - ready for expansion */}
               <Route path="/pdf-to-image" element={<NotFound />} />
               <Route path="/pdf-compressor" element={<NotFound />} />
-              <Route path="/image-converter" element={<NotFound />} />
+              <Route path="/image-converter" element={<ImageConverter />} />
               
               {/* Catch all 404 route */}
               <Route path="*" element={<NotFound />} />
