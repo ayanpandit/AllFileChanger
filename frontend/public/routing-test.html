@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Routing Test - AllFileChanger</title>
+</head>
+<body>
+    <h1>🔧 SPA Routing Test</h1>
+    <p>If you see this page when accessing <code>/image-rotate-flip</code> directly, it means the _redirects file is NOT working correctly.</p>
+    
+    <h2>✅ What Should Happen:</h2>
+    <ul>
+        <li>Direct access to <code>/image-rotate-flip</code> should load the React app</li>
+        <li>Refreshing on any route should maintain the React app</li>
+        <li>All assets should load from <code>/assets/</code> folder</li>
+    </ul>
+    
+    <h2>🚨 If You See This:</h2>
+    <p>The _redirects file is not working. Try these steps:</p>
+    <ol>
+        <li>Clear browser cache (Ctrl+Shift+R)</li>
+        <li>Check Render deployment logs</li>
+        <li>Verify _redirects file is in the root of deployed files</li>
+    </ol>
+    
+    <a href="/">← Back to Home</a>
+    
+    <script>
+        // Auto-redirect to React app after 3 seconds
+        setTimeout(() => {
+            window.location.href = '/';
+        }, 3000);
+    </script>
+</body>
+</html>
