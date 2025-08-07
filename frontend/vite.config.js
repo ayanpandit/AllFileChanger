@@ -16,15 +16,22 @@ export default defineConfig({
           helmet: ['react-helmet-async']
         }
       }
-    }
+    },
+    // Ensure all public files are copied to build directory
+    copyPublicDir: true
   },
   server: {
     port: 3000,
     host: true,
-    historyApiFallback: true  // Enable client-side routing fallback
+    historyApiFallback: {
+      index: '/index.html'
+    }
   },
   preview: {
     port: 3000,
-    host: true
+    host: true,
+    historyApiFallback: {
+      index: '/index.html'
+    }
   }
 })

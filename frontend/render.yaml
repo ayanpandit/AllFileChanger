@@ -4,16 +4,7 @@ services:
     env: static
     buildCommand: npm install --legacy-peer-deps && npm run build:production
     staticPublishPath: ./dist
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /index.html
-      - type: rewrite
-        source: /image-to-pdf
-        destination: /index.html
-      - type: rewrite
-        source: /image-compressor
-        destination: /index.html
+    # Let _redirects file handle all routing - this is cleaner
     headers:
       - path: /*
         headers:
@@ -25,9 +16,14 @@ services:
             value: strict-origin-when-cross-origin
           - key: Permissions-Policy
             value: camera=(), microphone=(), geolocation=()
+      - path: /assets/*
+        headers:
+          - key: Cache-Control
+            value: public, max-age=31536000, immutable
       - path: /static/*
         headers:
           - key: Cache-Control
+            value: public, max-age=31536000, immutable
             value: public, max-age=31536000, immutable
       - path: /assets/*
         headers:

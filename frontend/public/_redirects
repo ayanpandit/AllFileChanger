@@ -1,11 +1,27 @@
 # ================== REACT ROUTER SPA REDIRECTS ==================
-# This file fixes the "Not Found" issue when refreshing pages on Render
+# Critical: This file MUST be copied to the build directory for Render to work
 
-# Static assets and files should be served as-is
-/favicon.ico            /favicon.ico     200
-/robots.txt             /robots.txt      200
-/sitemap.xml            /sitemap.xml     200
-/assets/*               /assets/:splat   200
+# Static files - serve directly with exact match (highest priority)
+/favicon.ico            /favicon.ico            200!
+/robots.txt             /robots.txt             200!
+/sitemap.xml            /sitemap.xml            200!
+/meta.json              /meta.json              200!
+/static.json            /static.json            200!
+/vite.svg               /vite.svg               200!
 
-# All other routes should serve index.html for React Router
-/*                      /index.html      200
+# Built assets - serve with cache headers
+/assets/*               /assets/:splat          200!
+/static/*               /static/:splat          200!
+
+# Application routes - ALL must go to index.html for React Router
+/                       /index.html             200
+/image-to-pdf           /index.html             200
+/image-compressor       /index.html             200
+/image-converter        /index.html             200
+/image-resize           /index.html             200
+/image-rotate-flip      /index.html             200
+/pdf-to-image           /index.html             200
+/pdf-compressor         /index.html             200
+
+# Catch-all fallback for any other routes (MUST be last)
+/*                      /index.html             200
