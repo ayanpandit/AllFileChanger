@@ -4,7 +4,7 @@ services:
     env: static
     buildCommand: npm install --legacy-peer-deps && npm run build:production
     staticPublishPath: ./dist
-    # Let _redirects file handle all routing - this is cleaner
+    # Let _redirects file handle all routing
     headers:
       - path: /*
         headers:
