@@ -159,7 +159,9 @@ const ImageRotateFlip = () => {
     formData.append('flipY', flipY === -1);
 
     try {
-      const API_URL = import.meta.env.VITE_IMGROTATEFLIP_API_URL || 'http://localhost:5000';
+      const API_URL = import.meta.env.VITE_IMGROTATEFLIP_API_URL || 'https://imgrotateflip.onrender.com';
+      console.log('🔗 Using API URL:', API_URL);
+      
       const response = await fetch(`${API_URL}/process`, {
         method: 'POST',
         body: formData,
