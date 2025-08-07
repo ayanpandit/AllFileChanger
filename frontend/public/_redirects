@@ -1,22 +1,15 @@
-# ================== SIMPLIFIED SPA REDIRECTS ==================
-# This handles React Router for Render static hosting
+# ================== RENDER SPA REDIRECTS ==================
+# Specific format for Render static site hosting
 
-# Static assets - serve as-is (with ! to prevent further processing)  
-/favicon.ico    /favicon.ico    200!
-/robots.txt     /robots.txt     200!
-/sitemap.xml    /sitemap.xml    200!
-/vite.svg       /vite.svg       200!
-/assets/*       /assets/:splat  200!
+# Static assets first - highest priority
+/assets/*     /assets/:splat   200
+/vite.svg     /vite.svg        200
+/favicon.ico  /favicon.ico     200
+/robots.txt   /robots.txt      200
+/sitemap.xml  /sitemap.xml     200
 
-# File extensions that should be served directly
-*.js            /:splat         200!
-*.css           /:splat         200!
-*.png           /:splat         200!
-*.jpg           /:splat         200!
-*.svg           /:splat         200!
-*.woff          /:splat         200!
-*.woff2         /:splat         200!
-*.ico           /:splat         200!
+# API routes should not be caught (if any)
+/api/*        /api/:splat      404
 
-# All other routes go to React Router
-/*              /index.html     200
+# All other paths to React Router (SPA fallback)
+/*            /index.html      200

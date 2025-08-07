@@ -9,7 +9,6 @@ export default defineConfig({
     outDir: 'dist',
     assetsDir: 'assets',
     sourcemap: false,
-    // Ensure assets are properly handled
     emptyOutDir: true,
     rollupOptions: {
       output: {
@@ -17,13 +16,13 @@ export default defineConfig({
           vendor: ['react', 'react-dom', 'react-router-dom'],
           helmet: ['react-helmet-async']
         },
-        // Ensure consistent asset naming
+        // Consistent asset naming for better caching
         assetFileNames: 'assets/[name]-[hash][extname]',
         chunkFileNames: 'assets/[name]-[hash].js',
         entryFileNames: 'assets/[name]-[hash].js'
       }
     },
-    // Ensure all public files are copied to build directory
+    // Ensure all public files are copied including _redirects
     copyPublicDir: true
   },
   server: {
