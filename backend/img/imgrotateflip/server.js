@@ -1,115 +1,63 @@
 const express = require('express');
+const cors = require('cors'); // ✅ ADD THIS
 const multer = require('multer');
 const sharp = require('sharp');
-const fs = require('fs');
 const path = require('path');
-const cors = require('cors');
+const fs = require('fs');
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
-// Middleware
+// ✅ ENABLE CORS
 app.use(cors());
-app.use(express.json());
-app.use(express.static('output'));
 
-// Storage for uploads
-const upload = multer({ dest: 'uploads/' });
+// Serve static files
+app.use(express.static('public'));
 
-// Global processed image buffer
-let processedImageBuffer = null;
-let lastImageFormat = 'jpeg';
+// Ensure uploads folder exists
+const uploadDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir);
+}
 
-// Upload Route
-app.post('/upload', upload.single('image'), async (req, res) => {
+// Multer config
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, 'uploads/'),
+  filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname))
+});
+const upload = multer({ storage });
+
+// POST /process
+app.post('/process', upload.single('image'), async (req, res) => {
+  const { rotate, flipX, flipY } = req.body;
+  const imagePath = req.file.path;
+  const outputPath = 'uploads/processed-' + Date.now() + path.extname(req.file.originalname);
+
   try {
-    const filePath = req.file.path;
-    const image = sharp(filePath);
-    const metadata = await image.metadata();
-    lastImageFormat = metadata.format;
+    let image = sharp(imagePath);
 
-    processedImageBuffer = await image.toBuffer();
-    fs.unlinkSync(filePath); // remove temp upload
+    const rotateAngle = parseInt(rotate);
+    if (rotateAngle) image = image.rotate(rotateAngle);
 
-    // Add timestamp to force cache refresh
-    const timestamp = Date.now();
-    const outputPath = `output/processed.${lastImageFormat}`;
-    fs.writeFileSync(outputPath, processedImageBuffer);
+    if (flipX === 'true') image = image.flop();
+    if (flipY === 'true') image = image.flip();
 
-    res.json({ image: `http://localhost:5000/processed.${lastImageFormat}?t=${timestamp}` });
+    await image.toFile(outputPath);
+
+    fs.unlinkSync(imagePath);
+
+    res.sendFile(path.resolve(outputPath));
   } catch (err) {
-    console.error('Upload error:', err);
-    res.status(500).json({ error: 'Failed to upload image.' });
+    console.error(err);
+    res.status(500).send('Error processing image');
   }
 });
 
-// Rotate Route
-app.post('/rotate', async (req, res) => {
-  try {
-    const { direction } = req.body;
-    
-    if (!processedImageBuffer) {
-      return res.status(400).json({ error: 'No image uploaded. Please upload an image first.' });
-    }
-    
-    const degrees = direction === 'left' ? -90 : 90;
-
-    processedImageBuffer = await sharp(processedImageBuffer).rotate(degrees).toBuffer();
-    
-    // Add timestamp to force cache refresh
-    const timestamp = Date.now();
-    const outputPath = `output/processed.${lastImageFormat}`;
-    fs.writeFileSync(outputPath, processedImageBuffer);
-
-    res.json({ image: `http://localhost:5000/processed.${lastImageFormat}?t=${timestamp}` });
-  } catch (err) {
-    console.error('Rotation error:', err);
-    res.status(500).json({ error: 'Rotation failed.' });
-  }
-});
-
-// Flip Route
-app.post('/flip', async (req, res) => {
-  try {
-    const { direction } = req.body;
-    
-    if (!processedImageBuffer) {
-      return res.status(400).json({ error: 'No image uploaded. Please upload an image first.' });
-    }
-
-    let transformer = sharp(processedImageBuffer);
-    if (direction === 'horizontal') transformer = transformer.flop();
-    if (direction === 'vertical') transformer = transformer.flip();
-
-    processedImageBuffer = await transformer.toBuffer();
-    
-    // Add timestamp to force cache refresh
-    const timestamp = Date.now();
-    const outputPath = `output/processed.${lastImageFormat}`;
-    fs.writeFileSync(outputPath, processedImageBuffer);
-
-    res.json({ image: `http://localhost:5000/processed.${lastImageFormat}?t=${timestamp}` });
-  } catch (err) {
-    console.error('Flip error:', err);
-    res.status(500).json({ error: 'Flip failed.' });
-  }
-});
-
-// Download Route
-app.get('/download', (req, res) => {
-  const filePath = path.join(__dirname, `output/processed.${lastImageFormat}`);
-  if (fs.existsSync(filePath)) {
-    res.download(filePath);
-  } else {
-    res.status(404).send('File not found.');
-  }
-});
-
-// Ensure output folder exists
-if (!fs.existsSync('output')) fs.mkdirSync('output');
-if (!fs.existsSync('uploads')) fs.mkdirSync('uploads');
-
-// Start server
 app.listen(PORT, () => {
-  console.log(`🟢 Server running at http://localhost:${PORT}`);
+  console.log(`✅ Server running on http://localhost:${PORT}`);
 });
+
+// Keep alive mechanism to prevent server from sleeping
+setInterval(() => {
+  console.log('🔄 Keep alive ping at', new Date().toISOString());
+}, 13 * 60 * 1000); // Ping every 13 minutes
