@@ -147,9 +147,11 @@ export default function ImageToPdf() {
             // Method 2: Fallback - open in new tab if download didn't work
             setTimeout(() => {
               window.open(url, '_blank');
+              // Clean up after everything
+              setTimeout(() => {
+                window.URL.revokeObjectURL(url);
+              }, 2000);
             }, 1000);
-            
-            window.URL.revokeObjectURL(url);
           }, 100);
         } else {
           // Desktop download method
@@ -159,8 +161,11 @@ export default function ImageToPdf() {
           a.download = 'converted-images.pdf';
           document.body.appendChild(a);
           a.click();
-          window.URL.revokeObjectURL(url);
           document.body.removeChild(a);
+          // Delay cleanup to ensure download starts
+          setTimeout(() => {
+            window.URL.revokeObjectURL(url);
+          }, 1000);
         }
         
         setConvertedFiles([{ name: 'converted-images.pdf', url: URL.createObjectURL(blob) }]);

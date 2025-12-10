@@ -9,6 +9,26 @@ import ImageCompressor from './pages/ImageCompressor';
 import ImageConverter from './pages/ImageConverter';
 import ImageResize from './pages/ImageResize';
 import ImageRotateFlip from './pages/ImageRotateFlip';
+import ImageCrop from './pages/ImageCrop';
+import ImageWatermark from './pages/ImageWatermark';
+import ImageBackgroundRemove from './pages/ImageBackgroundRemove';
+import ImageEditor from './pages/ImageEditor';
+import PdfMerger from './pages/PdfMerger';
+import PdfSplitter from './pages/PdfSplitter';
+import PdfCompressor from './pages/PdfCompressor';
+import PdfToWord from './pages/PdfToWord';
+import WordToPdf from './pages/WordToPdf';
+import PdfToExcel from './pages/PdfToExcel';
+import PdfToPowerPoint from './pages/PdfToPowerPoint';
+import PdfProtect from './pages/PdfProtect';
+import PdfUnlock from './pages/PdfUnlock';
+import WordConverter from './pages/WordConverter';
+import ExcelConverter from './pages/ExcelConverter';
+import PowerPointConverter from './pages/PowerPointConverter';
+import TextExtractor from './pages/TextExtractor';
+import OcrScanner from './pages/OcrScanner';
+import DocumentMerger from './pages/DocumentMerger';
+import FormatConverter from './pages/FormatConverter';
 import NotFound from './pages/NotFound';
 
 function App() {
@@ -42,15 +62,37 @@ function App() {
           <main className="pt-24">
             <Routes>
               <Route path="/" element={<Home />} />
+              
+              {/* Image Tools */}
               <Route path="/image-to-pdf" element={<ImageToPdf />} />
               <Route path="/image-compressor" element={<ImageCompressor />} />
               <Route path="/image-converter" element={<ImageConverter />} />
               <Route path="/image-resize" element={<ImageResize />} />
               <Route path="/image-rotate-flip" element={<ImageRotateFlip />} />
+              <Route path="/image-crop" element={<ImageCrop />} />
+              <Route path="/image-watermark" element={<ImageWatermark />} />
+              <Route path="/image-background-remove" element={<ImageBackgroundRemove />} />
+              <Route path="/image-editor" element={<ImageEditor />} />
               
-              {/* Future routes - ready for expansion */}
-              <Route path="/pdf-to-image" element={<NotFound />} />
-              <Route path="/pdf-compressor" element={<NotFound />} />
+              {/* PDF Tools */}
+              <Route path="/pdf-merger" element={<PdfMerger />} />
+              <Route path="/pdf-splitter" element={<PdfSplitter />} />
+              <Route path="/pdf-compressor" element={<PdfCompressor />} />
+              <Route path="/pdf-to-word" element={<PdfToWord />} />
+              <Route path="/word-to-pdf" element={<WordToPdf />} />
+              <Route path="/pdf-to-excel" element={<PdfToExcel />} />
+              <Route path="/pdf-to-powerpoint" element={<PdfToPowerPoint />} />
+              <Route path="/pdf-protect" element={<PdfProtect />} />
+              <Route path="/pdf-unlock" element={<PdfUnlock />} />
+              
+              {/* Document Tools */}
+              <Route path="/word-converter" element={<WordConverter />} />
+              <Route path="/excel-converter" element={<ExcelConverter />} />
+              <Route path="/powerpoint-converter" element={<PowerPointConverter />} />
+              <Route path="/text-extractor" element={<TextExtractor />} />
+              <Route path="/ocr-scanner" element={<OcrScanner />} />
+              <Route path="/document-merger" element={<DocumentMerger />} />
+              <Route path="/format-converter" element={<FormatConverter />} />
               
               {/* Catch all 404 route */}
               <Route path="*" element={<NotFound />} />

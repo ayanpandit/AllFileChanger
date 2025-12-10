@@ -76,7 +76,7 @@ export default function ImageCompressor() {
     formData.append('image', file);
 
     if (targetSize) {
-      formData.append('targetSize', targetSize);
+      formData.append('targetSizeKB', targetSize);
     } else {
       formData.append('quality', quality);
     }
@@ -385,7 +385,7 @@ export default function ImageCompressor() {
                     {/* Quality Slider */}
                     <div className="space-y-3">
                       <label className="block text-sm font-medium text-gray-900 dark:text-white">
-                        Quality: {quality}%
+                        Quality Reduction: {100 - quality}% (Output Quality: {quality}%)
                       </label>
                       <input
                         type="range"
@@ -393,7 +393,7 @@ export default function ImageCompressor() {
                         max="100"
                         value={quality}
                         disabled={targetSize}
-                        onChange={(e) => setQuality(e.target.value)}
+                        onChange={(e) => setQuality(parseInt(e.target.value))}
                         className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700 slider"
                       />
                       <p className="text-xs text-gray-500 dark:text-gray-400">

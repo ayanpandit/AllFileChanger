@@ -7,7 +7,7 @@ const IMAGE_CONVERTER_API_URL = import.meta.env.VITE_IMAGECONVERTER_URL || 'http
 
 export default function ImageConverter() {
   const navigate = useNavigate();
-  const [file, setFile] = useState(null);
+  const [files, setFiles] = useState([]);
   const [format, setFormat] = useState('');
   const [quality, setQuality] = useState(85);
   const [isConverting, setIsConverting] = useState(false);
@@ -27,12 +27,16 @@ export default function ImageConverter() {
     );
     
     if (droppedFiles.length > 0) {
-      const selectedFile = droppedFiles[0];
-      if (selectedFile.size > 50 * 1024 * 1024) {
-        setErrorMessage('File too large (max 50MB)');
-        return;
+      const validFiles = droppedFiles.filter(f => f.size <= 50 * 1024 * 1024);
+      if (validFiles.length < droppedFiles.length) {
+        setErrorMessage('Some files were skipped (max 50MB per file)');
       }
-      setFile(selectedFile);
+      if (validFiles.length > 50) {
+        setErrorMessage('Maximum 50 files allowed');
+        setFiles(validFiles.slice(0, 50));
+      } else {
+        setFiles(validFiles);
+      }
     }
   }, []);
 
@@ -56,31 +60,40 @@ export default function ImageConverter() {
   // Handle file input
   const handleFileInput = (e) => {
     setErrorMessage('');
-    const selectedFile = e.target.files[0];
+    const selectedFiles = Array.from(e.target.files);
     
-    if (selectedFile) {
-      if (selectedFile.size > 50 * 1024 * 1024) {
-        setErrorMessage('File too large (max 50MB)');
-        return;
+    if (selectedFiles.length > 0) {
+      const validFiles = selectedFiles.filter(f => 
+        f.type.startsWith('image/') && f.size <= 50 * 1024 * 1024
+      );
+      if (validFiles.length < selectedFiles.length) {
+        setErrorMessage('Some files were skipped (invalid or too large)');
       }
-      if (!selectedFile.type.startsWith('image/')) {
-        setErrorMessage('Please select a valid image file');
-        return;
+      if (validFiles.length > 50) {
+        setErrorMessage('Maximum 50 files allowed');
+        setFiles(validFiles.slice(0, 50));
+      } else {
+        setFiles(validFiles);
       }
-      setFile(selectedFile);
     }
   };
 
   // Remove file
-  const removeFile = () => {
-    setFile(null);
+  const removeFile = (index) => {
+    setFiles(files.filter((_, i) => i !== index));
+    setErrorMessage('');
+  };
+  
+  // Clear all files
+  const clearAllFiles = () => {
+    setFiles([]);
     setErrorMessage('');
   };
 
-  // Convert image
+  // Convert images
   const convertImage = async () => {
-    if (!file || !format) {
-      setErrorMessage('Please select a file and format');
+    if (files.length === 0 || !format) {
+      setErrorMessage('Please select file(s) and format');
       return;
     }
 
@@ -90,52 +103,93 @@ export default function ImageConverter() {
 
     try {
       const formData = new FormData();
-      formData.append('image', file);
-      formData.append('format', format);
-      formData.append('quality', quality);
-
-      const response = await fetch(`${IMAGE_CONVERTER_API_URL}/convert`, {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Conversion failed');
-      }
-
-      const blob = await response.blob();
-      const filename = `converted_${Date.now()}.${format}`;
       
-      // Enhanced mobile-friendly download handling
-      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-      
-      if (isMobile) {
-        // Mobile-specific download approach
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.style.display = 'none';
-        a.href = url;
-        a.download = filename;
-        a.target = '_blank';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        window.URL.revokeObjectURL(url);
+      // Single or batch conversion
+      if (files.length === 1) {
+        formData.append('image', files[0]);
+        formData.append('format', format);
+        formData.append('quality', quality);
+
+        const response = await fetch(`${IMAGE_CONVERTER_API_URL}/convert`, {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.error || 'Conversion failed');
+        }
+
+        const blob = await response.blob();
+        const filename = `converted_${Date.now()}.${format}`;
         
-        // Show success message for mobile users
-        setShowSuccess(true);
-        setTimeout(() => setShowSuccess(false), 5000);
-      } else {
-        // Desktop download
+        // Mobile-friendly download
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
         a.download = filename;
+        a.style.display = 'none';
         document.body.appendChild(a);
-        a.click();
-        a.remove();
-        window.URL.revokeObjectURL(url);
+        
+        if (isMobile) {
+          setTimeout(() => {
+            a.click();
+            document.body.removeChild(a);
+            setTimeout(() => {
+              window.open(url, '_blank');
+              setTimeout(() => window.URL.revokeObjectURL(url), 2000);
+            }, 1000);
+          }, 100);
+        } else {
+          a.click();
+          document.body.removeChild(a);
+          setTimeout(() => window.URL.revokeObjectURL(url), 1000);
+        }
+        
+        setShowSuccess(true);
+        setTimeout(() => setShowSuccess(false), 3000);
+      } else {
+        // Batch conversion - return ZIP
+        files.forEach(file => formData.append('images', file));
+        formData.append('format', format);
+        formData.append('quality', quality);
+
+        const response = await fetch(`${IMAGE_CONVERTER_API_URL}/convert-batch`, {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (!response.ok) {
+          throw new Error('Batch conversion failed');
+        }
+
+        const blob = await response.blob();
+        const filename = `converted_images_${Date.now()}.zip`;
+        
+        // Mobile-friendly download
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        
+        if (isMobile) {
+          setTimeout(() => {
+            a.click();
+            document.body.removeChild(a);
+            setTimeout(() => {
+              window.open(url, '_blank');
+              setTimeout(() => window.URL.revokeObjectURL(url), 2000);
+            }, 1000);
+          }, 100);
+        } else {
+          a.click();
+          document.body.removeChild(a);
+          setTimeout(() => window.URL.revokeObjectURL(url), 1000);
+        }
         
         setShowSuccess(true);
         setTimeout(() => setShowSuccess(false), 3000);
@@ -339,6 +393,7 @@ export default function ImageConverter() {
                 <input
                   type="file"
                   accept="image/*"
+                  multiple
                   onChange={handleFileInput}
                   className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                   disabled={isConverting}
@@ -350,10 +405,10 @@ export default function ImageConverter() {
                   </div>
                   <div>
                     <p className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-2 transition-colors duration-500">
-                      {file ? 'Image Selected!' : 'Drop your image here or click to browse'}
+                      {files.length > 0 ? `${files.length} Image(s) Selected!` : 'Drop images here or click to browse'}
                     </p>
                     <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 transition-colors duration-500">
-                      Supports JPG, PNG, WebP, HEIF, HEIC, AVIF, GIF, BMP, TIFF, ICO • Max 50MB
+                      Supports JPG, PNG, WebP, HEIF, HEIC, AVIF, GIF, BMP, TIFF, ICO • Max 50MB each • Up to 50 files
                     </p>
                   </div>
                 </div>
@@ -376,39 +431,54 @@ export default function ImageConverter() {
               )}
             </div>
             
-            {/* Selected File Display */}
-            {file && (
+            {/* Selected Files Display */}
+            {files.length > 0 && (
               <div className="px-4 sm:px-6 lg:px-8 pb-4 sm:pb-6 lg:pb-8">
                 <div className="bg-gray-50 dark:bg-gray-900 rounded-xl p-4 sm:p-6 transition-colors duration-500">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3 sm:space-x-4 min-w-0 flex-1">
-                      <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
-                        <span className="text-lg sm:text-xl">🖼️</span>
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <p className="font-medium text-gray-900 dark:text-white truncate text-sm sm:text-base">
-                          {file.name}
-                        </p>
-                        <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-                          {(file.size / 1024 / 1024).toFixed(2)} MB • {file.type}
-                        </p>
-                      </div>
-                    </div>
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="font-semibold text-gray-900 dark:text-white">
+                      Selected Files ({files.length})
+                    </h3>
                     <button
-                      onClick={removeFile}
-                      className="flex-shrink-0 p-1 sm:p-2 text-red-500 hover:text-red-700 dark:hover:text-red-400 transition-colors duration-200"
+                      onClick={clearAllFiles}
+                      className="text-sm text-red-500 hover:text-red-700 dark:hover:text-red-400 transition-colors duration-200"
                     >
-                      <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                      </svg>
+                      Clear All
                     </button>
+                  </div>
+                  <div className="space-y-3 max-h-64 overflow-y-auto">
+                    {files.map((file, index) => (
+                      <div key={index} className="flex items-center justify-between bg-white dark:bg-gray-800 p-3 rounded-lg">
+                        <div className="flex items-center space-x-3 min-w-0 flex-1">
+                          <div className="flex-shrink-0 w-10 h-10 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
+                            <span className="text-lg">🖼️</span>
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <p className="font-medium text-gray-900 dark:text-white truncate text-sm">
+                              {file.name}
+                            </p>
+                            <p className="text-xs text-gray-600 dark:text-gray-400">
+                              {(file.size / 1024 / 1024).toFixed(2)} MB
+                            </p>
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => removeFile(index)}
+                          className="flex-shrink-0 p-1 text-red-500 hover:text-red-700 dark:hover:text-red-400 transition-colors duration-200"
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                        </button>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
             )}
             
             {/* Conversion Settings */}
-            {file && (
+            {files.length > 0 && (
               <div className="px-4 sm:px-6 lg:px-8 pb-6 sm:pb-8 space-y-6">
                 {/* Format Selection */}
                 <div>
@@ -471,7 +541,7 @@ export default function ImageConverter() {
                   ) : (
                     <div className="flex items-center justify-center space-x-2">
                       <span className="text-xl">🔄</span>
-                      <span>Convert to {format.toUpperCase()}</span>
+                      <span>Convert {files.length > 1 ? `${files.length} Images` : 'to ' + format.toUpperCase()}</span>
                     </div>
                   )}
                 </button>
