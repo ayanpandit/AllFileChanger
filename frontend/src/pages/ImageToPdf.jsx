@@ -116,7 +116,8 @@ export default function ImageToPdf() {
       const formData = new FormData();
       files.forEach(file => formData.append('images', file));
       
-      const response = await fetch('https://imgtopdf-vj4x.onrender.com/upload', {
+      const API_URL = import.meta.env.VITE_IMGTOPDF_URL || 'http://localhost:5005';
+      const response = await fetch(`${API_URL}/image-to-pdf`, {
         method: 'POST',
         body: formData,
       });

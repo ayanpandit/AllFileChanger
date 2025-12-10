@@ -2,10 +2,8 @@ import React, { useState, useCallback, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
-// API Configuration - Production backend URL
-const IMAGE_RESIZER_API_URL = process.env.NODE_ENV === 'production' 
-  ? 'https://imgresizer-qkp0.onrender.com' 
-  : 'http://localhost:5000';
+// API Configuration from environment variables
+const IMAGE_RESIZER_API_URL = import.meta.env.VITE_IMAGERESIZER_URL || 'http://localhost:5003';
 
 export default function ImageResize() {
   const navigate = useNavigate();

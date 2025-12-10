@@ -2,10 +2,8 @@ import React, { useState, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
-// API Configuration - Production backend URL
-const IMAGE_CONVERTER_API_URL = process.env.NODE_ENV === 'production' 
-  ? 'https://imageconverter-4r1c.onrender.com' 
-  : 'http://localhost:3000';
+// API Configuration from environment variables
+const IMAGE_CONVERTER_API_URL = import.meta.env.VITE_IMAGECONVERTER_URL || 'http://localhost:5002';
 
 export default function ImageConverter() {
   const navigate = useNavigate();
