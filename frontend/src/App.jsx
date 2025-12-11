@@ -75,7 +75,9 @@ function App() {
               <Route path="/image-editor" element={<ImageEditor />} />
               
               {/* PDF Tools */}
+              <Route path="/pdf-merge" element={<PdfMerger />} />
               <Route path="/pdf-merger" element={<PdfMerger />} />
+              <Route path="/pdf-split" element={<PdfSplitter />} />
               <Route path="/pdf-splitter" element={<PdfSplitter />} />
               <Route path="/pdf-compressor" element={<PdfCompressor />} />
               <Route path="/pdf-to-word" element={<PdfToWord />} />
@@ -89,9 +91,11 @@ function App() {
               <Route path="/word-converter" element={<WordConverter />} />
               <Route path="/excel-converter" element={<ExcelConverter />} />
               <Route path="/powerpoint-converter" element={<PowerPointConverter />} />
+              <Route path="/ppt-converter" element={<PowerPointConverter />} />
               <Route path="/text-extractor" element={<TextExtractor />} />
               <Route path="/ocr-scanner" element={<OcrScanner />} />
               <Route path="/document-merger" element={<DocumentMerger />} />
+              <Route path="/doc-merge" element={<DocumentMerger />} />
               <Route path="/format-converter" element={<FormatConverter />} />
               
               {/* Catch all 404 route */}

@@ -162,30 +162,57 @@ const ImageRotateFlip = () => {
       const API_URL = import.meta.env.VITE_IMAGEROTATEFLIP_URL || 'http://localhost:5004';
       console.log('🔗 Using API URL:', API_URL);
       
+      // Send to backend for processing
       const response = await fetch(`${API_URL}/process`, {
         method: 'POST',
         body: formData,
       });
 
       if (!response.ok) {
-        throw new Error('Processing failed');
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Processing failed');
       }
 
-      const blob = await response.blob();
+      const data = await response.json();
+      console.log('✅ Processed:', data);
+
+      // Download the processed image
+      const downloadResponse = await fetch(`${API_URL}/download/${data.sessionId}`);
+      if (!downloadResponse.ok) throw new Error('Download failed');
+
+      const blob = await downloadResponse.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
+      a.style.display = 'none';
       a.href = url;
       a.download = `rotated-flipped-${originalFile.name}`;
       document.body.appendChild(a);
       a.click();
-      document.body.removeChild(a);
-      window.URL.revokeObjectURL(url);
+
+      // Mobile-friendly cleanup
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      
+      if (isMobile) {
+        setTimeout(() => {
+          window.open(url, '_blank');
+        }, 100);
+        
+        setTimeout(() => {
+          window.URL.revokeObjectURL(url);
+          document.body.removeChild(a);
+        }, 2000);
+      } else {
+        setTimeout(() => {
+          window.URL.revokeObjectURL(url);
+          document.body.removeChild(a);
+        }, 1000);
+      }
       
       setShowSuccess(true);
       setTimeout(() => setShowSuccess(false), 3000);
     } catch (err) {
       console.error(err);
-      setErrorMessage("Processing failed. Please try again.");
+      setErrorMessage(err.message || "Processing failed. Please try again.");
     } finally {
       setIsProcessing(false);
     }
