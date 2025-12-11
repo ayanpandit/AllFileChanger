@@ -412,7 +412,7 @@ export default function ImageResize() {
                   {isProcessing ? (
                     <>
                       <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                      Resizing...
+                      Processing...
                     </>
                   ) : (
                     <>
@@ -421,21 +421,34 @@ export default function ImageResize() {
                   )}
                 </button>
 
+                {/* Show rotate buttons after processing */}
                 {sessionId && (
                   <>
                     <button
                       onClick={() => rotateImage('left')}
                       disabled={isProcessing}
-                      className="px-6 py-3 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-400 text-white font-medium rounded-lg transition-colors duration-200"
+                      className="px-6 py-3 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-400 text-white font-medium rounded-lg transition-colors duration-200 flex items-center gap-2"
                     >
-                      ⤺ Rotate Left
+                      {isProcessing ? (
+                        <>
+                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        </>
+                      ) : (
+                        <>⤺ Rotate Left</>
+                      )}
                     </button>
                     <button
                       onClick={() => rotateImage('right')}
                       disabled={isProcessing}
-                      className="px-6 py-3 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-400 text-white font-medium rounded-lg transition-colors duration-200"
+                      className="px-6 py-3 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-400 text-white font-medium rounded-lg transition-colors duration-200 flex items-center gap-2"
                     >
-                      ⤻ Rotate Right
+                      {isProcessing ? (
+                        <>
+                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        </>
+                      ) : (
+                        <>⤻ Rotate Right</>
+                      )}
                     </button>
                     <button
                       onClick={downloadImage}

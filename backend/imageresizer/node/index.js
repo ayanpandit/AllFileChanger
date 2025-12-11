@@ -21,13 +21,21 @@ setInterval(() => {
     }
 }, 5 * 60 * 1000); // Check every 5 minutes
 
-app.use(cors({
-    origin: true, // Allow all origins for development - restrict in production
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'X-Session-ID', 'Authorization']
-}));
+// CORS configuration - allow all origins for development
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, X-Session-ID, Authorization');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    
+    // Handle preflight
+    if (req.method === 'OPTIONS') {
+        return res.sendStatus(200);
+    }
+    next();
+});
 
+app.use(cors());
 app.use(express.json());
 
 const upload = multer({ 
