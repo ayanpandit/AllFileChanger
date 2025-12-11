@@ -30,6 +30,23 @@ export default function ImageResize() {
 
   const toggleTheme = () => setIsDark(v => !v);
 
+  // Keep in sync with global site theme changes (e.g. navbar toggle)
+  useEffect(() => {
+    // If another component toggles the `dark` class on <html>, update local state
+    const syncIsDark = () => setIsDark(document.documentElement.classList.contains('dark'));
+
+    const observer = new MutationObserver(() => {
+      syncIsDark();
+    });
+
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+
+    // Sync immediately on mount
+    syncIsDark();
+
+    return () => observer.disconnect();
+  }, []);
+
   // Handle file drop
   const handleDrop = useCallback((e) => {
     e.preventDefault();
@@ -175,13 +192,48 @@ export default function ImageResize() {
     }
   };
 
-  const downloadImage = () => {
+  const downloadImage = async () => {
     if (!sessionId) {
       setErrorMessage('Please resize or rotate an image first');
       return;
     }
-    
-    window.open(`${IMAGE_RESIZER_API_URL}/download/${sessionId}`, '_blank');
+
+    try {
+      const response = await fetch(`${IMAGE_RESIZER_API_URL}/download/${sessionId}`);
+      if (!response.ok) throw new Error('Download failed');
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = url;
+      a.download = `resized-image-${Date.now()}.${file?.name?.split('.').pop() || 'png'}`;
+      document.body.appendChild(a);
+      a.click();
+
+      // Mobile-friendly cleanup with delay
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      
+      if (isMobile) {
+        // For mobile, try opening in new tab as fallback
+        setTimeout(() => {
+          window.open(url, '_blank');
+        }, 100);
+        
+        setTimeout(() => {
+          window.URL.revokeObjectURL(url);
+          document.body.removeChild(a);
+        }, 2000);
+      } else {
+        setTimeout(() => {
+          window.URL.revokeObjectURL(url);
+          document.body.removeChild(a);
+        }, 1000);
+      }
+    } catch (error) {
+      console.error('Download error:', error);
+      setErrorMessage('Failed to download image');
+    }
   };
 
   const resetAll = () => {
@@ -253,7 +305,7 @@ export default function ImageResize() {
         </script>
       </Helmet>
 
-      <div className={`min-h-screen ${isDark ? 'bg-black text-white' : 'bg-white text-gray-900'}`}>
+      <div className={"min-h-screen " + (isDark ? 'bg-black' : 'bg-white') + ' transition-colors duration-500'}>
         {/* Hero Section */}
         <div className="relative overflow-hidden bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 dark:from-black dark:via-black dark:to-black transition-all duration-500">
           <div className="absolute inset-0 bg-black/20 dark:bg-black/80"></div>
@@ -268,20 +320,16 @@ export default function ImageResize() {
               <p className="text-lg sm:text-xl text-blue-100 mb-6 max-w-3xl mx-auto">
                 Resize images to any dimension and rotate them instantly. Fast, secure, and mobile-friendly.
               </p>
-              <div className="flex justify-center gap-3 mt-4">
-                <button onClick={toggleTheme} className="px-3 py-2 bg-white/20 hover:bg-white/30 text-white rounded-lg backdrop-blur-sm transition">
-                  {isDark ? '🌙 Dark' : '🌞 Light'}
-                </button>
-              </div>
+              
             </div>
           </div>
         </div>
 
         {/* Main Content */}
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           
           {/* Upload Section */}
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 mb-8">
+          <div className={`rounded-xl shadow-lg p-8 mb-8 ${isDark ? 'bg-black' : 'bg-white'}`}>
             <div className="text-center mb-6">
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
                 Upload Your Image
@@ -455,7 +503,7 @@ export default function ImageResize() {
 
           {/* Preview Section */}
           {previewSrc && (
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 mb-8">
+            <div className={`rounded-xl shadow-lg p-8 mb-8 ${isDark ? 'bg-black' : 'bg-white'}`}>
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 text-center">
                 Image Preview
               </h3>
@@ -470,7 +518,7 @@ export default function ImageResize() {
           )}
 
           {/* Features Section */}
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 mb-8">
+          <div className={`rounded-xl shadow-lg p-8 mb-8 ${isDark ? 'bg-black' : 'bg-white'}`}>
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
               🌟 Powerful Image Resizing Features
             </h2>
@@ -521,7 +569,7 @@ export default function ImageResize() {
           </div>
 
           {/* How It Works */}
-          <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-xl p-8 mb-8">
+          <div className={`rounded-xl p-8 mb-8 ${isDark ? 'bg-black' : 'bg-white'}`}>
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
               🛠️ How to Resize Images Online
             </h2>
@@ -557,62 +605,49 @@ export default function ImageResize() {
             </div>
           </div>
 
-          {/* Related Tools */}
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
-              🔗 Related Tools
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <Link
-                to="/image-converter"
-                className="group p-6 border border-gray-200 dark:border-gray-600 rounded-lg hover:border-blue-500 hover:shadow-md transition-all duration-200"
-              >
-                <div className="text-3xl mb-3">🔄</div>
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600">
-                  Image Converter
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300 text-sm">
-                  Convert between different image formats
-                </p>
-              </Link>
-              
-              <Link
-                to="/image-compressor"
-                className="group p-6 border border-gray-200 dark:border-gray-600 rounded-lg hover:border-blue-500 hover:shadow-md transition-all duration-200"
-              >
-                <div className="text-3xl mb-3">🗜️</div>
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600">
-                  Image Compressor
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300 text-sm">
-                  Reduce image file sizes without quality loss
-                </p>
-              </Link>
-              
-              <Link
-                to="/image-to-pdf"
-                className="group p-6 border border-gray-200 dark:border-gray-600 rounded-lg hover:border-blue-500 hover:shadow-md transition-all duration-200"
-              >
-                <div className="text-3xl mb-3">📄</div>
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600">
-                  Image to PDF
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300 text-sm">
-                  Convert images to PDF documents
-                </p>
-              </Link>
+          {/* Related Tools Section */}
+          <div className={`py-12 ${isDark ? 'bg-black' : 'bg-white'}`}>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <h2 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} mb-6 text-center`}>
+                🔗 Related Tools
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <Link to="/image-compressor" className={`${isDark ? 'bg-black border border-gray-700' : 'bg-white border border-gray-200'} p-6 rounded-lg hover:shadow-lg transition`}>
+                  <div className="text-3xl mb-3">🗜️</div>
+                  <h3 className={`${isDark ? 'text-white' : 'text-gray-900'} font-semibold mb-2`}>Image Compressor</h3>
+                  <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} text-sm`}>Reduce file size while keeping quality.</p>
+                </Link>
+
+                <Link to="/image-converter" className={`${isDark ? 'bg-black border border-gray-700' : 'bg-white border border-gray-200'} p-6 rounded-lg hover:shadow-lg transition`}>
+                  <div className="text-3xl mb-3">🛠️</div>
+                  <h3 className={`${isDark ? 'text-white' : 'text-gray-900'} font-semibold mb-2`}>Image Converter</h3>
+                  <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} text-sm`}>Convert images between formats.</p>
+                </Link>
+
+                <Link to="/image-rotate-flip" className={`${isDark ? 'bg-black border border-gray-700' : 'bg-white border border-gray-200'} p-6 rounded-lg hover:shadow-lg transition`}>
+                  <div className="text-3xl mb-3">🔄</div>
+                  <h3 className={`${isDark ? 'text-white' : 'text-gray-900'} font-semibold mb-2`}>Rotate & Flip</h3>
+                  <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} text-sm`}>Quickly rotate or flip images.</p>
+                </Link>
+
+                <Link to="/image-to-pdf" className={`${isDark ? 'bg-black border border-gray-700' : 'bg-white border border-gray-200'} p-6 rounded-lg hover:shadow-lg transition`}>
+                  <div className="text-3xl mb-3">📄</div>
+                  <h3 className={`${isDark ? 'text-white' : 'text-gray-900'} font-semibold mb-2`}>Image to PDF</h3>
+                  <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} text-sm`}>Create PDFs from images.</p>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
 
         {/* FAQ Section */}
-        <div className="bg-gray-50 dark:bg-gray-900 py-16">
+        <div className={`py-16 ${isDark ? 'bg-black' : 'bg-white'}`}>
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
               ❓ Frequently Asked Questions
             </h2>
             <div className="space-y-6">
-              <details className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
+              <details className={`${isDark ? 'bg-black' : 'bg-white'} rounded-lg p-6 shadow-sm`}>
                 <summary className="font-semibold text-gray-900 dark:text-white cursor-pointer">
                   What image formats can I resize?
                 </summary>
@@ -621,7 +656,7 @@ export default function ImageResize() {
                 </p>
               </details>
               
-              <details className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
+              <details className={`${isDark ? 'bg-black' : 'bg-white'} rounded-lg p-6 shadow-sm`}>
                 <summary className="font-semibold text-gray-900 dark:text-white cursor-pointer">
                   Is there a file size limit?
                 </summary>
@@ -630,7 +665,7 @@ export default function ImageResize() {
                 </p>
               </details>
               
-              <details className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
+              <details className={`${isDark ? 'bg-black' : 'bg-white'} rounded-lg p-6 shadow-sm`}>
                 <summary className="font-semibold text-gray-900 dark:text-white cursor-pointer">
                   Does resizing affect image quality?
                 </summary>
@@ -639,7 +674,7 @@ export default function ImageResize() {
                 </p>
               </details>
               
-              <details className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
+              <details className={`${isDark ? 'bg-black' : 'bg-white'} rounded-lg p-6 shadow-sm`}>
                 <summary className="font-semibold text-gray-900 dark:text-white cursor-pointer">
                   Are my images stored on your servers?
                 </summary>
@@ -648,7 +683,7 @@ export default function ImageResize() {
                 </p>
               </details>
               
-              <details className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
+              <details className={`${isDark ? 'bg-black' : 'bg-white'} rounded-lg p-6 shadow-sm`}>
                 <summary className="font-semibold text-gray-900 dark:text-white cursor-pointer">
                   Can I batch resize multiple images?
                 </summary>
