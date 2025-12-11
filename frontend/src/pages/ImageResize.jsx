@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
@@ -20,6 +20,15 @@ export default function ImageResize() {
   const [errorMessage, setErrorMessage] = useState('');
   const [processingTime, setProcessingTime] = useState('');
   const fileInputRef = useRef(null);
+
+  // Theme (light/dark) toggle for this page so user can see mode changes
+  const [isDark, setIsDark] = useState(() => document.documentElement.classList.contains('dark'));
+  useEffect(() => {
+    if (isDark) document.documentElement.classList.add('dark');
+    else document.documentElement.classList.remove('dark');
+  }, [isDark]);
+
+  const toggleTheme = () => setIsDark(v => !v);
 
   // Handle file drop
   const handleDrop = useCallback((e) => {
@@ -244,35 +253,25 @@ export default function ImageResize() {
         </script>
       </Helmet>
 
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900">
+      <div className={`min-h-screen ${isDark ? 'bg-black text-white' : 'bg-white text-gray-900'}`}>
         {/* Hero Section */}
-        <div className="relative overflow-hidden bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-700 dark:to-purple-700">
-          <div className="absolute inset-0 bg-black opacity-10"></div>
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div className="relative overflow-hidden bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 dark:from-black dark:via-black dark:to-black transition-all duration-500">
+          <div className="absolute inset-0 bg-black/20 dark:bg-black/80"></div>
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
             <div className="text-center">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6">
-                🖼️ Image Resizer & Rotator
+              <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-3xl mb-6 shadow-2xl transition-all duration-300">
+                <span className="text-3xl text-white">🖼️</span>
+              </div>
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4">
+                <span className="text-yellow-300">Image Resizer</span> & Rotator
               </h1>
-              <p className="text-xl sm:text-2xl text-blue-100 mb-8 max-w-3xl mx-auto">
-                Resize images to any dimension and rotate them instantly. Free, fast, and secure with no registration required.
+              <p className="text-lg sm:text-xl text-blue-100 mb-6 max-w-3xl mx-auto">
+                Resize images to any dimension and rotate them instantly. Fast, secure, and mobile-friendly.
               </p>
-              <div className="flex flex-wrap justify-center gap-4 text-blue-100">
-                <span className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-green-400 rounded-full"></span>
-                  Custom Dimensions
-                </span>
-                <span className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-green-400 rounded-full"></span>
-                  Instant Preview
-                </span>
-                <span className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-green-400 rounded-full"></span>
-                  One-Click Rotation
-                </span>
-                <span className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-green-400 rounded-full"></span>
-                  All Formats
-                </span>
+              <div className="flex justify-center gap-3 mt-4">
+                <button onClick={toggleTheme} className="px-3 py-2 bg-white/20 hover:bg-white/30 text-white rounded-lg backdrop-blur-sm transition">
+                  {isDark ? '🌙 Dark' : '🌞 Light'}
+                </button>
               </div>
             </div>
           </div>
