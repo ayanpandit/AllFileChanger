@@ -9,6 +9,7 @@ from datetime import datetime, timedelta
 from threading import Lock
 from PIL import Image
 import time
+import gc
 
 # Configure logging
 logging.basicConfig(
@@ -54,6 +55,56 @@ def cleanup_old_sessions():
         if expired:
             logger.info(f"Cleaned up {len(expired)} expired sessions")
 
+def process_image_for_pdf(image_bytes, filename):
+    """Process and normalize any image format for PDF conversion"""
+    try:
+        # Open image
+        img = Image.open(io.BytesIO(image_bytes))
+        original_format = img.format
+        
+        # Convert all images to RGB mode (required for consistent PDF generation)
+        # This handles: RGBA, P (palette), LA, L, CMYK, etc.
+        if img.mode == 'RGBA':
+            # Convert RGBA to RGB with white background
+            background = Image.new('RGB', img.size, (255, 255, 255))
+            background.paste(img, mask=img.split()[3] if len(img.split()) == 4 else None)
+            img = background
+        elif img.mode == 'LA':
+            # Convert LA (grayscale with alpha) to RGB
+            background = Image.new('RGB', img.size, (255, 255, 255))
+            background.paste(img, mask=img.split()[1] if len(img.split()) == 2 else None)
+            img = background
+        elif img.mode == 'P':
+            # Convert palette mode to RGB
+            img = img.convert('RGB')
+        elif img.mode in ('L', '1'):
+            # Convert grayscale/binary to RGB
+            img = img.convert('RGB')
+        elif img.mode == 'CMYK':
+            # Convert CMYK to RGB
+            img = img.convert('RGB')
+        elif img.mode != 'RGB':
+            # Any other mode, convert to RGB
+            img = img.convert('RGB')
+        
+        # Resize if too large (optimization)
+        max_dimension = 4096
+        if max(img.size) > max_dimension:
+            ratio = max_dimension / max(img.size)
+            new_size = tuple(int(dim * ratio) for dim in img.size)
+            img = img.resize(new_size, Image.Resampling.LANCZOS)
+            logger.info(f"Resized {filename} from {image_bytes.__sizeof__()} to fit {max_dimension}px")
+        
+        # Save as JPEG with high quality (consistent format for all images)
+        output = io.BytesIO()
+        img.save(output, format='JPEG', quality=95, optimize=True)
+        output.seek(0)
+        
+        return output.getvalue(), None
+    except Exception as e:
+        logger.error(f"Failed to process {filename}: {str(e)}")
+        return None, f"Cannot process image {filename}: {str(e)}"
+
 def validate_image(file_data, filename):
     """Validate image file format and size"""
     try:
@@ -70,16 +121,20 @@ def validate_image(file_data, filename):
         if ext not in ALLOWED_IMAGE_EXTENSIONS:
             return False, f"Unsupported image format: {ext}"
         
-        # Validate with PIL
-        img = Image.open(file_data)
-        img.verify()
-        file_data.seek(0)  # Reset after verify
-        
-        # Additional format check
-        if img.format.lower() not in ['jpeg', 'png', 'gif', 'bmp', 'webp', 'tiff']:
-            return False, f"Invalid image format: {img.format}"
-        
-        return True, None
+        # Quick validation with PIL (NO verify() - it corrupts data!)
+        try:
+            image_bytes = file_data.read()
+            img = Image.open(io.BytesIO(image_bytes))
+            img_format = img.format
+            
+            if not img_format or img_format.lower() not in ['jpeg', 'png', 'gif', 'bmp', 'webp', 'tiff']:
+                return False, f"Invalid image format: {img_format}"
+                
+            file_data.seek(0)  # Reset for later use
+            return True, None
+        except Exception as e:
+            return False, f"Cannot read image {filename}: {str(e)}"
+            
     except Exception as e:
         return False, f"Invalid image file {filename}: {str(e)}"
 
@@ -118,28 +173,55 @@ def image_to_pdf():
             logger.warning(f"Too many images: {len(files)}")
             return jsonify({'error': f'Maximum {MAX_IMAGES} images allowed'}), 400
         
-        # Validate and read all images
+        # Validate and process all images
         image_bytes_list = []
+        validation_start = time.time()
+        
         for idx, file in enumerate(files):
             if not file.filename:
                 continue
             
             file_data = io.BytesIO(file.read())
-            is_valid, error_msg = validate_image(file_data, file.filename)
             
+            # Validate first
+            is_valid, error_msg = validate_image(file_data, file.filename)
             if not is_valid:
                 logger.warning(f"Image validation failed: {error_msg}")
                 return jsonify({'error': error_msg}), 400
             
-            image_bytes_list.append(file_data.getvalue())
+            # Process and normalize the image
+            image_bytes = file_data.read()
+            file_data.seek(0)
+            
+            processed_bytes, error_msg = process_image_for_pdf(image_bytes, file.filename)
+            if error_msg:
+                logger.warning(f"Image processing failed: {error_msg}")
+                return jsonify({'error': error_msg}), 400
+            
+            image_bytes_list.append(processed_bytes)
         
         if not image_bytes_list:
             logger.warning("No valid images after validation")
             return jsonify({'error': 'No valid images found'}), 400
         
-        # Convert images to PDF
+        validation_time = round((time.time() - validation_start) * 1000, 2)
+        logger.info(f"Validated and processed {len(image_bytes_list)} images in {validation_time}ms")
+        
+        # Convert images to PDF (all images are now in consistent JPEG/RGB format)
+        conversion_start = time.time()
         logger.info(f"Converting {len(image_bytes_list)} images to PDF")
+        
         pdf_bytes = img2pdf.convert(image_bytes_list)
+        
+        conversion_time = round((time.time() - conversion_start) * 1000, 2)
+        logger.info(f"PDF conversion completed in {conversion_time}ms")
+        
+        # Store image count before clearing
+        image_count = len(image_bytes_list)
+        
+        # Clear image bytes from memory
+        del image_bytes_list
+        gc.collect()
         
         # Create session
         session_id = secrets.token_urlsafe(32)
@@ -159,7 +241,9 @@ def image_to_pdf():
             'filename': 'converted.pdf',
             'size': len(pdf_bytes),
             'imageCount': len(image_bytes_list),
-            'processingTime': processing_time
+            'processingTime': processing_time,
+            'validationTime': validation_time,
+            'conversionTime': conversion_time
         }), 200
     
     except img2pdf.ImageOpenError as e:
