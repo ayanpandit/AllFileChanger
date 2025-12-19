@@ -87,21 +87,31 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
             <div className="hidden lg:flex items-center space-x-1">
               {navItems.map((item) => (
                 <div key={item.name} className="relative group">
-                  <Link
-                    to={item.path}
-                    className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 flex items-center space-x-1 ${
-                      isActivePath(item.path)
-                        ? 'bg-blue-600 text-white shadow-lg'
-                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white'
-                    }`}
-                  >
-                    <span>{item.name}</span>
-                    {item.dropdown && (
+                  {item.dropdown ? (
+                    <button
+                      className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 flex items-center space-x-1 ${
+                        isActivePath(item.path)
+                          ? 'bg-blue-600 text-white shadow-lg'
+                          : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white'
+                      }`}
+                    >
+                      <span>{item.name}</span>
                       <svg className="w-4 h-4 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="m19 9-7 7-7-7" />
                       </svg>
-                    )}
-                  </Link>
+                    </button>
+                  ) : (
+                    <Link
+                      to={item.path}
+                      className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 flex items-center space-x-1 ${
+                        isActivePath(item.path)
+                          ? 'bg-blue-600 text-white shadow-lg'
+                          : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white'
+                      }`}
+                    >
+                      <span>{item.name}</span>
+                    </Link>
+                  )}
                   
                   {/* Dropdown Menu */}
                   {item.dropdown && (
@@ -194,17 +204,29 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
             <div className="max-h-[70vh] overflow-y-auto px-6 py-4 scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent">
               {navItems.map((item) => (
                 <div key={item.name} className="space-y-2 mb-4">
-                  <Link
-                    to={item.path}
-                    className={`block px-4 py-3 rounded-xl text-sm font-medium transition-colors duration-200 ${
-                      isActivePath(item.path)
-                        ? 'bg-blue-600 text-white'
-                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
-                    }`}
-                    onClick={() => setIsOpen(false)}
-                  >
-                    {item.name}
-                  </Link>
+                  {item.dropdown ? (
+                    <div
+                      className={`block px-4 py-3 rounded-xl text-sm font-medium transition-colors duration-200 ${
+                        isActivePath(item.path)
+                          ? 'bg-blue-600 text-white'
+                          : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
+                      }`}
+                    >
+                      {item.name}
+                    </div>
+                  ) : (
+                    <Link
+                      to={item.path}
+                      className={`block px-4 py-3 rounded-xl text-sm font-medium transition-colors duration-200 ${
+                        isActivePath(item.path)
+                          ? 'bg-blue-600 text-white'
+                          : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
+                      }`}
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
+                  )}
                   {item.dropdown && (
                     <div className="ml-4 space-y-1">
                       {item.dropdown.map((dropdownItem) => (
