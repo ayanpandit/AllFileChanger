@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import logo from '../assets/logo.png';
+
 export default function Home() {
   const imageTools = [
     { name: 'Image to PDF', desc: 'Convert JPG, PNG to PDF instantly', icon: '📄', path: '/image-to-pdf', popular: true },
@@ -392,9 +394,11 @@ export default function Home() {
             {/* Left - Brand */}
             <div className="text-center md:text-left">
               <div className="flex items-center justify-center md:justify-start space-x-3 mb-3">
-                <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold">A</span>
-                </div>
+                <img 
+                  src={logo} 
+                  alt="AllFileChanger Logo" 
+                  className="w-8 h-8 rounded-lg"
+                />
                 <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
                   AllFileChanger
                 </span>

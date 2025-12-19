@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import logo from '../assets/logo.png';
 
 export default function Navbar({ darkMode, toggleDarkMode }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -67,10 +68,12 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-3 group">
               <div className="relative">
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center transform group-hover:scale-110 transition-transform duration-200">
-                  <span className="text-white font-bold text-xl">A</span>
-                </div>
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl opacity-30 group-hover:opacity-50 transition-opacity duration-200 -z-10"></div>
+                <img 
+                  src={logo} 
+                  alt="AllFileChanger Logo" 
+                  className="w-12 h-12 rounded-xl transform group-hover:scale-110 transition-transform duration-200"
+                />
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl opacity-20 group-hover:opacity-40 transition-opacity duration-200 -z-10"></div>
               </div>
               <div className="hidden sm:block">
                 <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
