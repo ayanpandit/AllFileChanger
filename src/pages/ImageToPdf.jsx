@@ -227,32 +227,81 @@ export default function ImageToPdf() {
         image="/og-image-converter.jpg"
         schema={{
           "@context": "https://schema.org",
-          "@type": "WebApplication",
-          "name": "Image to PDF Converter",
-          "url": "https://www.allfilechanger.shop/image-to-pdf",
-          "description": "Professional grade Image to PDF conversion tool. Convert multiple images to a single PDF document instantly.",
-          "applicationCategory": "UtilitiesApplication",
-          "operatingSystem": "Any",
-          "permissions": "browser",
-          "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD",
-            "priceValidUntil": "2026-12-31"
-          },
-          "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.9",
-            "ratingCount": "12543",
-            "bestRating": "5",
-            "worstRating": "1"
-          },
-          "featureList": [
-            "Drag & Drop Interface",
-            "Batch Conversion",
-            "Client-side Privacy",
-            "Instant Download",
-            "No File Limits"
+          "@graph": [
+            {
+              "@type": "WebApplication",
+              "name": "Image to PDF Converter",
+              "url": "https://www.allfilechanger.shop/image-to-pdf",
+              "description": "Professional grade Image to PDF conversion tool. Convert multiple images to a single PDF document instantly.",
+              "applicationCategory": "UtilitiesApplication",
+              "operatingSystem": "Any",
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.9",
+                "ratingCount": "12543",
+                "bestRating": "5",
+                "worstRating": "1"
+              }
+            },
+            {
+              "@type": "FAQPage",
+              "mainEntity": [
+                {
+                  "@type": "Question",
+                  "name": "Is this Image to PDF converter free?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes, our tool is 100% free to use. There are no hidden charges, no registration required, and no limits on the number of files you can convert."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Is it safe to convert my images here?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Absolutely. We use client-side processing, which means your images are converted directly in your browser and are NEVER uploaded to our servers. Your privacy is guaranteed."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Can I convert multiple images at once?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes! You can upload and merge multiple images into a single PDF file. You can also reorder them before conversion."
+                  }
+                }
+              ]
+            },
+            {
+              "@type": "HowTo",
+              "name": "How to Convert Images to PDF",
+              "step": [
+                {
+                  "@type": "HowToStep",
+                  "name": "Upload Images",
+                  "text": "Drag and drop your JPG, PNG, or WebP images into the upload box.",
+                  "image": "https://www.allfilechanger.shop/og-image-converter.jpg",
+                  "url": "https://www.allfilechanger.shop/image-to-pdf#step1"
+                },
+                {
+                  "@type": "HowToStep",
+                  "name": "Arrange Files",
+                  "text": "Drag the images to reorder them exactly how you want them to appear in the PDF.",
+                  "url": "https://www.allfilechanger.shop/image-to-pdf#step2"
+                },
+                {
+                  "@type": "HowToStep",
+                  "name": "Convert & Download",
+                  "text": "Click the 'Convert to PDF' button and your file will maintain original quality.",
+                  "url": "https://www.allfilechanger.shop/image-to-pdf#step3"
+                }
+              ]
+            }
           ]
         }}
       />
