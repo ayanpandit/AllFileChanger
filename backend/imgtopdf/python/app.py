@@ -32,6 +32,7 @@ ALLOWED_ORIGINS = [
     'https://allfilechanger.netlify.app',
     'http://localhost:5173',
     'http://localhost:3000',
+    'https://www.allfilechanger.shop/image-to-pdf',
     'http://localhost:3001',
     os.environ.get('FRONTEND_URL', '')
 ]
