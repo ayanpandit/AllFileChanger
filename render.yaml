@@ -1,6 +1,6 @@
 staticSites:
   - name: allfilechanger-frontend
-    rootDir: frontend
+    # rootDir: frontend # REMOVED: Frontend is now in root
     buildCommand: npm install --legacy-peer-deps && npm run build:production
     publishPath: dist
     headers:
