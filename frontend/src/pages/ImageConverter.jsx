@@ -348,37 +348,30 @@ export default function ImageConverter() {
         </script>
       </Helmet>
       
-      {/* SEO-Optimized Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-800 dark:from-black dark:via-black dark:to-black">
+      {/* Compact Hero + Upload Section */}
+      <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-800 dark:from-black dark:via-black dark:to-black relative overflow-hidden">
         <div className="absolute inset-0 bg-black/20 dark:bg-black/80 transition-all duration-500"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24">
-          <div className="text-center">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-green-500 to-blue-600 rounded-3xl mb-6 shadow-2xl transition-all duration-300 hover:scale-110">
-              <span className="text-3xl text-white">🔄</span>
+        <div className="relative w-full max-w-4xl mx-auto px-4 sm:px-6 py-8">
+          
+          {/* Hero Content */}
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-green-500 to-blue-600 rounded-3xl mb-4 shadow-2xl transition-all duration-300 hover:scale-110">
+              <span className="text-2xl text-white">🔄</span>
             </div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 transition-all duration-500 leading-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3 transition-all duration-500 leading-tight">
               <span className="text-yellow-300 dark:text-yellow-400">Image Format</span> Converter
             </h1>
-            <p className="text-lg sm:text-xl lg:text-2xl text-blue-100 dark:text-gray-200 max-w-4xl mx-auto mb-6 sm:mb-8 transition-all duration-500 px-4">
-              Convert between <strong className="text-white">JPG, PNG, WebP, HEIF, AVIF and 10+ image formats</strong> instantly. 
-              Free, secure, and works directly in your browser with quality control!
+            <p className="text-base sm:text-lg text-blue-100 dark:text-gray-200 max-w-3xl mx-auto mb-3 transition-all duration-500">
+              Convert between <strong className="text-white">JPG, PNG, WebP, HEIF, AVIF and 10+ image formats</strong> instantly. Free, secure, browser-based!
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center px-4">
-              <div className="text-blue-100 dark:text-gray-300 text-sm sm:text-base transition-colors duration-500 text-center">
-                ✓ 10+ Formats  ✓ Quality Control  ✓ 100% Private  ✓ No Registration  ✓ Mobile Friendly
-              </div>
+            <div className="text-blue-100 dark:text-gray-300 text-sm transition-colors duration-500">
+              ✓ 10+ Formats  ✓ Quality Control  ✓ 100% Private  ✓ Mobile Friendly
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* Main Converter Section */}
-      <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
+          {/* Upload Card */}
           <div className="bg-white dark:bg-black rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-800 overflow-hidden transition-all duration-500">
-            
-            {/* Upload Area */}
-            <div className="p-4 sm:p-6 lg:p-8">
+            <div className="p-4 sm:p-6">
               <div
                 className={`relative border-2 border-dashed rounded-xl p-6 sm:p-8 lg:p-12 text-center transition-all duration-300 ${
                   dragActive

@@ -401,47 +401,37 @@ const ImageRotateFlip = () => {
         </script>
       </Helmet>
       
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-purple-600 via-indigo-600 to-blue-800 dark:from-black dark:via-black dark:to-black">
+      {/* Compact Hero + Upload Section */}
+      <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-600 via-indigo-600 to-blue-800 dark:from-black dark:via-black dark:to-black relative overflow-hidden">
         <div className="absolute inset-0 bg-black/20 dark:bg-black/80 transition-all duration-500"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24">
-          <div className="text-center">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-3xl mb-6 shadow-2xl transition-all duration-300 hover:scale-110">
-              <span className="text-3xl text-white">🔄</span>
+        <div className="relative w-full max-w-4xl mx-auto px-4 sm:px-6 py-8">
+          
+          {/* Hero Content */}
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-3xl mb-4 shadow-2xl transition-all duration-300 hover:scale-110">
+              <span className="text-2xl text-white">🔄</span>
             </div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 transition-all duration-500 leading-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3 transition-all duration-500 leading-tight">
               <span className="text-purple-300 dark:text-purple-400">Image Rotate &</span> Flip Tool
             </h1>
-            <p className="text-lg sm:text-xl md:text-2xl text-purple-100 dark:text-gray-300 mb-8 sm:mb-10 max-w-4xl mx-auto leading-relaxed font-light">
-              Rotate images 90°, 180°, 270° and flip horizontally or vertically. 
-              <span className="text-white font-medium"> Professional image editing</span> with real-time preview
+            <p className="text-base sm:text-lg text-purple-100 dark:text-gray-300 mb-3 max-w-3xl mx-auto">
+              Rotate images 90°, 180°, 270° and flip horizontally or vertically. <span className="text-white font-medium">Professional editing</span> with real-time preview
             </p>
-            
-            <div className="flex flex-wrap justify-center gap-4 text-sm text-purple-200 dark:text-gray-400 mb-8">
-              <div className="flex items-center gap-2 bg-white/10 dark:bg-gray-800/50 rounded-full px-4 py-2 backdrop-blur-sm">
-                <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+            <div className="flex flex-wrap justify-center gap-3 text-xs text-purple-200 dark:text-gray-400">
+              <div className="flex items-center gap-2 bg-white/10 dark:bg-gray-800/50 rounded-full px-3 py-1 backdrop-blur-sm">
+                <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
                 90° & 180° Rotation
               </div>
-              <div className="flex items-center gap-2 bg-white/10 dark:bg-gray-800/50 rounded-full px-4 py-2 backdrop-blur-sm">
-                <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                Horizontal & Vertical Flip
-              </div>
-              <div className="flex items-center gap-2 bg-white/10 dark:bg-gray-800/50 rounded-full px-4 py-2 backdrop-blur-sm">
-                <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+              <div className="flex items-center gap-2 bg-white/10 dark:bg-gray-800/50 rounded-full px-3 py-1 backdrop-blur-sm">
+                <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
                 Real-time Preview
               </div>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* Main Tool Section */}
-      <section className="py-12 sm:py-16 lg:py-20 relative">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          {/* Upload Area */}
-          <div className="bg-white dark:bg-gray-900 rounded-3xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden transition-all duration-500">
-            <div className="p-6 sm:p-8 lg:p-10">
+          {/* Upload Card */}
+          <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden transition-all duration-500">
+            <div className="p-4 sm:p-6">
               
               {/* Error Message */}
               {errorMessage && (

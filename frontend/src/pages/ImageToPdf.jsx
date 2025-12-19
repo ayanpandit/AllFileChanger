@@ -292,98 +292,95 @@ export default function ImageToPdf() {
         </script>
       </Helmet>
       
-      {/* SEO-Optimized Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-800 dark:from-black dark:via-black dark:to-black">
+      {/* Compact Hero + Upload Section */}
+      <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-800 dark:from-black dark:via-black dark:to-black relative overflow-hidden">
         <div className="absolute inset-0 bg-black/20 dark:bg-black/80 transition-all duration-500"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24">
-          <div className="text-center">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-orange-500 to-red-600 rounded-3xl mb-6 shadow-2xl transition-all duration-300 hover:scale-110">
-              <span className="text-3xl text-white">📄</span>
+        
+        <div className="relative w-full max-w-4xl mx-auto px-4 sm:px-6 py-8">
+          {/* Hero Content */}
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-orange-500 to-red-600 rounded-2xl mb-4 shadow-2xl">
+              <span className="text-2xl">📄</span>
             </div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 transition-all duration-500 leading-tight">
-              <span className="text-yellow-300 dark:text-yellow-400">Image to PDF</span> Converter
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3 leading-tight">
+              <span className="text-yellow-300">Image to PDF</span> Converter
             </h1>
-            <p className="text-lg sm:text-xl lg:text-2xl text-blue-100 dark:text-gray-200 max-w-4xl mx-auto mb-6 sm:mb-8 transition-all duration-500 px-4">
+            <p className="text-base sm:text-lg text-blue-100 dark:text-gray-200 max-w-2xl mx-auto mb-3">
               Convert <strong className="text-white">JPG, PNG, WebP, and other images to PDF</strong> instantly. 
               Free, secure, and works directly in your browser - no software needed!
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center px-4">
-              <div className="text-blue-100 dark:text-gray-300 text-sm sm:text-base transition-colors duration-500 text-center">
-                ✓ 100% Free  ✓ No Registration  ✓ Secure & Private  ✓ All Image Formats
+            <div className="text-blue-100 dark:text-gray-300 text-sm">
+              ✓ 100% Free  ✓ No Registration  ✓ Secure & Private  ✓ All Image Formats
+            </div>
+          </div>
+
+          {/* Upload Card */}
+          <div className="bg-white dark:bg-black rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-800 p-6 sm:p-8">
+            <div
+              className={`relative border-2 border-dashed rounded-xl p-12 text-center transition-all duration-300 ${
+                dragActive
+                  ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/50 scale-105'
+                  : 'border-gray-300 dark:border-gray-800 hover:border-blue-400 dark:hover:border-blue-500'
+              }`}
+              onDrop={handleDrop}
+              onDragEnter={handleDragEnter}
+              onDragLeave={handleDragLeave}
+              onDragOver={handleDragOver}
+            >
+              <div className="space-y-4">
+                <div className="mx-auto w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
+                  <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                  </svg>
+                </div>
+                
+                <div className="space-y-2">
+                  <p className="text-xl font-semibold text-gray-900 dark:text-white">
+                    {dragActive ? 'Drop your images here!' : 'Drop your images here'}
+                  </p>
+                  <p className="text-sm text-gray-600 dark:text-gray-300">
+                    or <span className="text-blue-600 dark:text-blue-400 font-medium">click to select files</span> from your device
+                  </p>
+                </div>
+                
+                <input
+                  type="file"
+                  multiple
+                  accept="image/*"
+                  onChange={handleFileInput}
+                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                />
+                
+                <div className="flex flex-wrap justify-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+                  <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full">JPG</span>
+                  <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full">PNG</span>
+                  <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full">WebP</span>
+                  <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full">GIF</span>
+                  <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full">BMP</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Main Converter Section */}
-      <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-white dark:bg-black rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-800 overflow-hidden transition-all duration-500">
-            
-            {/* Upload Area */}
-            <div className="p-4 sm:p-6 lg:p-8">
-              <div
-                className={`relative border-2 border-dashed rounded-xl p-6 sm:p-8 lg:p-12 text-center transition-all duration-300 ${
-                  dragActive
-                    ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/50 scale-105'
-                    : 'border-gray-300 dark:border-gray-800 hover:border-blue-400 dark:hover:border-blue-500'
-                }`}
-                onDrop={handleDrop}
-                onDragEnter={handleDragEnter}
-                onDragLeave={handleDragLeave}
-                onDragOver={handleDragOver}
-              >
-                <div className="space-y-4 sm:space-y-6">
-                  <div className="mx-auto w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
-                    <svg className="w-8 h-8 sm:w-10 sm:h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                    </svg>
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <p className="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-900 dark:text-white transition-colors duration-500">
-                      {dragActive ? 'Drop your images here!' : 'Drop your images here'}
-                    </p>
-                    <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 transition-colors duration-500">
-                      or <span className="text-blue-600 dark:text-blue-400 font-medium">click to select files</span> from your device
-                    </p>
-                  </div>
-                  
-                  <input
-                    type="file"
-                    multiple
-                    accept="image/*"
-                    onChange={handleFileInput}
-                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                  />
-                  
-                  <div className="flex flex-wrap justify-center gap-2 text-xs sm:text-sm text-gray-500 dark:text-gray-400 transition-colors duration-500">
-                    <span className="px-3 py-1 bg-gray-100 dark:bg-black rounded-full transition-colors duration-300">JPG</span>
-                    <span className="px-3 py-1 bg-gray-100 dark:bg-black rounded-full transition-colors duration-300">PNG</span>
-                    <span className="px-3 py-1 bg-gray-100 dark:bg-black rounded-full transition-colors duration-300">WebP</span>
-                    <span className="px-3 py-1 bg-gray-100 dark:bg-black rounded-full transition-colors duration-300">GIF</span>
-                    <span className="px-3 py-1 bg-gray-100 dark:bg-black rounded-full transition-colors duration-300">BMP</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* File List */}
-            {files.length > 0 && (
-              <div className="border-t border-gray-200 dark:border-gray-800 p-6 sm:p-8">
-                <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white mb-4 transition-colors duration-500">
-                  Selected Images ({files.length}) - Drag to reorder
-                </h3>
-                <div className="space-y-3 max-h-64 overflow-y-auto">
-                  {files.map((file, index) => (
-                    <div 
-                      key={`${file.name}-${index}`} 
-                      className="flex items-center justify-between p-3 sm:p-4 bg-gray-50 dark:bg-black rounded-xl transition-all duration-300 cursor-move hover:bg-gray-100 dark:hover:bg-gray-900"
-                      draggable
-                      onDragStart={(e) => handleFileDragStart(e, index)}
-                      onDragOver={handleFileDragOver}
-                      onDrop={(e) => handleFileDrop(e, index)}
+      {/* File List Section (Fixed Position when files exist) */}
+      {files.length > 0 && (
+        <section className="py-8 px-4 bg-gray-50 dark:bg-gray-900">
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-white dark:bg-black rounded-2xl shadow-xl border border-gray-200 dark:border-gray-800 p-6">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                Selected Images ({files.length}) - Drag to reorder
+              </h3>
+              <div className="space-y-3 max-h-64 overflow-y-auto">
+                {files.map((file, index) => (
+                  <div 
+                    key={`${file.name}-${index}`} 
+                    className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-900 rounded-xl cursor-move hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
+                    draggable
+                    onDragStart={(e) => handleFileDragStart(e, index)}
+                    onDragOver={handleFileDragOver}
+                    onDrop={(e) => handleFileDrop(e, index)}
                     >
                       <div className="flex items-center space-x-3 flex-1 min-w-0">
                         <div className="flex flex-col items-center space-y-1">
@@ -452,7 +449,9 @@ export default function ImageToPdf() {
                   💡 Tip: Drag files to reorder them, or use the arrow buttons to adjust the sequence
                 </p>
               </div>
-            )}
+            </div>
+          </section>
+        )}
 
             {/* Convert Button */}
             {files.length > 0 && (
@@ -500,9 +499,6 @@ export default function ImageToPdf() {
                 </p>
               </div>
             )}
-          </div>
-        </div>
-      </section>
 
       {/* Features Section */}
       <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-black transition-all duration-500">

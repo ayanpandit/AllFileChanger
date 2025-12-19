@@ -306,38 +306,27 @@ export default function ImageResize() {
       </Helmet>
 
       <div className={"min-h-screen " + (isDark ? 'bg-black' : 'bg-white') + ' transition-colors duration-500'}>
-        {/* Hero Section */}
-        <div className="relative overflow-hidden bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 dark:from-black dark:via-black dark:to-black transition-all duration-500">
+        {/* Compact Hero + Upload Section */}
+        <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 dark:from-black dark:via-black dark:to-black relative overflow-hidden transition-all duration-500">
           <div className="absolute inset-0 bg-black/20 dark:bg-black/80"></div>
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-            <div className="text-center">
-              <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-3xl mb-6 shadow-2xl transition-all duration-300">
-                <span className="text-3xl text-white">🖼️</span>
+          <div className="relative w-full max-w-4xl mx-auto px-4 sm:px-6 py-8">
+            
+            {/* Hero Content */}
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-3xl mb-4 shadow-2xl transition-all duration-300 hover:scale-110">
+                <span className="text-2xl text-white">🖼️</span>
               </div>
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3">
                 <span className="text-yellow-300">Image Resizer</span> & Rotator
               </h1>
-              <p className="text-lg sm:text-xl text-blue-100 mb-6 max-w-3xl mx-auto">
+              <p className="text-base sm:text-lg text-blue-100 max-w-3xl mx-auto mb-3">
                 Resize images to any dimension and rotate them instantly. Fast, secure, and mobile-friendly.
               </p>
-              
             </div>
-          </div>
-        </div>
 
-        {/* Main Content */}
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          
-          {/* Upload Section */}
-          <div className={`rounded-xl shadow-lg p-8 mb-8 ${isDark ? 'bg-black' : 'bg-white'}`}>
-            <div className="text-center mb-6">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                Upload Your Image
-              </h2>
-              <p className="text-gray-600 dark:text-gray-300">
-                Drag and drop an image or click to browse (max 50MB)
-              </p>
-            </div>
+            {/* Upload Card */}
+            <div className="bg-white dark:bg-black rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-800 overflow-hidden transition-all duration-500">
+              <div className="p-4 sm:p-6">
 
             {/* File Upload Area */}
             <div
@@ -513,10 +502,15 @@ export default function ImageResize() {
               </div>
             )}
           </div>
+        </div>
+          </div>
+      </section>
 
-          {/* Preview Section */}
-          {previewSrc && (
-            <div className={`rounded-xl shadow-lg p-8 mb-8 ${isDark ? 'bg-black' : 'bg-white'}`}>
+      {/* Preview Section */}
+      {previewSrc && (
+        <section className="py-8 px-4 bg-gray-50 dark:bg-gray-900 transition-all duration-500">
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-white dark:bg-black rounded-xl shadow-lg p-8 border border-gray-200 dark:border-gray-800">
               <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 text-center">
                 Image Preview
               </h3>
@@ -528,10 +522,14 @@ export default function ImageResize() {
                 />
               </div>
             </div>
-          )}
+          </div>
+        </section>
+      )}
 
-          {/* Features Section */}
-          <div className={`rounded-xl shadow-lg p-8 mb-8 ${isDark ? 'bg-black' : 'bg-white'}`}>
+      {/* Features Section */}
+      <section className="py-8 px-4 bg-white dark:bg-black transition-all duration-500">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-gray-50 dark:bg-gray-900 rounded-xl shadow-lg p-8 border border-gray-200 dark:border-gray-800">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
               🌟 Powerful Image Resizing Features
             </h2>
@@ -617,48 +615,49 @@ export default function ImageResize() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* Related Tools Section */}
-          <div className={`py-12 ${isDark ? 'bg-black' : 'bg-white'}`}>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <h2 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} mb-6 text-center`}>
-                🔗 Related Tools
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <Link to="/image-compressor" className={`${isDark ? 'bg-black border border-gray-700' : 'bg-white border border-gray-200'} p-6 rounded-lg hover:shadow-lg transition`}>
-                  <div className="text-3xl mb-3">🗜️</div>
-                  <h3 className={`${isDark ? 'text-white' : 'text-gray-900'} font-semibold mb-2`}>Image Compressor</h3>
-                  <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} text-sm`}>Reduce file size while keeping quality.</p>
-                </Link>
+      {/* Related Tools Section */}
+      <section className="py-8 px-4 bg-white dark:bg-black transition-all duration-500">
+        <div className="max-w-7xl mx-auto">
+          <h2 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} mb-6 text-center`}>
+            🔗 Related Tools
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <Link to="/image-compressor" className={`${isDark ? 'bg-black border border-gray-700' : 'bg-white border border-gray-200'} p-6 rounded-lg hover:shadow-lg transition`}>
+              <div className="text-3xl mb-3">🗜️</div>
+              <h3 className={`${isDark ? 'text-white' : 'text-gray-900'} font-semibold mb-2`}>Image Compressor</h3>
+              <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} text-sm`}>Reduce file size while keeping quality.</p>
+            </Link>
 
-                <Link to="/image-converter" className={`${isDark ? 'bg-black border border-gray-700' : 'bg-white border border-gray-200'} p-6 rounded-lg hover:shadow-lg transition`}>
-                  <div className="text-3xl mb-3">🛠️</div>
-                  <h3 className={`${isDark ? 'text-white' : 'text-gray-900'} font-semibold mb-2`}>Image Converter</h3>
-                  <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} text-sm`}>Convert images between formats.</p>
-                </Link>
+            <Link to="/image-converter" className={`${isDark ? 'bg-black border border-gray-700' : 'bg-white border border-gray-200'} p-6 rounded-lg hover:shadow-lg transition`}>
+              <div className="text-3xl mb-3">🛠️</div>
+              <h3 className={`${isDark ? 'text-white' : 'text-gray-900'} font-semibold mb-2`}>Image Converter</h3>
+              <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} text-sm`}>Convert images between formats.</p>
+            </Link>
 
-                <Link to="/image-rotate-flip" className={`${isDark ? 'bg-black border border-gray-700' : 'bg-white border border-gray-200'} p-6 rounded-lg hover:shadow-lg transition`}>
-                  <div className="text-3xl mb-3">🔄</div>
-                  <h3 className={`${isDark ? 'text-white' : 'text-gray-900'} font-semibold mb-2`}>Rotate & Flip</h3>
-                  <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} text-sm`}>Quickly rotate or flip images.</p>
-                </Link>
+            <Link to="/image-rotate-flip" className={`${isDark ? 'bg-black border border-gray-700' : 'bg-white border border-gray-200'} p-6 rounded-lg hover:shadow-lg transition`}>
+              <div className="text-3xl mb-3">🔄</div>
+              <h3 className={`${isDark ? 'text-white' : 'text-gray-900'} font-semibold mb-2`}>Rotate & Flip</h3>
+              <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} text-sm`}>Quickly rotate or flip images.</p>
+            </Link>
 
-                <Link to="/image-to-pdf" className={`${isDark ? 'bg-black border border-gray-700' : 'bg-white border border-gray-200'} p-6 rounded-lg hover:shadow-lg transition`}>
-                  <div className="text-3xl mb-3">📄</div>
-                  <h3 className={`${isDark ? 'text-white' : 'text-gray-900'} font-semibold mb-2`}>Image to PDF</h3>
-                  <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} text-sm`}>Create PDFs from images.</p>
-                </Link>
-              </div>
-            </div>
+            <Link to="/image-to-pdf" className={`${isDark ? 'bg-black border border-gray-700' : 'bg-white border border-gray-200'} p-6 rounded-lg hover:shadow-lg transition`}>
+              <div className="text-3xl mb-3">📄</div>
+              <h3 className={`${isDark ? 'text-white' : 'text-gray-900'} font-semibold mb-2`}>Image to PDF</h3>
+              <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} text-sm`}>Create PDFs from images.</p>
+            </Link>
           </div>
         </div>
+      </section>
 
-        {/* FAQ Section */}
-        <div className={`py-16 ${isDark ? 'bg-black' : 'bg-white'}`}>
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
-              ❓ Frequently Asked Questions
-            </h2>
+      {/* FAQ Section */}
+      <section className="py-8 px-4 bg-gray-50 dark:bg-gray-900 transition-all duration-500">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+            ❓ Frequently Asked Questions
+          </h2>
             <div className="space-y-6">
               <details className={`${isDark ? 'bg-black' : 'bg-white'} rounded-lg p-6 shadow-sm`}>
                 <summary className="font-semibold text-gray-900 dark:text-white cursor-pointer">
@@ -706,8 +705,8 @@ export default function ImageResize() {
               </details>
             </div>
           </div>
-        </div>
-      </div>
+      </section>
+    </div>
     </>
   );
 }
