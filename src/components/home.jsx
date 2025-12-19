@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import SEO from './SEO';
 
 import logo from '../assets/logo.png';
 
@@ -39,7 +40,7 @@ export default function Home() {
   ];
 
   const ToolCard = ({ tool }) => (
-    <Link 
+    <Link
       to={tool.path}
       className="group relative bg-white dark:bg-black rounded-xl shadow-md hover:shadow-xl dark:shadow-gray-800/50 transition-all duration-500 p-4 sm:p-6 border border-gray-100 dark:border-gray-800 hover:border-blue-200 dark:hover:border-blue-600 hover:-translate-y-1 transform-gpu"
     >
@@ -67,6 +68,12 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-black transition-all duration-500">
+      <SEO
+        title="AllFileChanger - Free Online File Converter (PDF, Image, Docs)"
+        description="The best free online file converter. Convert PDF to Word, Image to PDF, Merge PDF, Compress Images and more. Fast, secure, and no registration required."
+        keywords="file converter, pdf tools, image converter, free online converter, pdf to word, image to pdf, heic to pdf, merge pdf, compress pdf, ocr online"
+        image="/og-image.jpg"
+      />
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-800 dark:from-black dark:via-gray-900 dark:to-black">
         <div className="absolute inset-0 bg-black/20 dark:bg-black/60 transition-all duration-500"></div>
@@ -76,15 +83,15 @@ export default function Home() {
               All-in-One <span className="text-yellow-300 dark:text-yellow-400">File Converter</span>
             </h1>
             <p className="text-lg sm:text-xl lg:text-2xl text-blue-100 dark:text-gray-200 max-w-3xl mx-auto mb-6 sm:mb-8 transition-all duration-500 px-4">
-              Convert, compress, merge, and edit your files instantly. 
+              Convert, compress, merge, and edit your files instantly.
               <strong className="text-white"> 25+ tools</strong> in one powerful platform.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center px-4">
-              <button 
+              <button
                 onClick={() => {
                   const imageToolsSection = document.getElementById('image-tools-section');
                   if (imageToolsSection) {
-                    imageToolsSection.scrollIntoView({ 
+                    imageToolsSection.scrollIntoView({
                       behavior: 'smooth',
                       block: 'start'
                     });
@@ -228,12 +235,12 @@ export default function Home() {
             </h2>
             <div className="prose prose-lg max-w-none text-gray-700 dark:text-gray-300 transition-colors duration-500">
               <p className="text-xl leading-relaxed mb-6">
-                <strong>AllFileChanger.shop</strong> is your go-to solution for all file conversion needs. 
-                Whether you need to <strong>convert images to PDF</strong>, <strong>compress images</strong>, 
-                <strong>merge PDF files</strong>, or <strong>convert documents</strong>, we provide fast, 
+                <strong>AllFileChanger.shop</strong> is your go-to solution for all file conversion needs.
+                Whether you need to <strong>convert images to PDF</strong>, <strong>compress images</strong>,
+                <strong>merge PDF files</strong>, or <strong>convert documents</strong>, we provide fast,
                 secure, and free tools that work instantly in your browser.
               </p>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-12">
                 <div>
                   <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4 transition-colors duration-500">🎯 Most Popular Tools</h3>
@@ -258,9 +265,9 @@ export default function Home() {
               </div>
 
               <p className="leading-relaxed">
-                Our platform supports all major file formats including <strong>JPG, PNG, PDF, Word, Excel, PowerPoint</strong>, 
-                and many more. With over 25 specialized tools, you can handle any file conversion task efficiently. 
-                All processing happens securely in the cloud, ensuring your files remain private and are automatically 
+                Our platform supports all major file formats including <strong>JPG, PNG, PDF, Word, Excel, PowerPoint</strong>,
+                and many more. With over 25 specialized tools, you can handle any file conversion task efficiently.
+                All processing happens securely in the cloud, ensuring your files remain private and are automatically
                 deleted after conversion.
               </p>
             </div>
@@ -279,19 +286,19 @@ export default function Home() {
                   🚀 Best Online File Converter 2025
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300 leading-relaxed transition-colors duration-500">
-                  AllFileChanger.shop is the <strong>most trusted online file converter</strong> with over 1 million files converted daily. 
-                  Our <strong>free file conversion tools</strong> support all popular formats and deliver professional results instantly. 
+                  AllFileChanger.shop is the <strong>most trusted online file converter</strong> with over 1 million files converted daily.
+                  Our <strong>free file conversion tools</strong> support all popular formats and deliver professional results instantly.
                   No software downloads required - everything works directly in your browser.
                 </p>
               </div>
-              
+
               <div>
                 <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3 transition-colors duration-500">
                   📄 PDF Conversion Specialists
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300 leading-relaxed transition-colors duration-500">
-                  Convert <strong>images to PDF</strong>, <strong>PDF to Word</strong>, <strong>PDF to Excel</strong>, and more. 
-                  Our advanced PDF tools handle complex documents while maintaining perfect formatting. 
+                  Convert <strong>images to PDF</strong>, <strong>PDF to Word</strong>, <strong>PDF to Excel</strong>, and more.
+                  Our advanced PDF tools handle complex documents while maintaining perfect formatting.
                   Merge multiple PDFs, split large files, or compress without quality loss.
                 </p>
               </div>
@@ -301,8 +308,8 @@ export default function Home() {
                   🖼️ Image Processing Excellence
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300 leading-relaxed transition-colors duration-500">
-                  Professional <strong>image compression</strong>, <strong>format conversion</strong>, and <strong>resizing tools</strong>. 
-                  Convert between JPG, PNG, WebP, and other formats. Remove backgrounds, add watermarks, 
+                  Professional <strong>image compression</strong>, <strong>format conversion</strong>, and <strong>resizing tools</strong>.
+                  Convert between JPG, PNG, WebP, and other formats. Remove backgrounds, add watermarks,
                   or edit images with our comprehensive suite of tools.
                 </p>
               </div>
@@ -326,7 +333,7 @@ export default function Home() {
                       <p className="text-sm text-gray-600 dark:text-gray-400 transition-colors duration-500">Convert files in under 10 seconds with our optimized servers</p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start space-x-3">
                     <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                       <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -338,7 +345,7 @@ export default function Home() {
                       <p className="text-sm text-gray-600 dark:text-gray-400 transition-colors duration-500">SSL encryption and automatic file deletion after 24 hours</p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start space-x-3">
                     <div className="w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                       <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -350,7 +357,7 @@ export default function Home() {
                       <p className="text-sm text-gray-600 dark:text-gray-400 transition-colors duration-500">No hidden costs, premium features, or usage limits</p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start space-x-3">
                     <div className="w-6 h-6 bg-orange-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                       <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
@@ -370,7 +377,7 @@ export default function Home() {
                   🏆 Trusted by Professionals
                 </h4>
                 <p className="text-sm text-gray-600 dark:text-gray-300 transition-colors duration-500">
-                  "AllFileChanger has become our go-to tool for all document conversions. 
+                  "AllFileChanger has become our go-to tool for all document conversions.
                   The speed and quality are unmatched, and the fact that it's completely free makes it incredible value."
                 </p>
                 <div className="flex items-center mt-3 space-x-1">
@@ -394,9 +401,9 @@ export default function Home() {
             {/* Left - Brand */}
             <div className="text-center md:text-left">
               <div className="flex items-center justify-center md:justify-start space-x-3 mb-3">
-                <img 
-                  src={logo} 
-                  alt="AllFileChanger Logo" 
+                <img
+                  src={logo}
+                  alt="AllFileChanger Logo"
                   className="w-8 h-8 rounded-lg"
                 />
                 <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
@@ -411,22 +418,22 @@ export default function Home() {
             {/* Center - Social Links */}
             <div className="text-center">
               <div className="flex justify-center space-x-4 mb-3">
-                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" 
-                   className="w-10 h-10 bg-blue-500 hover:bg-blue-600 text-white rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
+                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"
+                  className="w-10 h-10 bg-blue-500 hover:bg-blue-600 text-white rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
                   </svg>
                 </a>
                 <a href="https://github.com" target="_blank" rel="noopener noreferrer"
-                   className="w-10 h-10 bg-gray-800 hover:bg-gray-900 text-white rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
+                  className="w-10 h-10 bg-gray-800 hover:bg-gray-900 text-white rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
                   </svg>
                 </a>
                 <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
-                   className="w-10 h-10 bg-blue-700 hover:bg-blue-800 text-white rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
+                  className="w-10 h-10 bg-blue-700 hover:bg-blue-800 text-white rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                   </svg>
                 </a>
               </div>
