@@ -577,58 +577,62 @@ export default function ImageToPdf() {
         </div>
       </section>
 
-      {/* SEO Content Section */}
+      {/* SEO Content Section - High Keyword Density */}
       <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-black transition-all duration-500">
         <div className="max-w-4xl mx-auto">
-          <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 rounded-2xl p-8 sm:p-12 transition-all duration-500">
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-6 text-center transition-colors duration-500">
+          <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 rounded-2xl p-8 sm:p-12 transition-all duration-500 border border-blue-100 dark:border-gray-700">
+            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-6 text-center transition-colors duration-500">
               The Best Free Image to PDF Converter Online
-            </h2>
+            </h1>
 
             <div className="prose prose-lg max-w-none text-gray-700 dark:text-gray-300 transition-colors duration-500">
               <p className="text-lg leading-relaxed mb-6">
-                Looking for a reliable <strong>Image to PDF converter</strong>? Our free online tool is the perfect solution for converting
-                <strong> JPG to PDF</strong>, <strong>PNG to PDF</strong>, and other image formats instantly. Whether you need to convert a single
-                image or multiple files at once, our converter handles it all with professional quality results.
+                <strong>AllFileChanger</strong> provides the ultimate free solution to <strong>convert images to PDF</strong>.
+                Whether you have <strong>JPG to PDF</strong>, <strong>PNG to PDF</strong>, or even <strong>WebP to PDF</strong> needs, our tool handles it all instantly in your browser.
+                Unlike other tools, we allow <strong>unlimited batch conversion</strong> for free.
+              </p>
+
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mt-8 mb-4">Why is this the Best Image to PDF Tool?</h2>
+              <p>
+                Our <strong>online PDF converter</strong> stands out because it prioritizes <strong>privacy and speed</strong>.
+                Most converters upload your sensitive photos to a cloud server. We use <strong>client-side technology</strong> to keep your files
+                safely on your device. This makes us the most secure <strong>JPG to PDF converter</strong> on the web.
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-8">
                 <div>
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4 transition-colors duration-500">
-                    📸 Supported Image Formats
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+                    🚀 Supported Formats
                   </h3>
-                  <ul className="space-y-2 text-gray-600 dark:text-gray-400 transition-colors duration-500">
-                    <li>• <strong>JPG/JPEG</strong> - Most common photo format</li>
-                    <li>• <strong>PNG</strong> - High-quality with transparency</li>
-                    <li>• <strong>WebP</strong> - Modern web image format</li>
-                    <li>• <strong>GIF</strong> - Animated and static images</li>
-                    <li>• <strong>BMP</strong> - Windows bitmap images</li>
+                  <ul className="space-y-2 text-gray-600 dark:text-gray-400">
+                    <li>• <strong>JPG to PDF</strong>: Perfect for photos and scans.</li>
+                    <li>• <strong>PNG to PDF</strong>: Maintains high quality with transparency.</li>
+                    <li>• <strong>HEIC to PDF</strong>: Convert iPhone photos easily.</li>
+                    <li>• <strong>WebP to PDF</strong>: Modern web format support.</li>
+                    <li>• <strong>BMP & GIF</strong>: Full support for legacy formats.</li>
                   </ul>
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4 transition-colors duration-500">
-                    🎯 Perfect For
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
+                    ✨ Key Features
                   </h3>
-                  <ul className="space-y-2 text-gray-600 dark:text-gray-400 transition-colors duration-500">
-                    <li>• Creating photo albums</li>
-                    <li>• Document compilation</li>
-                    <li>• Portfolio presentations</li>
-                    <li>• Digital archiving</li>
-                    <li>• Professional reports</li>
+                  <ul className="space-y-2 text-gray-600 dark:text-gray-400">
+                    <li>• <strong>No Watermarks</strong>: Clean, professional PDFs.</li>
+                    <li>• <strong>Unlimited Files</strong>: Convert 100+ images at once.</li>
+                    <li>• <strong>No Registration</strong>: Instant access, no sign-up.</li>
+                    <li>• <strong>Drag & Drop</strong>: Easy reordering of pages.</li>
+                    <li>• <strong>Mobile Ready</strong>: Works on iOS and Android.</li>
                   </ul>
                 </div>
               </div>
 
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mt-8 mb-4">How to Combine Photos into One PDF</h2>
               <p className="leading-relaxed mb-6">
-                Our <strong>image to PDF converter online</strong> tool processes everything directly in your browser, ensuring complete
-                privacy and security. No need to install software or worry about file uploads - everything happens locally on your device.
-                The converted PDFs maintain the original image quality while being optimized for sharing and storage.
-              </p>
-
-              <p className="leading-relaxed">
-                Convert images to PDF in just three simple steps: upload your images, arrange them if needed, and click convert.
-                Your PDF will be ready for download instantly. It's that simple!
+                Turning your photo albums or scanned documents into a single PDF file is easy.
+                Simply <strong>drag and drop</strong> your images into the box above. Our smart engine will automatically
+                optimize them for printing and sharing. You can rearrange the order to ensure your <strong>PDF document</strong>
+                flows perfectly. Click "Convert" and download your file in seconds.
               </p>
             </div>
           </div>
