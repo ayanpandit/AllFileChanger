@@ -1,31 +1,102 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <!-- Homepage -->
   <url>
-    <loc>https://allfilechanger.com/</loc>
-    <lastmod>2025-08-05</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://www.allfilechanger.shop/</loc>
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
-  <!-- Image to PDF Converter -->
+  <!-- Image Tools -->
   <url>
-    <loc>https://allfilechanger.com/image-to-pdf</loc>
-    <lastmod>2025-08-05</lastmod>
+    <loc>https://www.allfilechanger.shop/image-to-pdf</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
-
-  <!-- Image Compressor -->
   <url>
-    <loc>https://allfilechanger.com/image-compressor</loc>
-    <lastmod>2025-08-05</lastmod>
+    <loc>https://www.allfilechanger.shop/image-compressor</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
+  <url>
+    <loc>https://www.allfilechanger.shop/image-converter</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+   <url>
+    <loc>https://www.allfilechanger.shop/image-resize</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.allfilechanger.shop/image-crop</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.allfilechanger.shop/image-editor</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
 
+  <!-- PDF Tools -->
+  <url>
+    <loc>https://www.allfilechanger.shop/pdf-merger</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.allfilechanger.shop/pdf-splitter</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.allfilechanger.shop/pdf-compressor</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.allfilechanger.shop/pdf-to-word</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.allfilechanger.shop/word-to-pdf</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.allfilechanger.shop/pdf-protect</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.allfilechanger.shop/pdf-unlock</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Document Tools -->
+  <url>
+    <loc>https://www.allfilechanger.shop/word-converter</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.allfilechanger.shop/excel-converter</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.allfilechanger.shop/text-extractor</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.allfilechanger.shop/ocr-scanner</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
 </urlset>

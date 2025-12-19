@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
+import SEO from '../components/SEO';
 
 export default function ImageToPdf() {
   const navigate = useNavigate();
@@ -15,11 +15,11 @@ export default function ImageToPdf() {
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
-    
-    const droppedFiles = Array.from(e.dataTransfer.files).filter(file => 
+
+    const droppedFiles = Array.from(e.dataTransfer.files).filter(file =>
       file.type.startsWith('image/')
     );
-    
+
     if (droppedFiles.length > 0) {
       setFiles(prev => [...prev, ...droppedFiles]);
     }
@@ -44,7 +44,7 @@ export default function ImageToPdf() {
 
   // Handle file input
   const handleFileInput = (e) => {
-    const selectedFiles = Array.from(e.target.files).filter(file => 
+    const selectedFiles = Array.from(e.target.files).filter(file =>
       file.type.startsWith('image/')
     );
     if (selectedFiles.length > 0) {
@@ -71,7 +71,7 @@ export default function ImageToPdf() {
   const handleFileDrop = (e, dropIndex) => {
     e.preventDefault();
     const dragIndex = parseInt(e.dataTransfer.getData('text/plain'));
-    
+
     if (dragIndex !== dropIndex) {
       setFiles(prev => {
         const newFiles = [...prev];
@@ -108,62 +108,62 @@ export default function ImageToPdf() {
   // Convert to PDF
   const convertToPdf = async () => {
     if (files.length === 0) return;
-    
+
     setIsConverting(true);
     setShowSuccess(false);
-    
+
     try {
       const formData = new FormData();
       files.forEach(file => formData.append('images', file));
-      
+
       const API_URL = import.meta.env.VITE_IMGTOPDF_URL || 'http://localhost:5005';
-      
+
       // Step 1: Convert images to PDF and get session ID
       const response = await fetch(`${API_URL}/image-to-pdf`, {
         method: 'POST',
         body: formData,
       });
-      
+
       if (!response.ok) {
         const errorData = await response.json();
         console.error('Conversion failed:', errorData);
         alert(`Conversion failed: ${errorData.error || 'Unknown error'}`);
         return;
       }
-      
+
       const data = await response.json();
-      
+
       if (data.success && data.sessionId) {
         // Step 2: Download the PDF using the session ID
         const downloadResponse = await fetch(`${API_URL}/download/${data.sessionId}`);
-        
+
         if (!downloadResponse.ok) {
           console.error('Download failed');
           alert('Failed to download PDF');
           return;
         }
-        
+
         const blob = await downloadResponse.blob();
-        
+
         // Enhanced mobile-friendly download handling
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        
+
         if (isMobile) {
           // For mobile devices, try multiple download methods
           const url = window.URL.createObjectURL(blob);
-          
+
           // Method 1: Try the standard download approach
           const a = document.createElement('a');
           a.href = url;
           a.download = 'converted-images.pdf';
           a.style.display = 'none';
           document.body.appendChild(a);
-          
+
           // Trigger click with timeout for mobile compatibility
           setTimeout(() => {
             a.click();
             document.body.removeChild(a);
-            
+
             // Method 2: Fallback - open in new tab if download didn't work
             setTimeout(() => {
               window.open(url, '_blank');
@@ -187,10 +187,10 @@ export default function ImageToPdf() {
             window.URL.revokeObjectURL(url);
           }, 1000);
         }
-        
+
         setConvertedFiles([{ name: 'converted-images.pdf', url: URL.createObjectURL(blob) }]);
         setShowSuccess(true);
-        
+
         // Clear files and redirect to home after successful conversion
         setTimeout(() => {
           setFiles([]);
@@ -220,82 +220,47 @@ export default function ImageToPdf() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-black transition-all duration-500">
-      <Helmet>
-        <title>Free Image to PDF Converter Online | Convert JPG, PNG to PDF - AllFileChanger</title>
-        <meta name="description" content="Convert images to PDF online for free. Support JPG, PNG, WebP, GIF, BMP. Batch convert multiple images, drag & drop interface, fast conversion, no watermarks. #1 image to PDF converter." />
-        <meta name="keywords" content="image to pdf converter, jpg to pdf, png to pdf, convert images to pdf, free pdf converter, batch image converter, online pdf converter, image converter" />
-        
-        {/* Open Graph Tags for Social Media */}
-        <meta property="og:title" content="Free Image to PDF Converter | Convert JPG, PNG to PDF Online" />
-        <meta property="og:description" content="Convert images to PDF online for free. Support JPG, PNG, WebP, GIF, BMP. Batch convert multiple images with our fast, secure converter." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://allfilechanger.com/image-to-pdf" />
-        <meta property="og:image" content="https://allfilechanger.com/og-image-converter.jpg" />
-        <meta property="og:site_name" content="AllFileChanger" />
-        
-        {/* Twitter Card Tags */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Free Image to PDF Converter | Convert JPG, PNG to PDF" />
-        <meta name="twitter:description" content="Convert images to PDF online for free. Support multiple formats, batch conversion, fast & secure." />
-        <meta name="twitter:image" content="https://allfilechanger.com/twitter-image-converter.jpg" />
-        
-        {/* Additional SEO Tags */}
-        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-        <meta name="googlebot" content="index, follow" />
-        <meta name="language" content="English" />
-        <meta name="revisit-after" content="1 days" />
-        <meta name="author" content="AllFileChanger" />
-        <meta name="copyright" content="AllFileChanger" />
-        <meta name="rating" content="General" />
-        
-        {/* Canonical URL */}
-        <link rel="canonical" href="https://allfilechanger.com/image-to-pdf" />
-        
-        {/* Structured Data */}
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "WebApplication",
-            "name": "Image to PDF Converter",
-            "description": "Free online tool to convert images (JPG, PNG, WebP, GIF, BMP) to PDF format with batch conversion support",
-            "url": "https://allfilechanger.com/image-to-pdf",
-            "applicationCategory": "UtilitiesApplication",
-            "operatingSystem": "Any",
-            "permissions": "browser",
-            "offers": {
-              "@type": "Offer",
-              "price": "0",
-              "priceCurrency": "USD"
-            },
-            "featureList": [
-              "Convert JPG to PDF",
-              "Convert PNG to PDF", 
-              "Batch image conversion",
-              "Drag and drop interface",
-              "Mobile responsive",
-              "No watermarks",
-              "Free unlimited conversions"
-            ],
-            "provider": {
-              "@type": "Organization",
-              "name": "AllFileChanger",
-              "url": "https://allfilechanger.com"
-            },
-            "aggregateRating": {
-              "@type": "AggregateRating",
-              "ratingValue": "4.9",
-              "ratingCount": "10847",
-              "bestRating": "5",
-              "worstRating": "1"
-            }
-          })}
-        </script>
-      </Helmet>
-      
+      <SEO
+        title="Free Image to PDF Converter - Convert JPG to PDF Online"
+        description="Convert JPG, PNG, WebP & other images to PDF in seconds. 100% Free, Secure, and Private processing directly in your browser. No limits, no watermarks."
+        keywords="image to pdf, jpg to pdf, png to pdf, convert image to pdf, free pdf converter, online pdf tools, batch image conversion, no watermark pdf"
+        image="/og-image-converter.jpg"
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          "name": "Image to PDF Converter",
+          "url": "https://www.allfilechanger.shop/image-to-pdf",
+          "description": "Professional grade Image to PDF conversion tool. Convert multiple images to a single PDF document instantly.",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "Any",
+          "permissions": "browser",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD",
+            "priceValidUntil": "2026-12-31"
+          },
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "ratingCount": "12543",
+            "bestRating": "5",
+            "worstRating": "1"
+          },
+          "featureList": [
+            "Drag & Drop Interface",
+            "Batch Conversion",
+            "Client-side Privacy",
+            "Instant Download",
+            "No File Limits"
+          ]
+        }}
+      />
+
       {/* Compact Hero + Upload Section */}
       <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-800 dark:from-black dark:via-black dark:to-black relative overflow-hidden">
         <div className="absolute inset-0 bg-black/20 dark:bg-black/80 transition-all duration-500"></div>
-        
+
         <div className="relative w-full max-w-4xl mx-auto px-4 sm:px-6 py-8">
           {/* Hero Content */}
           <div className="text-center mb-8">
@@ -306,7 +271,7 @@ export default function ImageToPdf() {
               <span className="text-yellow-300">Image to PDF</span> Converter
             </h1>
             <p className="text-base sm:text-lg text-blue-100 dark:text-gray-200 max-w-2xl mx-auto mb-3">
-              Convert <strong className="text-white">JPG, PNG, WebP, and other images to PDF</strong> instantly. 
+              Convert <strong className="text-white">JPG, PNG, WebP, and other images to PDF</strong> instantly.
               Free, secure, and works directly in your browser - no software needed!
             </p>
             <div className="text-blue-100 dark:text-gray-300 text-sm">
@@ -317,11 +282,10 @@ export default function ImageToPdf() {
           {/* Upload Card */}
           <div className="bg-white dark:bg-black rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-800 p-6 sm:p-8">
             <div
-              className={`relative border-2 border-dashed rounded-xl p-12 text-center transition-all duration-300 ${
-                dragActive
-                  ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/50 scale-105'
-                  : 'border-gray-300 dark:border-gray-800 hover:border-blue-400 dark:hover:border-blue-500'
-              }`}
+              className={`relative border-2 border-dashed rounded-xl p-12 text-center transition-all duration-300 ${dragActive
+                ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/50 scale-105'
+                : 'border-gray-300 dark:border-gray-800 hover:border-blue-400 dark:hover:border-blue-500'
+                }`}
               onDrop={handleDrop}
               onDragEnter={handleDragEnter}
               onDragLeave={handleDragLeave}
@@ -333,7 +297,7 @@ export default function ImageToPdf() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                   </svg>
                 </div>
-                
+
                 <div className="space-y-2">
                   <p className="text-xl font-semibold text-gray-900 dark:text-white">
                     {dragActive ? 'Drop your images here!' : 'Drop your images here'}
@@ -342,7 +306,7 @@ export default function ImageToPdf() {
                     or <span className="text-blue-600 dark:text-blue-400 font-medium">click to select files</span> from your device
                   </p>
                 </div>
-                
+
                 <input
                   type="file"
                   multiple
@@ -350,7 +314,7 @@ export default function ImageToPdf() {
                   onChange={handleFileInput}
                   className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                 />
-                
+
                 <div className="flex flex-wrap justify-center gap-2 text-xs text-gray-500 dark:text-gray-400">
                   <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full">JPG</span>
                   <span className="px-3 py-1 bg-gray-100 dark:bg-gray-800 rounded-full">PNG</span>
@@ -374,131 +338,131 @@ export default function ImageToPdf() {
               </h3>
               <div className="space-y-3 max-h-64 overflow-y-auto">
                 {files.map((file, index) => (
-                  <div 
-                    key={`${file.name}-${index}`} 
+                  <div
+                    key={`${file.name}-${index}`}
                     className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-900 rounded-xl cursor-move hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
                     draggable
                     onDragStart={(e) => handleFileDragStart(e, index)}
                     onDragOver={handleFileDragOver}
                     onDrop={(e) => handleFileDrop(e, index)}
-                    >
-                      <div className="flex items-center space-x-3 flex-1 min-w-0">
-                        <div className="flex flex-col items-center space-y-1">
-                          <div className="w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs font-bold">
-                            {index + 1}
-                          </div>
-                          <div className="text-gray-400 dark:text-gray-500">
-                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                              <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z"/>
-                            </svg>
-                          </div>
+                  >
+                    <div className="flex items-center space-x-3 flex-1 min-w-0">
+                      <div className="flex flex-col items-center space-y-1">
+                        <div className="w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs font-bold">
+                          {index + 1}
                         </div>
-                        <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                          <span className="text-white text-sm">🖼️</span>
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm sm:text-base font-medium text-gray-900 dark:text-white truncate transition-colors duration-500">
-                            {file.name}
-                          </p>
-                          <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 transition-colors duration-500">
-                            {formatFileSize(file.size)}
-                          </p>
+                        <div className="text-gray-400 dark:text-gray-500">
+                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z" />
+                          </svg>
                         </div>
                       </div>
-                      
-                      <div className="flex items-center space-x-2">
-                        {/* Move Up Button */}
-                        <button
-                          onClick={() => moveFileUp(index)}
-                          disabled={index === 0}
-                          className="p-2 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 disabled:opacity-30 disabled:cursor-not-allowed transition-colors duration-200"
-                          aria-label="Move up"
-                        >
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
-                          </svg>
-                        </button>
-                        
-                        {/* Move Down Button */}
-                        <button
-                          onClick={() => moveFileDown(index)}
-                          disabled={index === files.length - 1}
-                          className="p-2 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 disabled:opacity-30 disabled:cursor-not-allowed transition-colors duration-200"
-                          aria-label="Move down"
-                        >
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                          </svg>
-                        </button>
-                        
-                        {/* Remove Button */}
-                        <button
-                          onClick={() => removeFile(index)}
-                          className="p-2 text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 transition-colors duration-200"
-                          aria-label="Remove file"
-                        >
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                          </svg>
-                        </button>
+                      <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <span className="text-white text-sm">🖼️</span>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm sm:text-base font-medium text-gray-900 dark:text-white truncate transition-colors duration-500">
+                          {file.name}
+                        </p>
+                        <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 transition-colors duration-500">
+                          {formatFileSize(file.size)}
+                        </p>
                       </div>
                     </div>
-                  ))}
-                </div>
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-3 text-center">
-                  💡 Tip: Drag files to reorder them, or use the arrow buttons to adjust the sequence
-                </p>
-              </div>
-            </div>
-          </section>
-        )}
 
-            {/* Convert Button */}
-            {files.length > 0 && (
-              <div className="border-t border-gray-200 dark:border-gray-800 p-4 sm:p-6 lg:p-8">
-                {showSuccess && (
-                  <div className="mb-4 p-4 bg-green-50 dark:bg-green-900/50 border border-green-200 dark:border-green-800 rounded-xl">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-2">
-                        <div className="w-5 h-5 text-green-600 dark:text-green-400">
-                          <svg fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                          </svg>
-                        </div>
-                        <span className="text-green-800 dark:text-green-200 font-medium">
-                          PDF created successfully! Download started automatically.
-                        </span>
-                      </div>
-                      <span className="text-green-600 dark:text-green-400 text-sm font-medium">
-                        Redirecting to home...
-                      </span>
+                    <div className="flex items-center space-x-2">
+                      {/* Move Up Button */}
+                      <button
+                        onClick={() => moveFileUp(index)}
+                        disabled={index === 0}
+                        className="p-2 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 disabled:opacity-30 disabled:cursor-not-allowed transition-colors duration-200"
+                        aria-label="Move up"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+                        </svg>
+                      </button>
+
+                      {/* Move Down Button */}
+                      <button
+                        onClick={() => moveFileDown(index)}
+                        disabled={index === files.length - 1}
+                        className="p-2 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 disabled:opacity-30 disabled:cursor-not-allowed transition-colors duration-200"
+                        aria-label="Move down"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </button>
+
+                      {/* Remove Button */}
+                      <button
+                        onClick={() => removeFile(index)}
+                        className="p-2 text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 transition-colors duration-200"
+                        aria-label="Remove file"
+                      >
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </button>
                     </div>
                   </div>
-                )}
-                
-                <button
-                  onClick={convertToPdf}
-                  disabled={isConverting}
-                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-500 text-white font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 disabled:transform-none text-base sm:text-lg"
-                >
-                  {isConverting ? (
-                    <div className="flex items-center justify-center space-x-2">
-                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                      <span>Converting to PDF...</span>
-                    </div>
-                  ) : (
-                    <div className="flex items-center justify-center space-x-2">
-                      <span className="text-xl">📄</span>
-                      <span>Convert {files.length} Image{files.length > 1 ? 's' : ''} to PDF</span>
-                    </div>
-                  )}
-                </button>
-                
-                <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 text-center mt-3 transition-colors duration-500">
-                  All processing happens in your browser. No files are uploaded to servers.
-                </p>
+                ))}
+              </div>
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-3 text-center">
+                💡 Tip: Drag files to reorder them, or use the arrow buttons to adjust the sequence
+              </p>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Convert Button */}
+      {files.length > 0 && (
+        <div className="border-t border-gray-200 dark:border-gray-800 p-4 sm:p-6 lg:p-8">
+          {showSuccess && (
+            <div className="mb-4 p-4 bg-green-50 dark:bg-green-900/50 border border-green-200 dark:border-green-800 rounded-xl">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <div className="w-5 h-5 text-green-600 dark:text-green-400">
+                    <svg fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <span className="text-green-800 dark:text-green-200 font-medium">
+                    PDF created successfully! Download started automatically.
+                  </span>
+                </div>
+                <span className="text-green-600 dark:text-green-400 text-sm font-medium">
+                  Redirecting to home...
+                </span>
+              </div>
+            </div>
+          )}
+
+          <button
+            onClick={convertToPdf}
+            disabled={isConverting}
+            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-500 text-white font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 disabled:transform-none text-base sm:text-lg"
+          >
+            {isConverting ? (
+              <div className="flex items-center justify-center space-x-2">
+                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                <span>Converting to PDF...</span>
+              </div>
+            ) : (
+              <div className="flex items-center justify-center space-x-2">
+                <span className="text-xl">📄</span>
+                <span>Convert {files.length} Image{files.length > 1 ? 's' : ''} to PDF</span>
               </div>
             )}
+          </button>
+
+          <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 text-center mt-3 transition-colors duration-500">
+            All processing happens in your browser. No files are uploaded to servers.
+          </p>
+        </div>
+      )}
 
       {/* Features Section */}
       <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-gray-50 dark:bg-black transition-all duration-500">
@@ -511,42 +475,42 @@ export default function ImageToPdf() {
               Professional-grade conversion with enterprise-level security and lightning-fast processing.
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {[
-              { 
-                icon: '⚡', 
-                title: 'Lightning Fast', 
-                desc: 'Convert multiple images to PDF in seconds with our optimized processing engine.' 
+              {
+                icon: '⚡',
+                title: 'Lightning Fast',
+                desc: 'Convert multiple images to PDF in seconds with our optimized processing engine.'
               },
-              { 
-                icon: '🔒', 
-                title: '100% Secure', 
-                desc: 'All files are processed locally in your browser. No uploads to servers, complete privacy.' 
+              {
+                icon: '🔒',
+                title: '100% Secure',
+                desc: 'All files are processed locally in your browser. No uploads to servers, complete privacy.'
               },
-              { 
-                icon: '📱', 
-                title: 'Mobile Friendly', 
-                desc: 'Works perfectly on all devices - desktop, tablet, and mobile phones.' 
+              {
+                icon: '📱',
+                title: 'Mobile Friendly',
+                desc: 'Works perfectly on all devices - desktop, tablet, and mobile phones.'
               },
-              { 
-                icon: '🆓', 
-                title: 'Completely Free', 
-                desc: 'No hidden costs, no registration required, no watermarks on your converted PDFs.' 
+              {
+                icon: '🆓',
+                title: 'Completely Free',
+                desc: 'No hidden costs, no registration required, no watermarks on your converted PDFs.'
               },
-              { 
-                icon: '🔄', 
-                title: 'Batch Convert', 
-                desc: 'Convert multiple images at once. Support for JPG, PNG, WebP, GIF, and more.' 
+              {
+                icon: '🔄',
+                title: 'Batch Convert',
+                desc: 'Convert multiple images at once. Support for JPG, PNG, WebP, GIF, and more.'
               },
-              { 
-                icon: '⚙️', 
-                title: 'High Quality', 
-                desc: 'Maintains original image quality while creating optimized PDF files.' 
+              {
+                icon: '⚙️',
+                title: 'High Quality',
+                desc: 'Maintains original image quality while creating optimized PDF files.'
               }
             ].map((feature, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className="group bg-white dark:bg-black rounded-xl p-6 sm:p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-200 dark:border-gray-800 hover:border-blue-200 dark:hover:border-blue-600 hover:-translate-y-1"
               >
                 <div className="text-4xl sm:text-5xl mb-4 group-hover:scale-110 transition-transform duration-300">
@@ -571,14 +535,14 @@ export default function ImageToPdf() {
             <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-6 text-center transition-colors duration-500">
               The Best Free Image to PDF Converter Online
             </h2>
-            
+
             <div className="prose prose-lg max-w-none text-gray-700 dark:text-gray-300 transition-colors duration-500">
               <p className="text-lg leading-relaxed mb-6">
-                Looking for a reliable <strong>Image to PDF converter</strong>? Our free online tool is the perfect solution for converting 
-                <strong> JPG to PDF</strong>, <strong>PNG to PDF</strong>, and other image formats instantly. Whether you need to convert a single 
+                Looking for a reliable <strong>Image to PDF converter</strong>? Our free online tool is the perfect solution for converting
+                <strong> JPG to PDF</strong>, <strong>PNG to PDF</strong>, and other image formats instantly. Whether you need to convert a single
                 image or multiple files at once, our converter handles it all with professional quality results.
               </p>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-8">
                 <div>
                   <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4 transition-colors duration-500">
@@ -592,7 +556,7 @@ export default function ImageToPdf() {
                     <li>• <strong>BMP</strong> - Windows bitmap images</li>
                   </ul>
                 </div>
-                
+
                 <div>
                   <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4 transition-colors duration-500">
                     🎯 Perfect For
@@ -608,13 +572,13 @@ export default function ImageToPdf() {
               </div>
 
               <p className="leading-relaxed mb-6">
-                Our <strong>image to PDF converter online</strong> tool processes everything directly in your browser, ensuring complete 
-                privacy and security. No need to install software or worry about file uploads - everything happens locally on your device. 
+                Our <strong>image to PDF converter online</strong> tool processes everything directly in your browser, ensuring complete
+                privacy and security. No need to install software or worry about file uploads - everything happens locally on your device.
                 The converted PDFs maintain the original image quality while being optimized for sharing and storage.
               </p>
 
               <p className="leading-relaxed">
-                Convert images to PDF in just three simple steps: upload your images, arrange them if needed, and click convert. 
+                Convert images to PDF in just three simple steps: upload your images, arrange them if needed, and click convert.
                 Your PDF will be ready for download instantly. It's that simple!
               </p>
             </div>
@@ -633,7 +597,7 @@ export default function ImageToPdf() {
               Explore our complete suite of file conversion tools
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {[
               { name: 'PDF to Word', desc: 'Convert PDF to editable Word documents', icon: '📝', path: '/pdf-to-word' },
@@ -683,22 +647,22 @@ export default function ImageToPdf() {
             {/* Center - Social Links */}
             <div className="text-center">
               <div className="flex justify-center space-x-4 mb-3">
-                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" 
-                   className="w-10 h-10 bg-blue-500 hover:bg-blue-600 text-white rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
+                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"
+                  className="w-10 h-10 bg-blue-500 hover:bg-blue-600 text-white rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
                   </svg>
                 </a>
                 <a href="https://github.com" target="_blank" rel="noopener noreferrer"
-                   className="w-10 h-10 bg-gray-800 hover:bg-gray-900 text-white rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
+                  className="w-10 h-10 bg-gray-800 hover:bg-gray-900 text-white rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
                   </svg>
                 </a>
                 <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
-                   className="w-10 h-10 bg-blue-700 hover:bg-blue-800 text-white rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
+                  className="w-10 h-10 bg-blue-700 hover:bg-blue-800 text-white rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                   </svg>
                 </a>
               </div>

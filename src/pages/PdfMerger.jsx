@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
+import SEO from '../components/SEO';
 
 function PdfMerger() {
   const navigate = useNavigate();
@@ -14,9 +14,9 @@ function PdfMerger() {
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
-    
+
     if (e.dataTransfer.files) {
-      const newFiles = Array.from(e.dataTransfer.files).filter(file => 
+      const newFiles = Array.from(e.dataTransfer.files).filter(file =>
         file.type === 'application/pdf'
       );
       setFiles(prev => [...prev, ...newFiles]);
@@ -42,7 +42,7 @@ function PdfMerger() {
 
   const handleFileInput = (e) => {
     if (e.target.files) {
-      const newFiles = Array.from(e.target.files).filter(file => 
+      const newFiles = Array.from(e.target.files).filter(file =>
         file.type === 'application/pdf'
       );
       setFiles(prev => [...prev, ...newFiles]);
@@ -82,7 +82,7 @@ function PdfMerger() {
   const handleFileDrop = (e, dropIndex) => {
     e.preventDefault();
     if (draggedIndex === null) return;
-    
+
     const newFiles = [...files];
     const [draggedFile] = newFiles.splice(draggedIndex, 1);
     newFiles.splice(dropIndex, 0, draggedFile);
@@ -95,7 +95,7 @@ function PdfMerger() {
       alert('Please select at least 2 PDF files to merge.');
       return;
     }
-    
+
     setIsProcessing(true);
     const formData = new FormData();
     files.forEach((file) => {
@@ -110,10 +110,10 @@ function PdfMerger() {
 
       if (response.ok) {
         const blob = await response.blob();
-        
+
         // Mobile-friendly download with fallback
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        
+
         if (isMobile) {
           const url = window.URL.createObjectURL(blob);
           const a = document.createElement('a');
@@ -121,7 +121,7 @@ function PdfMerger() {
           a.download = 'merged.pdf';
           a.style.display = 'none';
           document.body.appendChild(a);
-          
+
           setTimeout(() => {
             a.click();
             document.body.removeChild(a);
@@ -138,7 +138,7 @@ function PdfMerger() {
           a.click();
           window.URL.revokeObjectURL(url);
         }
-        
+
         setShowSuccess(true);
         setTimeout(() => {
           navigate('/', { replace: true });
@@ -162,12 +162,27 @@ function PdfMerger() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-black transition-all duration-500">
-      <Helmet>
-        <title>Free PDF Merger Online | Combine Multiple PDF Files - AllFileChanger</title>
-        <meta name="description" content="Merge PDF files online for free. Combine multiple PDFs into one document. Fast, secure, and easy to use. No installation required." />
-        <link rel="canonical" href="https://allfilechanger.com/pdf-merger" />
-      </Helmet>
-      
+      <SEO
+        title="Free PDF Merger Online | Combine Multiple PDF Files"
+        description="Merge PDF files online for free. Combine multiple PDFs into one document. Fast, secure, and easy to use. No installation required."
+        keywords="merge pdf, combine pdf, join pdf, pdf merger free, online pdf merger"
+        path="/pdf-merger"
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          "name": "PDF Merger",
+          "url": "https://www.allfilechanger.shop/pdf-merger",
+          "description": "Free online tool to merge multiple PDF files into one document.",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "Any",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        }}
+      />
+
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-red-600 via-orange-600 to-yellow-800 dark:from-black dark:via-black dark:to-black">
         <div className="absolute inset-0 bg-black/20 dark:bg-black/80 transition-all duration-500"></div>
@@ -180,7 +195,7 @@ function PdfMerger() {
               <span className="text-yellow-300 dark:text-yellow-400">PDF Merger</span> Tool
             </h1>
             <p className="text-lg sm:text-xl lg:text-2xl text-red-100 dark:text-gray-200 max-w-4xl mx-auto mb-6 sm:mb-8 transition-all duration-500 px-4">
-              Combine multiple PDF files into one with <strong className="text-white">drag-and-drop simplicity</strong>. 
+              Combine multiple PDF files into one with <strong className="text-white">drag-and-drop simplicity</strong>.
               Free, fast, and works directly in your browser!
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center px-4">
@@ -196,15 +211,14 @@ function PdfMerger() {
       <section className="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <div className="bg-white dark:bg-black rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-800 overflow-hidden transition-all duration-500">
-            
+
             {/* Upload Area */}
             <div className="p-4 sm:p-6 lg:p-8">
               <div
-                className={`relative border-2 border-dashed rounded-xl p-6 sm:p-8 lg:p-12 text-center transition-all duration-300 ${
-                  dragActive
+                className={`relative border-2 border-dashed rounded-xl p-6 sm:p-8 lg:p-12 text-center transition-all duration-300 ${dragActive
                     ? 'border-red-500 bg-red-50 dark:bg-red-950/50 scale-105'
                     : 'border-gray-300 dark:border-gray-800 hover:border-red-400 dark:hover:border-red-500'
-                }`}
+                  }`}
                 onDrop={handleDrop}
                 onDragEnter={handleDragEnter}
                 onDragLeave={handleDragLeave}
@@ -216,7 +230,7 @@ function PdfMerger() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                     </svg>
                   </div>
-                  
+
                   <div className="space-y-2">
                     <p className="text-lg sm:text-xl lg:text-2xl font-semibold text-gray-900 dark:text-white transition-colors duration-500">
                       {dragActive ? 'Drop your PDFs here!' : 'Drop your PDF files here'}
@@ -225,7 +239,7 @@ function PdfMerger() {
                       or <span className="text-red-600 dark:text-red-400 font-medium">click to select files</span> from your device
                     </p>
                   </div>
-                  
+
                   <input
                     type="file"
                     multiple
@@ -233,7 +247,7 @@ function PdfMerger() {
                     onChange={handleFileInput}
                     className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                   />
-                  
+
                   <div className="flex flex-wrap justify-center gap-2 text-xs sm:text-sm text-gray-500 dark:text-gray-400 transition-colors duration-500">
                     <span className="px-3 py-1 bg-gray-100 dark:bg-black rounded-full transition-colors duration-300">PDF</span>
                   </div>
@@ -249,8 +263,8 @@ function PdfMerger() {
                 </h3>
                 <div className="space-y-3 max-h-64 overflow-y-auto">
                   {files.map((file, index) => (
-                    <div 
-                      key={`${file.name}-${index}`} 
+                    <div
+                      key={`${file.name}-${index}`}
                       className="flex items-center justify-between p-3 sm:p-4 bg-gray-50 dark:bg-black rounded-xl transition-all duration-300 cursor-move hover:bg-gray-100 dark:hover:bg-gray-900"
                       draggable
                       onDragStart={(e) => handleFileDragStart(e, index)}
@@ -275,7 +289,7 @@ function PdfMerger() {
                           </p>
                         </div>
                       </div>
-                      
+
                       <div className="flex items-center space-x-2">
                         <button
                           onClick={() => moveFileUp(index)}
@@ -286,7 +300,7 @@ function PdfMerger() {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
                           </svg>
                         </button>
-                        
+
                         <button
                           onClick={() => moveFileDown(index)}
                           disabled={index === files.length - 1}
@@ -296,7 +310,7 @@ function PdfMerger() {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                           </svg>
                         </button>
-                        
+
                         <button
                           onClick={() => removeFile(index)}
                           className="p-2 text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 transition-colors duration-200"
