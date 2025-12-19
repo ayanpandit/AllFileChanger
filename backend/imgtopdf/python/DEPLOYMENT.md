@@ -144,18 +144,26 @@ Set up external monitoring (UptimeRobot, Pingdom):
 
 ## ⚡ Performance Optimization
 
+The backend now parallelizes validation and image normalization across all available CPU cores using
+`ThreadPoolExecutor`. Each worker handles the entire validate → convert pipeline, which keeps the
+conversion stage CPU-bound instead of I/O-bound. Keep an eye on:
+
+- CPU saturation (increase plan size or reduce `MAX_IMAGES` if cores are pegged)
+- Memory usage when processing 150–200 images simultaneously
+- Response times reported in Railway metrics (expect ~1s for 100 mixed images on Hobby plan)
+
 ### Recommended Settings for Railway
 
 **Hobby Plan ($5/month):**
 ```
 GUNICORN_WORKERS=2
-MAX_IMAGES=30
+MAX_IMAGES=100
 ```
 
 **Pro Plan ($20/month):**
 ```
 GUNICORN_WORKERS=4
-MAX_IMAGES=50
+MAX_IMAGES=200
 ```
 
 ### Auto-Scaling

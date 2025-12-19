@@ -12,16 +12,16 @@ Production-grade Flask API for converting images to PDF with session-based proce
 - Automatic session cleanup
 
 ✅ **Image Processing**
-- Supports: JPG, JPEG, PNG, GIF, BMP, WebP, TIFF
-- Multi-image conversion (up to 50 images)
-- File size validation (20MB per image, 100MB total)
-- Image format verification with PIL
+- Supports: JPG, JPEG, PNG, GIF, BMP, WebP, TIFF, HEIC, HEIF, ICO, SVG
+- Multi-image conversion (up to 200 images per request)
+- File size validation (20MB per image, 100MB total payload)
+- Automatic mode conversion + resizing for consistent, high-quality PDFs
 
 ✅ **Performance**
-- Gunicorn with gevent workers
-- Multithreaded processing
-- Optimized memory usage
-- Health check endpoint
+- Gunicorn with gevent workers in production
+- Parallel ThreadPoolExecutor processing using all CPU cores
+- Optimized memory usage with aggressive cleanup
+- Health/metrics endpoints for observability
 
 ## API Endpoints
 
@@ -148,7 +148,7 @@ curl -X POST http://localhost:5005/image-to-pdf \
 
 ## Configuration Limits
 
-- **Max Images**: 50 per conversion
+- **Max Images**: 200 per conversion
 - **Max Image Size**: 20MB per image
 - **Max Total Upload**: 100MB
 - **Session Timeout**: 30 minutes
