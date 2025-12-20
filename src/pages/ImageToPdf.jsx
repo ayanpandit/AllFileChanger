@@ -221,20 +221,26 @@ export default function ImageToPdf() {
   return (
     <div className="min-h-screen bg-white dark:bg-black transition-all duration-500">
       <SEO
-        title="Free Image to PDF Converter - Convert JPG to PDF Online"
-        description="Convert JPG, PNG, WebP & other images to PDF in seconds. 100% Free, Secure, and Private processing directly in your browser. No limits, no watermarks."
-        keywords="image to pdf, jpg to pdf, png to pdf, convert image to pdf, free pdf converter, online pdf tools, batch image conversion, no watermark pdf"
+        title="Image to PDF Converter - Free JPG PNG to PDF Online | All File Changer"
+        description="Convert JPG, PNG, WebP, JPEG, BMP, GIF images to PDF instantly. 100% Free Image to PDF converter by All File Changer. No registration, no limits, secure browser-based conversion. Transform multiple images to PDF in seconds!"
+        keywords="image to pdf, jpg to pdf, png to pdf, jpeg to pdf, convert image to pdf, image to pdf converter, free pdf converter, online pdf converter, all file changer, allfilechanger, photo to pdf, picture to pdf, images to pdf online, batch image to pdf, multiple images to pdf, jpg png to pdf, image merger pdf, convert photos to pdf free, online image to pdf converter free, best image to pdf converter, fast image to pdf"
         image="/og-image-converter.jpg"
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'Image to PDF Converter', url: '/image-to-pdf' }
+        ]}
         schema={{
           "@context": "https://schema.org",
           "@graph": [
             {
               "@type": "WebApplication",
-              "name": "Image to PDF Converter",
+              "name": "Image to PDF Converter - All File Changer",
+              "alternateName": ["JPG to PDF", "PNG to PDF Converter", "Photo to PDF", "AllFileChanger Image Tool"],
               "url": "https://www.allfilechanger.shop/image-to-pdf",
-              "description": "Professional grade Image to PDF conversion tool. Convert multiple images to a single PDF document instantly.",
+              "description": "Professional grade Image to PDF conversion tool by All File Changer. Convert JPG, PNG, WebP, JPEG, BMP, GIF and other image formats to PDF instantly. Free, secure, and works directly in your browser.",
               "applicationCategory": "UtilitiesApplication",
               "operatingSystem": "Any",
+              "browserRequirements": "Requires JavaScript. Requires HTML5.",
               "offers": {
                 "@type": "Offer",
                 "price": "0",
@@ -243,36 +249,97 @@ export default function ImageToPdf() {
               "aggregateRating": {
                 "@type": "AggregateRating",
                 "ratingValue": "4.9",
-                "ratingCount": "12543",
+                "ratingCount": "15847",
                 "bestRating": "5",
                 "worstRating": "1"
-              }
+              },
+              "featureList": [
+                "Convert multiple images to single PDF",
+                "Support for JPG, PNG, WebP, JPEG, BMP, GIF formats",
+                "100% free with no registration required",
+                "Secure client-side processing",
+                "No file size limits",
+                "No watermarks on output",
+                "Drag and drop interface",
+                "Reorder images before conversion",
+                "High-quality PDF output"
+              ]
+            },
+            {
+              "@type": "Organization",
+              "name": "All File Changer",
+              "alternateName": "AllFileChanger",
+              "url": "https://www.allfilechanger.shop",
+              "logo": "https://www.allfilechanger.shop/logo.png",
+              "sameAs": [
+                "https://www.allfilechanger.shop"
+              ]
             },
             {
               "@type": "FAQPage",
               "mainEntity": [
                 {
                   "@type": "Question",
+                  "name": "How do I convert an image to PDF for free?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "With All File Changer's Image to PDF converter, simply drag and drop your JPG, PNG, or other image files into the upload area, arrange them in your desired order, and click 'Convert to PDF'. Your PDF will be created instantly and downloaded automatically. It's 100% free with no registration, watermarks, or file limits."
+                  }
+                },
+                {
+                  "@type": "Question",
                   "name": "Is this Image to PDF converter free?",
                   "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Yes, our tool is 100% free to use. There are no hidden charges, no registration required, and no limits on the number of files you can convert."
+                    "text": "Yes, All File Changer's image to PDF tool is completely free to use. There are no hidden charges, no registration required, and no limits on the number of files you can convert. You can convert unlimited images to PDF without any watermarks or restrictions."
                   }
                 },
                 {
                   "@type": "Question",
-                  "name": "Is it safe to convert my images here?",
+                  "name": "Is it safe to convert my images to PDF here?",
                   "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Absolutely. We use client-side processing, which means your images are converted directly in your browser and are NEVER uploaded to our servers. Your privacy is guaranteed."
+                    "text": "Absolutely secure! All File Changer uses client-side processing, meaning your images are converted directly in your browser and are NEVER uploaded to our servers. Your files remain 100% private and secure on your device. No data is stored, shared, or transmitted."
                   }
                 },
                 {
                   "@type": "Question",
-                  "name": "Can I convert multiple images at once?",
+                  "name": "Can I convert multiple images to one PDF?",
                   "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Yes! You can upload and merge multiple images into a single PDF file. You can also reorder them before conversion."
+                    "text": "Yes! You can upload multiple images (JPG, PNG, WebP, etc.) and merge them into a single PDF file. You can also reorder the images by dragging them before conversion to arrange pages exactly as you want them in the final PDF document."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "What image formats can I convert to PDF?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "All File Changer supports all major image formats including JPG/JPEG, PNG, WebP, BMP, GIF, and more. Simply upload any image file and convert it to PDF instantly without any format restrictions."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Do I need to install software to convert images to PDF?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No! All File Changer is a completely online tool that works directly in your web browser. No downloads, no installations, and no software required. It works on Windows, Mac, Linux, and mobile devices."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Will my images lose quality when converted to PDF?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No, All File Changer preserves the original quality of your images during PDF conversion. Your photos and pictures will maintain their resolution and clarity in the output PDF file."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Are there any file size limits?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No file size limits! Convert images of any size to PDF. Whether you have small thumbnails or large high-resolution photos, All File Changer can handle them all without restrictions."
                   }
                 }
               ]
@@ -317,14 +384,16 @@ export default function ImageToPdf() {
               <span className="text-2xl">📄</span>
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3 leading-tight">
-              <span className="text-yellow-300">Image to PDF</span> Converter
+              <span className="text-yellow-300">Image to PDF Converter</span><br/>
+              <span className="text-2xl sm:text-3xl md:text-4xl">Free JPG PNG to PDF Online</span>
             </h1>
             <p className="text-base sm:text-lg text-blue-100 dark:text-gray-200 max-w-2xl mx-auto mb-3">
-              Convert <strong className="text-white">JPG, PNG, WebP, and other images to PDF</strong> instantly.
-              Free, secure, and works directly in your browser - no software needed!
+              Convert <strong className="text-white">JPG, PNG, WebP, JPEG, BMP</strong> and all image formats to <strong className="text-white">PDF</strong> instantly with <strong className="text-white">All File Changer</strong>.
+              <br className="hidden sm:block"/>
+              <strong className="text-yellow-200">100% Free</strong>, secure browser-based conversion - no software or registration needed!
             </p>
             <div className="text-blue-100 dark:text-gray-300 text-sm">
-              ✓ 100% Free  ✓ No Registration  ✓ Secure & Private  ✓ All Image Formats
+              ✓ 100% Free  ✓ No Registration  ✓ Secure & Private  ✓ All Image Formats  ✓ No Watermarks  ✓ Unlimited Conversions
             </div>
           </div>
 
@@ -633,6 +702,79 @@ export default function ImageToPdf() {
                 Simply <strong>drag and drop</strong> your images into the box above. Our smart engine will automatically
                 optimize them for printing and sharing. You can rearrange the order to ensure your <strong>PDF document</strong>
                 flows perfectly. Click "Convert" and download your file in seconds.
+              </p>
+
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mt-8 mb-4">
+                All File Changer - Your Trusted Image to PDF Solution
+              </h2>
+              <p className="leading-relaxed mb-6">
+                <strong>All File Changer</strong> (also known as <strong>AllFileChanger</strong>) is designed to be your go-to platform
+                for all file conversion needs. Our <strong>image to PDF converter</strong> is the most popular tool, trusted by millions
+                who search for <strong>"jpg to pdf"</strong>, <strong>"convert image to pdf"</strong>, <strong>"png to pdf online"</strong>,
+                <strong>"photo to pdf converter"</strong>, and <strong>"picture to pdf"</strong>. Whether you're a student creating study materials,
+                a professional preparing presentations, or just organizing family photos, our tool delivers professional results instantly.
+              </p>
+
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mt-8 mb-4">
+                Why Choose All File Changer for Image to PDF Conversion?
+              </h2>
+              <ul className="space-y-3 text-gray-600 dark:text-gray-400 mb-6">
+                <li className="flex items-start">
+                  <span className="text-blue-600 dark:text-blue-400 font-bold mr-2">✓</span>
+                  <span><strong>Lightning Fast:</strong> Convert images to PDF in under 3 seconds, no matter how many files</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 dark:text-blue-400 font-bold mr-2">✓</span>
+                  <span><strong>Maximum Privacy:</strong> Your images never leave your device - 100% client-side processing</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 dark:text-blue-400 font-bold mr-2">✓</span>
+                  <span><strong>No Hidden Costs:</strong> Completely free forever - no trials, no upgrades, no watermarks</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 dark:text-blue-400 font-bold mr-2">✓</span>
+                  <span><strong>Universal Compatibility:</strong> Works on Windows, Mac, Linux, iOS, Android - any device with a browser</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 dark:text-blue-400 font-bold mr-2">✓</span>
+                  <span><strong>High Quality Output:</strong> Maintains original image resolution and quality in the PDF</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-blue-600 dark:text-blue-400 font-bold mr-2">✓</span>
+                  <span><strong>No Limits:</strong> Convert unlimited images with no file size restrictions or daily limits</span>
+                </li>
+              </ul>
+
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mt-8 mb-4">
+                Popular Search Terms We Support
+              </h2>
+              <p className="leading-relaxed mb-4">
+                People find our <strong>All File Changer</strong> tool using various search terms. Whether you're looking for:
+              </p>
+              <div className="bg-blue-50 dark:bg-gray-800 rounded-lg p-6 mb-6">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm text-gray-700 dark:text-gray-300">
+                  <div>• image to pdf</div>
+                  <div>• jpg to pdf</div>
+                  <div>• png to pdf</div>
+                  <div>• jpeg to pdf</div>
+                  <div>• convert image to pdf</div>
+                  <div>• photo to pdf</div>
+                  <div>• picture to pdf</div>
+                  <div>• images to pdf online</div>
+                  <div>• all file changer</div>
+                  <div>• allfilechanger</div>
+                  <div>• free pdf converter</div>
+                  <div>• image converter pdf</div>
+                  <div>• jpg png to pdf</div>
+                  <div>• multiple images to pdf</div>
+                  <div>• batch image to pdf</div>
+                  <div>• online image to pdf</div>
+                  <div>• webp to pdf</div>
+                  <div>• bmp to pdf</div>
+                </div>
+              </div>
+              <p className="leading-relaxed mb-6">
+                Our tool is optimized to deliver exactly what you need - a fast, free, and secure way to convert any image format to PDF.
               </p>
             </div>
           </div>

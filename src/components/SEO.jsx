@@ -11,6 +11,7 @@ export default function SEO({
     image = '/og-image.jpg',
     type = 'website',
     schema,
+    breadcrumbs,
     publishedTime,
     modifiedTime,
     author = 'AllFileChanger'
@@ -38,6 +39,18 @@ export default function SEO({
             "url": DOMAIN
         }
     };
+
+    // Breadcrumbs Schema
+    const breadcrumbsSchema = breadcrumbs ? {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": breadcrumbs.map((crumb, index) => ({
+            "@type": "ListItem",
+            "position": index + 1,
+            "name": crumb.name,
+            "item": `${DOMAIN}${crumb.url}`
+        }))
+    } : null;
 
     return (
         <Helmet>
@@ -74,6 +87,13 @@ export default function SEO({
             <script type="application/ld+json">
                 {JSON.stringify(structuredData)}
             </script>
+
+            {/* Breadcrumbs JSON-LD */}
+            {breadcrumbsSchema && (
+                <script type="application/ld+json">
+                    {JSON.stringify(breadcrumbsSchema)}
+                </script>
+            )}
         </Helmet>
     );
 }

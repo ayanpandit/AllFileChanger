@@ -11,9 +11,43 @@
   <!-- Image Tools -->
   <url>
     <loc>https://www.allfilechanger.shop/image-to-pdf</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <lastmod>2025-12-21</lastmod>
+  </url>
+  
+  <!-- Alternative Image to PDF URLs for SEO -->
+  <url>
+    <loc>https://www.allfilechanger.shop/jpg-to-pdf</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+    <lastmod>2025-12-21</lastmod>
+  </url>
+  <url>
+    <loc>https://www.allfilechanger.shop/png-to-pdf</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+    <lastmod>2025-12-21</lastmod>
+  </url>
+  <url>
+    <loc>https://www.allfilechanger.shop/jpeg-to-pdf</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <lastmod>2025-12-21</lastmod>
   </url>
+  <url>
+    <loc>https://www.allfilechanger.shop/photo-to-pdf</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <lastmod>2025-12-21</lastmod>
+  </url>
+  <url>
+    <loc>https://www.allfilechanger.shop/convert-image-to-pdf</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <lastmod>2025-12-21</lastmod>
+  </url>
+  
   <url>
     <loc>https://www.allfilechanger.shop/image-compressor</loc>
     <changefreq>weekly</changefreq>

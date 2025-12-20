@@ -65,6 +65,15 @@ function App() {
               
               {/* Image Tools */}
               <Route path="/image-to-pdf" element={<ImageToPdf />} />
+              {/* Alternative search term routes for Image to PDF */}
+              <Route path="/jpg-to-pdf" element={<ImageToPdf />} />
+              <Route path="/png-to-pdf" element={<ImageToPdf />} />
+              <Route path="/jpeg-to-pdf" element={<ImageToPdf />} />
+              <Route path="/photo-to-pdf" element={<ImageToPdf />} />
+              <Route path="/picture-to-pdf" element={<ImageToPdf />} />
+              <Route path="/convert-image-to-pdf" element={<ImageToPdf />} />
+              <Route path="/images-to-pdf" element={<ImageToPdf />} />
+              
               <Route path="/image-compressor" element={<ImageCompressor />} />
               <Route path="/image-converter" element={<ImageConverter />} />
               <Route path="/image-resize" element={<ImageResize />} />
