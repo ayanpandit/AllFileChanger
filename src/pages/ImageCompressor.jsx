@@ -117,266 +117,54 @@ export default function ImageCompressor() {
   return (
     <div className="min-h-screen bg-white dark:bg-black transition-all duration-500">
       <Helmet>
-        <title>Image Compressor Online Free - Compress JPG PNG WebP 2025 | AllFileChanger</title>
-        <meta name="description" content="Free image compressor 2025 - Compress JPG, PNG, WebP images online. Reduce file size by 90% without quality loss. AI-powered compression. No signup. Fast & secure. All File Changer #1 tool." />
-        <meta name="keywords" content="image compressor, compress image online free, all file changer, allfilechanger, compress jpg, compress png, compress webp, reduce image size, image optimization tool, compress photos online, image file size reducer, online image compressor 2025, best free image compressor, compress image without losing quality, bulk image compression, optimize images for web, photo compressor, picture compressor, compress image to 100kb, compress image to 50kb, tinypng alternative, squoosh alternative, imageoptim online" />
+        <title>Free Image Compressor Online | Reduce Image Size Without Quality Loss - AllFileChanger</title>
+        <meta name="description" content="Compress images online for free. Reduce JPG, PNG, WebP file sizes by 60-80% without losing quality. Fast, secure browser-based compression tool. No registration required." />
+        <meta name="keywords" content="image compressor, compress images online, reduce image size, image optimization, jpg compressor, png compressor, webp compressor, free image compression, online image optimizer, compress photos, image file size reducer" />
         
         {/* Open Graph Tags */}
-        <meta property="og:title" content="Image Compressor Online Free 2025 - Best JPG PNG WebP Compression | All File Changer" />
-        <meta property="og:description" content="#1 Free image compressor 2025. Compress JPG, PNG, WebP by 90% without quality loss. AI-powered, secure, no signup. Try AllFileChanger now!" />
+        <meta property="og:title" content="Free Image Compressor | Reduce Image Size Online Without Quality Loss" />
+        <meta property="og:description" content="Compress images online for free. Reduce JPG, PNG, WebP file sizes by 60-80% without losing quality. Fast, secure browser-based compression." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://allfilechanger.com/image-compressor" />
         <meta property="og:image" content="https://allfilechanger.com/og-image-compressor.jpg" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="AllFileChanger Free Image Compressor Tool" />
-        <meta property="og:site_name" content="AllFileChanger | All File Changer" />
-        <meta property="og:locale" content="Image Compressor Online Free 2025 - Compress JPG PNG WebP | AllFileChanger" />
-        <meta name="twitter:description" content="Compress images online free. Reduce JPG PNG WebP by 90%. No quality loss. AI-powered. All File Changer - trusted by 5M+ users." />
-        <meta name="twitter:image" content="https://allfilechanger.com/twitter-image-compressor.jpg" />
-        <meta name="twitter:image:alt" content="AllFileChanger Image Compressor Tool Screenshot" />
-        <meta name="twitter:site" content="@allfilechanger" />
-        <meta name="twitter:creator" content="@allfilechanger
-        <meta name="twitter:card" content="summary_la, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
-        <meta name="bingbot" content="index, follow" />
-        <meta name="language" content="en-US" />
-        <meta name="revisit-after" content="1 day" />
-        <meta name="author" content="AllFileChanger | All File Changer" />
-        <meta name="copyright" content="© 2025 AllFileChanger. All rights reserved." />
-        <meta name="rating" content="General" />
-        <meta name="distribution" content="global" />
-        <meta name="coverage" content="Worldwide" />
-        <meta name="target" content="all" />
-        <meta name="HandheldFriendly" content="True" />
-        <meta name="MobileOptimized" content="320" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta name="format-detection" content="telephone=no" />
+        <meta property="og:site_name" content="AllFileChanger" />
         
-        {/* Geo Tags */}
+        {/* Twitter Card Tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Free Image Compressor | Reduce Image Size Online" />
+        <meta name="twitter:description" content="Compress images online for free. Reduce file sizes by 60-80% without quality loss. Support JPG, PNG, WebP formats." />
+        <meta name="twitter:image" content="https://allfilechanger.com/twitter-image-compressor.jpg" />
+        
+        {/* Additional SEO Meta Tags */}
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+        <meta name="googlebot" content="index, follow" />
+        <meta name="language" content="English" />
+        <meta name="revisit-after" content="1 days" />
+        <meta name="author" content="AllFileChanger" />
+        <meta name="copyright" content="AllFileChanger" />
+        <meta name="rating" content="General" />
         <meta name="geo.region" content="US" />
         <meta name="geo.placename" content="United States" />
-        <meta name="geo.position" content="37.09024;-95.712891" />
-        <meta name="ICBM" content="37.09024, -95.712891" />
-        Image Compressor Online Free - AllFileChanger",
-            "alternateName": ["All File Changer Image Compressor", "AllFileChanger Compress Images", "Free JPG PNG WebP Compressor"],
-            "description": "Professional AI-powered online image compression tool that reduces file sizes by up to 90% without quality loss. Supports JPG, PNG, WebP, GIF formats with advanced mozjpeg compression algorithms. Trusted by 5M+ users worldwide in 2025.",
+        
+        {/* Canonical URL */}
+        <link rel="canonical" href="https://allfilechanger.com/image-compressor" />
+        
+        {/* Structured Data - WebApplication Schema */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebApplication",
+            "name": "Free Image Compressor Online",
+            "description": "Professional online image compression tool that reduces file sizes by 60-80% without quality loss. Supports JPG, PNG, WebP, GIF formats with advanced compression algorithms.",
             "url": "https://allfilechanger.com/image-compressor",
             "applicationCategory": "UtilitiesApplication",
-            "operatingSystem": "Windows, macOS, Linux, iOS, Android, Any",
+            "operatingSystem": "Any",
             "permissions": "browser",
-            "browserRequirements": "Requires JavaScript. Works on Chrome, Firefox, Safari, Edge.",
-            "softwareVersion": "2.0",
-            "datePublished": "2024-01-01",
-            "dateModified": "2025-12-23",
-            "inLanguage": "en-US",
+            "browserRequirements": "Requires JavaScript",
             "offers": {
               "@type": "Offer",
-              "price": "0",JPEG images online free",
-              "Compress PNG images with transparency", 
-              "WebP modern format compression",
-              "GIF animation compression support",
-              "AI-powered smart quality control",
-              "Target file size compression (10KB-500KB)",
-              "Bulk batch image processing",
-              "100% browser-based secure processing",
-              "Unlimited file size and quantity",
-              "No watermarks or branding added",
-              "Mobile iOS Android responsive",
-              "Drag and drop upload interface",
-              "Lossless compression algorithms",
-              "MozJPEG optimization",
-              "Privacy-first no upload to servers",
-              "Instant download compressed images",
-              "Binary search compression algorithm",
-              "Up to 90% size reduction"
-            ],
-            "screenshot": "https://allfilechanger.com/screenshots/image-compressor.png",
-            "video": {
-              "@type": "VideoObject",
-              "name": "How to Use AllFileChanger Image Compressor",
-              "description": "Step-by-step tutorial on compressing images online",
-              "thumbnailUrl": "https://allfilechanger.com/video-thumb-compressor.jpg",
-              "uploadDate": "2025-01-15"
-            },
-            "provider": {
-              "@type": "Organization",
-              "name": "AllFileChanger",
-              "alternateName": "All File Changer",
-              "legalName": "AllFileChanger LLC",
-              "url": "https://allfilechanger.com",
-              "logo": {
-                "@type": "ImageObject",
-                "url": "https://allfilechanger.com/logo.png",
-                "width": "512",,
-                  "bestRating": "5"
-                },
-                "author": {
-                  "@type": "Person",
-                  "name": "Sarah Johnson"
-                },
-                "datePublished": "2025-11-15",
-                "reviewBody": "Best image compressor I've found online. All File Changer reduced my photos by 85% without any visible quality loss! Perfect for my web design work."
-              },
-              {
-                "@type": "Review",
-                "reviewRating": {
-                  "@type": "Rating",
-                  "ratingValue": "5",
-                  "bestRating": "5"
-                },
-                "author": {
-                  "@type": "Person",
-                  "name": "Michael Chen"
-                },
-                "datePublished": "2025-12-01",
-                "reviewBody": "AllFileChanger is amazing! Compressed 500 images in minutes. Much better than TinyPNG or Squoosh. Highly recommend!"
-              }, with AllFileChanger?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "AllFileChanger (All File Changer) image compressor typically reduces file sizes by 60-90% while maintaining excellent visual quality. Our AI-powered compression uses advanced mozjpeg and binary search algorithms. The exact compression depends on the original image format, dimensions, and your quality settings. Most users achieve 70-85% reduction for web images."
-                }
-              },
-              {
-                "@type": "Question", 
-                "name": "What image formats does AllFileChanger compressor support?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "AllFileChanger supports all major image formats including JPG/JPEG, PNG (with transparency), WebP (modern format), and GIF (animated). Each format is optimized using the best compression algorithms available in 2025. JPG uses mozjpeg, PNG uses advanced lossless compression, and WebP offers superior compression ratios."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "Is AllFileChanger image compression tool really free?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Yes! AllFileChanger (All File Changer) image compressor is 100% free forever with no hidden costs, no subscription fees, no registration required, and absolutely no watermarks added to your compressed images. You can compress unlimited images without any restrictions."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "Are my images safe when using AllFileChanger compressor?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Absolutely safe! All compression happens directly in your browser using client-side JavaScript. Your images are NEVER uploaded to our servers or stored anywhere. This ensures complete privacy, security, and GDPR compliance. No one can access your images except you."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "How is AllFileChanger different from TinyPNG or Squoosh?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "AllFileChanger offers several advantages: (1) 100% browser-based processing vs server uploads, (2) No file size limits or daily quotas, (3) Advanced target file size feature with binary search, (4) Faster compression speeds, (5) No account needed, (6) Works offline after first load, (7) Supports more formats, (8) Better compression ratios using latest mozjpeg."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "Can I compress images to specific file sizes like 100KB or 50KB?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Yes! AllFileChanger features an advanced target file size compression. You can choose from presets (10KB, 50KB, 100KB, 200KB, 500KB) or set custom sizes. Our binary search algorithm automatically adjusts quality and dimensions to hit your target size while maximizing visual quality."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "Does AllFileChanger work on mobile phones?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Yes! AllFileChanger is fully responsive and works perfectly on all devices including iPhones, Android phones, tablets, and desktops. The interface adapts to your screen size. You can compress images on-the-go directly from your mobile browser without installing any app."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "What is the maximum image size I can compress on AllFileChanger?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "AllFileChanger currently supports images up to 50MB per file. However, since processing happens in your browser, extremely large files may take longer depending on your device performance. For best results, we recommend images under 25MB. There are no limits on the number of images you can compress."
-                }
-              }
-            ]
-          })}
-        </script>
-        
-        {/* Software Application Schema */}
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "SoftwareApplication",
-            "name": "AllFileChanger Image Compressor",
-            "alternateName": "All File Changer Compress Images Tool",
-            "applicationCategory": "MultimediaApplication",
-            "operatingSystem": "Web Browser",Image Compressor Online Free</span> - AllFileChanger
-            </h1>
-            <p className="text-base sm:text-lg text-green-100 dark:text-gray-200 max-w-3xl mx-auto mb-3 transition-all duration-500">
-              Compress JPG, PNG, WebP images by <strong className="text-white">90% without quality loss</strong>. All File Changer - trusted by 5M+ users. No signup required
-              "priceCurrency": "USD"
-            },
-            "aggAI-Powered Compression  ✓ Target File Size  ✓ 100% Private  ✓ No Watermarks
-            </div>
-            <div className="mt-2 text-green-200 dark:text-gray-400 text-xs">
-              <em>Best alternative to TinyPNG, Squoosh, ImageOptim - Free Forever</em>
-              "@type": "AggregateRating",
-              "ratingValue": "4.9",
-              "ratingCount": "52847"
-            }
-          })}
-        </script>
-        
-        {/* HowTo Schema */}
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "HowTo",
-            "name": "How to Compress Images Online with AllFileChanger",
-            "description": "Step-by-step guide to compress JPG, PNG, WebP images for free using All File Changer",
-            "image": "https://allfilechanger.com/how-to-compress-images.jpg",
-            "totalTime": "PT1M",
-            "estimatedCost": {
-              "@type": "MonetaryAmount",
-              "currency": "USD",
-              "value": "0"
-            },
-            "tool": [{
-              "@type": "HowToTool",
-              "name": "AllFileChanger Image Compressor"
-            }],
-            "step": [
-              {
-                "@type": "HowToStep",
-                "position": "1",
-                "name": "Upload Image",
-                "text": "Click or drag-drop your JPG, PNG, or WebP image to the upload area on AllFileChanger",
-                "image": "https://allfilechanger.com/step1-upload.jpg"
-              },
-              {
-                "@type": "HowToStep",
-                "position": "2",
-                "name": "Adjust Compression",
-                "text": "Set quality slider (10-100%) or choose target file size (10KB-500KB). Lower quality = smaller file size.",
-                "image": "https://allfilechanger.com/step2-settings.jpg"
-              },
-              {
-                "@type": "HowToStep",
-                "position": "3",
-                "name": "Compress & Download",
-                "text": "Click 'Compress & Download' button. Your compressed image downloads instantly. Compare original vs compressed size.",
-                "image": "https://allfilechanger.com/step3-download.jpg"contactType": "Customer Support",
-                "email": "support@allfilechanger.com",
-                "availableLanguage": ["English", "Spanish", "French", "German"]
-              },
-              "sameAs": [
-                "https://twitter.com/allfilechanger",
-                "https://github.com/allfilechanger",
-                "https://linkedin.com/company/allfilechanger",
-                "https://facebook.com/allfilechanger",
-                "https://instagram.com/allfilechanger"
-              ]
-            },
-            "aggregateRating": {
-              "@type": "AggregateRating",
-              "ratingValue": "4.9",
-              "reviewCount": "52847",
-              "ratingCount": "52USD",
+              "price": "0",
+              "priceCurrency": "USD",
               "availability": "https://schema.org/InStock"
             },
             "featureList": [
@@ -508,10 +296,10 @@ export default function ImageCompressor() {
           <div className="text-center mb-8">
             <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-600 rounded-3xl mb-4 shadow-2xl transition-all duration-300 hover:scale-110">
               <span className="text-2xl text-white">🗜️</span>
-            </div>AllFileChanger is the #1 Image Compressor in 2025?
-            </h2>
-            <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto transition-colors duration-500">
-              AI-powered mozjpeg compression algorithms that maintain image quality while reducing file size by up to 90%. All File Changer delivers professional results inst
+            </div>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3 transition-all duration-500 leading-tight">
+              <span className="text-green-300 dark:text-green-400">Smart Image</span> Compressor
+            </h1>
             <p className="text-base sm:text-lg text-green-100 dark:text-gray-200 max-w-3xl mx-auto mb-3 transition-all duration-500">
               Reduce image file size without compromising quality. <strong className="text-white">Free, fast, and secure</strong> compression for all your images.
             </p>
@@ -572,23 +360,14 @@ export default function ImageCompressor() {
               <div className="border-t border-gray-200 dark:border-gray-800 p-6 sm:p-8">
                 <div className="space-y-6">
                   {/* File Info */}
-              Image Compressor Online Free 2025 - AllFileChanger | All File Changer - Compress JPG PNG WebP Without Losing Quality
-            </h2>
-            
-            <div className="prose prose-lg max-w-none text-gray-700 dark:text-gray-300 transition-colors duration-500">
-              <p className="text-lg leading-relaxed mb-6">
-                Welcome to <strong>AllFileChanger</strong> (also known as <strong>All File Changer</strong>), the most powerful and trusted 
-                <strong> image compressor online free</strong> tool in 2025. Our AI-powered platform is the perfect solution for 
-                reducing <strong>image file size</strong> without compromising quality. Whether you need to <strong>compress JPG</strong>, 
-                <strong> compress PNG</strong>, <strong>compress WebP</strong>, or optimize photos for web, email, or social media, 
-                <strong> AllFileChanger</strong> delivers professional results in seconds with up to <strong>90% size reduction</strong>.
-              </p>
-              
-              <p className="text-base leading-relaxed mb-6 bg-green-50 dark:bg-green-900/20 p-4 rounded-lg border-l-4 border-green-500">
-                <strong>🏆 Why 5 Million Users Choose AllFileChanger:</strong> Unlike other image compressors, All File Changer processes 
-                everything in your browser - no uploads, no privacy concerns, no file limits. We use cutting-edge <strong>mozjpeg</strong> and 
-                <strong> binary search algorithms</strong> to achieve the perfect balance between quality and compression. It's completely free, 
-                no registration needed, and works on all devices. Try the best <strong>TinyPNG alternative</strong> and <strong>Squoosh alternative</strong> today!
+                  <div className="bg-gray-50 dark:bg-black rounded-xl p-4">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-600 rounded-lg flex items-center justify-center">
+                        <span className="text-white text-sm">🖼️</span>
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-sm sm:text-base font-medium text-gray-900 dark:text-white">{file.name}</p>
+                        <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
                           Original size: {formatFileSize(file.size)}
                         </p>
                       </div>
@@ -722,10 +501,10 @@ export default function ImageCompressor() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12 sm:mb-16">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-4 transition-colors duration-500">
-              Why AllFileChanger is the #1 Image Compressor in 2025?
+              Why Choose Our Image Compressor?
             </h2>
             <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto transition-colors duration-500">
-              AI-powered mozjpeg compression algorithms that maintain image quality while reducing file size by up to 90%. All File Changer delivers professional results instantly.
+              Advanced compression algorithms that maintain image quality while reducing file size significantly.
             </p>
           </div>
           
@@ -733,33 +512,33 @@ export default function ImageCompressor() {
             {[
               { 
                 icon: '🎯', 
-                title: 'AI Smart Compression', 
-                desc: 'AllFileChanger uses AI-powered mozjpeg algorithms to find the perfect balance between quality and 90% file size reduction.' 
+                title: 'Smart Compression', 
+                desc: 'AI-powered compression that finds the perfect balance between quality and file size.' 
               },
               { 
                 icon: '⚡', 
-                title: 'Lightning Fast 2.5s', 
-                desc: 'All File Changer compresses images in 2-3 seconds with our optimized WebAssembly processing engine. Fastest in 2025.' 
+                title: 'Lightning Fast', 
+                desc: 'Compress images in seconds with our optimized processing engine.' 
               },
               { 
                 icon: '🔒', 
-                title: '100% Private & Secure', 
-                desc: 'AllFileChanger compression happens locally in your browser. Zero server uploads. GDPR compliant. Your images never leave your device.' 
+                title: '100% Private', 
+                desc: 'All compression happens locally in your browser. No files uploaded to servers.' 
               },
               { 
                 icon: '🎚️', 
-                title: 'Precision Quality Control', 
-                desc: 'Fine-tune compression from 10-100% quality or target exact file sizes (10KB-500KB). AllFileChanger gives you total control.' 
+                title: 'Quality Control', 
+                desc: 'Fine-tune compression with quality slider or target specific file sizes.' 
               },
               { 
                 icon: '📱', 
-                title: 'Mobile iOS & Android Ready', 
-                desc: 'AllFileChanger works perfectly on all devices - iPhone, Android, iPad, desktop, laptop. Responsive design for on-the-go compression.' 
+                title: 'Mobile Ready', 
+                desc: 'Works perfectly on all devices - desktop, tablet, and mobile phones.' 
               },
               { 
                 icon: '🆓', 
-                title: 'Completely Free Forever', 
-                desc: 'All File Changer has no limits, no watermarks, no registration, no hidden fees. Compress unlimited images free in 2025.' 
+                title: 'Completely Free', 
+                desc: 'No limits, no watermarks, no registration required. Compress unlimited images.' 
               }
             ].map((feature, index) => (
               <div 
@@ -813,60 +592,27 @@ export default function ImageCompressor() {
                 <div>
                   <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4 transition-colors duration-500">
                     💼 Perfect For
-                  </AllFileChanger Image Compression Technology Works (2025)
+                  </h3>
+                  <ul className="space-y-2 text-gray-600 dark:text-gray-400 transition-colors duration-500">
+                    <li>• <strong>Website Optimization</strong> - Faster loading times</li>
+                    <li>• <strong>Email Attachments</strong> - Reduce file sizes for sharing</li>
+                    <li>• <strong>Social Media</strong> - Optimize images for platforms</li>
+                    <li>• <strong>Storage Savings</strong> - Free up disk space</li>
+                    <li>• <strong>Mobile Apps</strong> - Reduce app size and bandwidth</li>
+                  </ul>
+                </div>
+              </div>
+
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4 transition-colors duration-500">
+                How Our Image Compression Works
               </h3>
               <p className="leading-relaxed mb-6">
-                <strong>AllFileChanger</strong> (All File Changer) uses cutting-edge <strong>AI-powered compression algorithms</strong> including 
-                <strong> mozjpeg</strong>, <strong>Sharp library</strong>, and <strong>binary search optimization</strong> to analyze each pixel 
-                and intelligently remove unnecessary data while preserving visual quality. Our proprietary compression process happens entirely in 
-                your browser using WebAssembly and modern JavaScript, ensuring <strong>complete privacy</strong> and <strong>security</strong> - 
-                your images never leave your device. You can choose between quality-based compression (10-100% slider) or target specific file sizes 
-                (10KB-500KB) for optimal results. This makes AllFileChanger the most advanced <strong>free image compressor online</strong> available in 2025.
+                Our <strong>online image compressor</strong> uses advanced algorithms to analyze each pixel and remove unnecessary data 
+                while preserving visual quality. The compression process happens entirely in your browser, ensuring complete privacy 
+                and security. You can choose between quality-based compression or target specific file sizes for optimal results.
               </p>
-              AllFileChanger Beats All Other Image Compressors (TinyPNG, Squoosh, ImageOptim)
-                </h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-sm text-green-700 dark:text-green-300">
-                  <div>✅ 100% Free Forever - No Limits</div>
-                  <div>✅ No File Size Restrictions (50MB Max)</div>
-                  <div>✅ 100% Browser-Based Security</div>
-                  <div>✅ Zero Registration Required</div>
-                  <div>✅ Unlimited Daily Compressions</div>
-                  <div>✅ Mobile iOS & Android Ready</div>
-                  <div>✅ No Watermarks Ever Added</div>
-                  <div>✅ Lightning Fast 3-Second Processing</div>
-                  <div>✅ Works Offline After Load</div>
-                  <div>✅ No Server Uploads Required</div>
-                  <div>✅ GDPR Compliant Privacy</div>
-                  <div>✅ Open Source Transparent</div>
-                AllFileChanger Supported Image Formats & Advanced Compression Types (2025)
-              </h3>
-              <p className="leading-relaxed mb-4">
-                <strong>All File Changer</strong> supports all major and modern image formats with specialized compression techniques for each
-                  <div>✅ No Ads or Popups</div>
-                  <div>✅ Active Development 2025trong> Parallel processing</div>
-                  <div><strong>Smart Resizing:</strong> Auto-dimension optimization</d hover:shadow-lg transition-shadow">
-                  <div className="text-2xl mb-2">📸</div>
-                  <div className="font-semibold text-gray-900 dark:text-white">JPG/JPEG Compression</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">MozJPEG lossy compression - Best for photos</div>
-                  <div className="text-xs text-green-600 dark:text-green-400 mt-1">Up to 85% reduction</div>
-                </div>
-                <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 text-center hover:shadow-lg transition-shadow">
-                  <div className="text-2xl mb-2">🖼️</div>
-                  <div className="font-semibold text-gray-900 dark:text-white">PNG Compression</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">Lossless with transparency support</div>
-                  <div className="text-xs text-green-600 dark:text-green-400 mt-1">Up to 70% reduction</div>
-                </div>
-                <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 text-center hover:shadow-lg transition-shadow">
-                  <div className="text-2xl mb-2">🌐</div>
-                  <div className="font-semibold text-gray-900 dark:text-white">WebP Compression</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">Modern web format - Best compression ratio</div>
-                  <div className="text-xs text-green-600 dark:text-green-400 mt-1">Up to 90% reduction</div>
-                </div>
-                <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 text-center hover:shadow-lg transition-shadow">
-                  <div className="text-2xl mb-2">🎬</div>
-                  <div className="font-semibold text-gray-900 dark:text-white">GIF Compression</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">Animated images with color optimization</div>
-                  <div className="text-xs text-green-600 dark:text-green-400 mt-1">Up to 60% reductionk:border-green-800 rounded-xl p-6 my-8">
+
+              <div className="bg-green-100 dark:bg-green-900/30 border border-green-200 dark:border-green-800 rounded-xl p-6 my-8">
                 <h4 className="text-lg font-semibold text-green-800 dark:text-green-200 mb-3">
                   🏆 Why Choose Our Image Compressor?
                 </h4>
@@ -895,72 +641,13 @@ export default function ImageCompressor() {
                   <div className="text-sm text-gray-600 dark:text-gray-400">Lossy compression for photos</div>
                 </div>
                 <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 text-center">
-                  <diAllFileChanger Real-World Compression Statistics & Performance (2025)
-                </h4>
-                <p className="text-blue-700 dark:text-blue-300 text-sm leading-relaxed mb-4">
-                  <strong>AllFileChanger</strong> users typically achieve <strong>70-90% file size reduction</strong> while maintaining 
-                  excellent visual quality that's indistinguishable from the original. The average compression time is under 
-                  <strong> 2-3 seconds per image</strong>, making it the <strong>fastest free image compressor online</strong> available in 2025. 
-                  Over <strong>5 million images</strong> have been successfully compressed using All File Changer, saving users 
-                  <strong> 250+ terabytes</strong> of storage space globally.
-                </p>
-               div className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 border-2 border-purple-200 dark:border-purple-800 rounded-xl p-6 my-8">
-                <h4 className="text-lg font-semibold text-purple-800 dark:text-purple-200 mb-3 text-center">
-                  🎯 SEO Benefits of Image Compression with AllFileChanger
-                </h4>
-                <p className="text-purple-700 dark:text-purple-300 text-sm leading-relaxed text-center mb-4">
-                  Using <strong>AllFileChanger image compressor</strong> improves your website's SEO ranking by reducing page load times, 
-                  improving Core Web Vitals (LCP, CLS, FID), and enhancing user experience. Google prioritizes fast-loading websites 
-                  in search results, making image compression essential for SEO in 2025.
-                </p>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center text-sm">
-                  <div>
-                    <div className="text-2xl mb-1">⚡</div>
-                    <strong>50% Faster Load Times</strong>
-                    <div className="text-xs text-purple-600 dark:text-purple-400">Better Google PageSpeed Score</div>
-                  </div>
-                  <div>
-                    <div className="text-2xl mb-1">📈</div>
-                    <strong>Higher Search Rankings</strong>
-                    <div className="text-xs text-purple-600 dark:text-purple-400">Improved Core Web Vitals</div>
-                  </div>
-                  <div>
-                    <div className="text-2xl mb-1">🎯</div>
-                    <strong>Better User Experience</strong>
-                    <div className="text-xs text-purple-600 dark:text-purple-400">Lower Bounce Rates</div>
-                  </div>
+                  <div className="text-2xl mb-2">🖼️</div>
+                  <div className="font-semibold text-gray-900 dark:text-white">PNG</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">Lossless with transparency</div>
                 </div>
-              </div>
-              
-              <p className="leading-relaxed text-center text-lg font-medium mt-8">
-                Start compressing your images with <strong>AllFileChanger</strong> (All File Changer) now and experience the perfect balance of 
-                <strong> quality and file size optimization</strong>. Join over <strong>5 million users</strong> who trust 
-                <strong> AllFileChanger - the #1 free image compressor online</strong> for all their compression needs in 2025!
-              </p>
-              
-              <div className="text-center mt-6">
-                <a href="#" 
-                   className="inline-block bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-lg">
-                  🚀 Start Compressing Images Now - Free Forever
-                </a>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mt-3">
-                  Trusted by professionals • No registration • No credit card • No limits
-                </p>
-              </div   <div className="text-xs text-blue-700 dark:text-blue-300">Images Compressed</div>
-                  </div>
-                  <div className="bg-white dark:bg-blue-950/50 rounded-lg p-3">
-                    <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">90%</div>
-                    <div className="text-xs text-blue-700 dark:text-blue-300">Max Reduction</div>
-                  </div>
-                  <div className="bg-white dark:bg-blue-950/50 rounded-lg p-3">
-                    <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">2.5s</div>
-                    <div className="text-xs text-blue-700 dark:text-blue-300">Avg Speed</div>
-                  </div>
-                  <div className="bg-white dark:bg-blue-950/50 rounded-lg p-3">
-                    <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">4.9★</div>
-                    <div className="text-xs text-blue-700 dark:text-blue-300">User Rating</div>
-                  </div>
-                </divdiv className="font-semibold text-gray-900 dark:text-white">WebP</div>
+                <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 text-center">
+                  <div className="text-2xl mb-2">🌐</div>
+                  <div className="font-semibold text-gray-900 dark:text-white">WebP</div>
                   <div className="text-sm text-gray-600 dark:text-gray-400">Modern web format</div>
                 </div>
                 <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 text-center">
