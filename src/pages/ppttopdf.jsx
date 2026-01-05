@@ -73,8 +73,8 @@ export default function PowerPointConverter() {
   return (
     <div className="min-h-screen bg-white dark:bg-black transition-all duration-500">
       <Helmet>
-        <title>PowerPoint Converter - Convert PPT/PPTX to PDF | AllFileChanger</title>
-        <meta name="description" content="Convert PowerPoint presentations (PPT, PPTX) to PDF and text formats online for free. Fast, secure PowerPoint converter." />
+        <title>PPTX TO PDF CONVERTER - Convert PPTX to PDF | AllFileChanger</title>
+        <meta name="description" content="Convert PPT and PPTX to PDF online — ppt to pdf, pptx to pdf, powerpoint to pdf. Fast, secure, and free PPTX to PDF converter." />
       </Helmet>
 
       <section className="relative overflow-hidden bg-gradient-to-br from-orange-600 via-red-600 to-pink-600 dark:from-black dark:via-black dark:to-black">
@@ -85,9 +85,9 @@ export default function PowerPointConverter() {
               <span className="text-3xl text-white">📽️</span>
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6">
-              <span className="text-yellow-300 dark:text-yellow-400">PowerPoint Converter</span>
+              <span className="text-yellow-300 dark:text-yellow-400">PPTX TO PDF CONVERTER</span>
             </h1>
-            <p className="text-lg sm:text-xl text-orange-100 dark:text-gray-300 mb-6 max-w-3xl mx-auto">Convert PowerPoint presentations to PDF and text. Fast, secure, and free.</p>
+            <p className="text-lg sm:text-xl text-orange-100 dark:text-gray-300 mb-6 max-w-3xl mx-auto">Convert PPT and PPTX files to PDF quickly. Keywords: ppt to pdf, pptx to pdf, powerpoint to pdf. Fast, secure, and free.</p>
           </div>
         </div>
       </section>
