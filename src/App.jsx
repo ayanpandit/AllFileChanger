@@ -24,7 +24,7 @@ import PdfProtect from './pages/PdfProtect';
 import PdfUnlock from './pages/PdfUnlock';
 import WordConverter from './pages/WordConverter';
 import ExcelConverter from './pages/ExcelConverter';
-import PowerPointConverter from './pages/PowerPointConverter';
+import PowerPointConverter from './pages/ppttopdf';
 import TextExtractor from './pages/TextExtractor';
 import OcrScanner from './pages/OcrScanner';
 import DocumentMerger from './pages/DocumentMerger';
