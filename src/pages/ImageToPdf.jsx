@@ -118,35 +118,29 @@ export default function ImageToPdf() {
 
       const API_URL = import.meta.env.VITE_PYTHON_API_URL + '/api/pdf';
 
-      // Step 1: Convert images to PDF and get session ID
+      // Convert images to PDF – backend returns the file directly
       const response = await fetch(`${API_URL}/image-to-pdf`, {
         method: 'POST',
         body: formData,
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        console.error('Conversion failed:', errorData);
-        alert(`Conversion failed: ${errorData.error || 'Unknown error'}`);
+        let errorMsg = 'Unknown error';
+        try {
+          const errorData = await response.json();
+          errorMsg = errorData.error || errorMsg;
+        } catch {
+          errorMsg = response.statusText;
+        }
+        console.error('Conversion failed:', errorMsg);
+        alert(`Conversion failed: ${errorMsg}`);
         return;
       }
 
-      const data = await response.json();
+      const blob = await response.blob();
 
-      if (data.success && data.sessionId) {
-        // Step 2: Download the PDF using the session ID
-        const downloadResponse = await fetch(`${API_URL}/download/${data.sessionId}`);
-
-        if (!downloadResponse.ok) {
-          console.error('Download failed');
-          alert('Failed to download PDF');
-          return;
-        }
-
-        const blob = await downloadResponse.blob();
-
-        // Enhanced mobile-friendly download handling
-        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      // Enhanced mobile-friendly download handling
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
         if (isMobile) {
           // For mobile devices, try multiple download methods
@@ -198,10 +192,6 @@ export default function ImageToPdf() {
           // Redirect to home page after 2 seconds
           navigate('/', { replace: true });
         }, 2000);
-      } else {
-        console.error('Invalid response:', data);
-        alert('Conversion failed: Invalid response from server');
-      }
     } catch (error) {
       console.error('Conversion failed:', error);
       alert(`Error: ${error.message || 'Failed to convert images'}`);

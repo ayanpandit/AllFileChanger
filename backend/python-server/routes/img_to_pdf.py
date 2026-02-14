@@ -1,29 +1,16 @@
-"""Image → PDF conversion with session-based download."""
+"""Image → PDF conversion – returns the PDF directly in the response."""
 
-from flask import Blueprint, request, send_file, jsonify, after_this_request
-import img2pdf, io, os, secrets, gc, logging
-from datetime import datetime, timedelta
-from threading import Lock
+from flask import Blueprint, request, send_file, jsonify
+import img2pdf, io, os, gc, logging
 from PIL import Image
 from concurrent.futures import ThreadPoolExecutor
 
 bp = Blueprint('img_to_pdf', __name__)
 logger = logging.getLogger(__name__)
 
-# ── Session store ───────────────────────────────────────────────────────────
-_sessions = {}
-_lock = Lock()
-_SESSION_TTL = timedelta(minutes=10)
 _MAX_IMAGES = 200
 _MAX_SIZE = 20 * 1024 * 1024  # 20 MB per image
 _ALLOWED_EXT = {'jpg','jpeg','png','gif','bmp','webp','tiff','tif','heic','heif','ico','svg'}
-
-def _cleanup():
-    now = datetime.now()
-    with _lock:
-        expired = [k for k, v in _sessions.items() if now - v['ts'] > _SESSION_TTL]
-        for k in expired:
-            del _sessions[k]
 
 def _process(image_bytes, filename):
     """Convert any image to RGB JPEG bytes for img2pdf."""
@@ -49,7 +36,6 @@ def _process(image_bytes, filename):
 
 @bp.route('/image-to-pdf', methods=['POST'])
 def image_to_pdf():
-    _cleanup()
     if 'images' not in request.files:
         return jsonify(error='No images uploaded'), 400
 
@@ -82,28 +68,8 @@ def image_to_pdf():
     del images_bytes
     gc.collect()
 
-    sid = secrets.token_urlsafe(32)
-    with _lock:
-        _sessions[sid] = {'pdf': pdf_bytes, 'ts': datetime.now(), 'filename': 'converted.pdf'}
+    logger.info(f'Converted {count} images to PDF ({len(pdf_bytes)} bytes)')
 
-    return jsonify(success=True, sessionId=sid, filename='converted.pdf',
-                   size=len(pdf_bytes), imageCount=count), 200
-
-
-@bp.route('/download/<session_id>', methods=['GET'])
-def download_pdf(session_id):
-    with _lock:
-        data = _sessions.get(session_id)
-    if not data:
-        return jsonify(error='Session expired or invalid'), 404
-
-    buf = io.BytesIO(data['pdf'])
-
-    @after_this_request
-    def _del(response):
-        with _lock:
-            _sessions.pop(session_id, None)
-        return response
-
+    buf = io.BytesIO(pdf_bytes)
     return send_file(buf, mimetype='application/pdf',
-                     as_attachment=True, download_name=data['filename'])
+                     as_attachment=True, download_name='converted.pdf')

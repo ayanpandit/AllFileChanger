@@ -92,7 +92,6 @@ def root():
         version='1.0.0',
         endpoints={
             'image_to_pdf':    'POST /api/pdf/image-to-pdf',
-            'pdf_download':    'GET  /api/pdf/download/<id>',
             'pdf_merge':       'POST /api/pdf/merge',
             'pdf_split':       'POST /api/pdf/split',
             'pdf_compress':    'POST /api/pdf/compress',
