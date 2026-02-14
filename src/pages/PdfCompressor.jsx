@@ -1,6 +1,8 @@
 import React, { useState, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
+import PageContent from '../components/PageContent';
+import { pdfCompressorData } from '../data/pageContentData';
 
 function PdfCompressor() {
   const navigate = useNavigate();
@@ -228,6 +230,7 @@ function PdfCompressor() {
           </div>
         </div>
       </section>
+      <PageContent {...pdfCompressorData} />
     </div>
   );
 }

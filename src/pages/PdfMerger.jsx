@@ -1,6 +1,8 @@
 import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SEO from '../components/SEO';
+import PageContent from '../components/PageContent';
+import { pdfMergerData } from '../data/pageContentData';
 
 function PdfMerger() {
   const navigate = useNavigate();
@@ -374,6 +376,7 @@ function PdfMerger() {
           </div>
         </div>
       </section>
+      <PageContent {...pdfMergerData} />
     </div>
   );
 }

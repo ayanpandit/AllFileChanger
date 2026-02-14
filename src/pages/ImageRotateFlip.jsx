@@ -1,6 +1,8 @@
 import React, { useRef, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import PageContent from '../components/PageContent';
+import { imageRotateFlipData } from '../data/pageContentData';
 
 const ImageRotateFlip = () => {
   const canvasRef = useRef(null);
@@ -835,6 +837,7 @@ const ImageRotateFlip = () => {
           </button>
         </div>
       </section>
+      <PageContent {...imageRotateFlipData} />
     </div>
   );
 };

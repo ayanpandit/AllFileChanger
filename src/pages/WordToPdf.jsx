@@ -1,6 +1,8 @@
 import React, { useState, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
+import PageContent from '../components/PageContent';
+import { wordToPdfData } from '../data/pageContentData';
 
 function WordToPdf() {
   const navigate = useNavigate();
@@ -77,6 +79,7 @@ function WordToPdf() {
           </div>
         </div>
       </section>
+      <PageContent {...wordToPdfData} />
     </div>
   );
 }

@@ -1,6 +1,8 @@
 import React, { useState, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
+import PageContent from '../components/PageContent';
+import { imageEditorData } from '../data/pageContentData';
 
 function ImageEditor() {
   const navigate = useNavigate();
@@ -328,6 +330,7 @@ function ImageEditor() {
           </div>
         </div>
       </section>
+      <PageContent {...imageEditorData} />
     </div>
   );
 }

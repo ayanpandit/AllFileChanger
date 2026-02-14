@@ -1,6 +1,8 @@
 import React, { useState, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
+import PageContent from '../components/PageContent';
+import { imageWatermarkData } from '../data/pageContentData';
 
 function ImageWatermark() {
   const navigate = useNavigate();
@@ -276,6 +278,7 @@ function ImageWatermark() {
           </div>
         </div>
       </section>
+      <PageContent {...imageWatermarkData} />
     </div>
   );
 }

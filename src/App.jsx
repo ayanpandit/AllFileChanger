@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
+import ScrollToTop from './components/ScrollToTop';
 import './App.css';
 import Navbar from './components/navbar';
 import Home from './components/home';
@@ -57,6 +58,7 @@ function App() {
   return (
     <HelmetProvider>
       <Router>
+        <ScrollToTop />
         <div className={`min-h-screen transition-colors duration-500 ${darkMode ? 'dark bg-black' : 'bg-white'}`}>
           <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
           <main className="pt-24">

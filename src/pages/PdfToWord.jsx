@@ -1,6 +1,8 @@
 import React, { useState, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
+import PageContent from '../components/PageContent';
+import { pdfToWordData } from '../data/pageContentData';
 
 function PdfToWord() {
   const navigate = useNavigate();
@@ -93,6 +95,7 @@ function PdfToWord() {
           </div>
         </div>
       </section>
+      <PageContent {...pdfToWordData} />
     </div>
   );
 }

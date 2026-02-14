@@ -1,6 +1,8 @@
 import React, { useState, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
+import PageContent from '../components/PageContent';
+import { imageCropData } from '../data/pageContentData';
 
 function ImageCrop() {
   const navigate = useNavigate();
@@ -293,6 +295,7 @@ function ImageCrop() {
           </div>
         </div>
       </section>
+      <PageContent {...imageCropData} />
     </div>
   );
 }

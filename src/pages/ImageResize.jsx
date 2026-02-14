@@ -1,6 +1,8 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import PageContent from '../components/PageContent';
+import { imageResizeData } from '../data/pageContentData';
 
 // API Configuration from environment variables
 const IMAGE_RESIZER_API_URL = import.meta.env.VITE_NODE_API_URL + '/api/image';
@@ -706,6 +708,7 @@ export default function ImageResize() {
             </div>
           </div>
       </section>
+      <PageContent {...imageResizeData} />
     </div>
     </>
   );

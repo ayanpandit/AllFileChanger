@@ -1,6 +1,8 @@
 import React, { useState, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
+import PageContent from '../components/PageContent';
+import { imageBgRemoveData } from '../data/pageContentData';
 
 function ImageBackgroundRemove() {
   const navigate = useNavigate();
@@ -241,6 +243,7 @@ function ImageBackgroundRemove() {
           </div>
         </div>
       </section>
+      <PageContent {...imageBgRemoveData} />
     </div>
   );
 }

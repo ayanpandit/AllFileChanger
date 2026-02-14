@@ -1,6 +1,8 @@
 import React, { useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import PageContent from '../components/PageContent';
+import { documentMergerData } from '../data/pageContentData';
 
 const API_URL = import.meta.env.VITE_PYTHON_API_URL + '/api/doc';
 
@@ -216,11 +218,7 @@ export default function DocumentMerger() {
         </div>
       </section>
 
-      <footer className="bg-gray-100 dark:bg-black transition-all duration-500 py-12 border-t border-gray-200 dark:border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-gray-600 dark:text-gray-400">© 2024 AllFileChanger. All rights reserved.</p>
-        </div>
-      </footer>
+      <PageContent {...documentMergerData} />
     </div>
   );
 }
