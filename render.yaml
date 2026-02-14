@@ -16,15 +16,16 @@ services:
   # ── Python PDF/Doc Backend ──────────────────────────────────────────────
   - type: web
     name: allfilechanger-python-backend
-    runtime: python
+    runtime: docker
     rootDir: backend/python-server
-    buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 4 --timeout 120
+    dockerfilePath: ./Dockerfile
     envVars:
       - key: FLASK_ENV
         value: production
       - key: CORS_ORIGIN
         sync: false
+      - key: PORT
+        value: "5050"
     healthCheckPath: /health
 
 staticSites:
