@@ -103,7 +103,7 @@ function PdfMerger() {
     });
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_PDFMERGER_URL}/merge`, {
+      const response = await fetch(`${import.meta.env.VITE_PYTHON_API_URL}/api/pdf/merge`, {
         method: 'POST',
         body: formData,
       });

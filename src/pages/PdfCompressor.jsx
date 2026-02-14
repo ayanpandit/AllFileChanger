@@ -56,7 +56,7 @@ function PdfCompressor() {
     formData.append('level', compressionLevel);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_PDFCOMPRESSOR_URL}/compress`, {
+      const response = await fetch(`${import.meta.env.VITE_PYTHON_API_URL}/api/pdf/compress`, {
         method: 'POST',
         body: formData,
       });

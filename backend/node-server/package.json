@@ -1,0 +1,20 @@
+{
+  "name": "allfilechanger-node-backend",
+  "version": "1.0.0",
+  "description": "Unified Node.js backend for AllFileChanger image processing",
+  "main": "server.js",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "start": "NODE_ENV=production node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "multer": "^1.4.5-lts.1",
+    "sharp": "^0.33.0",
+    "cors": "^2.8.5",
+    "archiver": "^7.0.0"
+  }
+}

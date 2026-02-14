@@ -67,7 +67,7 @@ function ImageCrop() {
     formData.append('height', cropDimensions.height);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_IMAGECROP_URL}/crop`, {
+      const response = await fetch(`${import.meta.env.VITE_NODE_API_URL}/api/image/crop`, {
         method: 'POST',
         body: formData,
       });

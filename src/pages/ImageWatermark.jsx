@@ -61,7 +61,7 @@ function ImageWatermark() {
     formData.append('position', position);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_IMAGEWATERMARK_URL}/watermark`, {
+      const response = await fetch(`${import.meta.env.VITE_NODE_API_URL}/api/image/watermark`, {
         method: 'POST',
         body: formData,
       });

@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
-const API_URL = import.meta.env.VITE_FORMATCONVERTER_URL || 'http://localhost:5025';
+const API_URL = import.meta.env.VITE_PYTHON_API_URL + '/api/doc';
 
 export default function FormatConverter() {
   const [file, setFile] = useState(null);
@@ -38,7 +38,7 @@ export default function FormatConverter() {
       const formData = new FormData();
       formData.append('file', file);
       formData.append('format', format);
-      const response = await fetch(`${API_URL}/convert`, { method: 'POST', body: formData });
+      const response = await fetch(`${API_URL}/format-convert`, { method: 'POST', body: formData });
       if (!response.ok) throw new Error('Conversion failed');
 
       const blob = await response.blob();

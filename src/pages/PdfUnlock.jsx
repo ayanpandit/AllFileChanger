@@ -22,7 +22,7 @@ export default function PdfUnlock() {
     formData.append('pdf', file);
     formData.append('password', password);
     try {
-      const res = await fetch(`${import.meta.env.VITE_PDFUNLOCK_URL}/unlock`, { method: 'POST', body: formData });
+      const res = await fetch(`${import.meta.env.VITE_PYTHON_API_URL}/api/pdf/unlock`, { method: 'POST', body: formData });
       if (res.ok) {
         const blob = await res.blob();
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);

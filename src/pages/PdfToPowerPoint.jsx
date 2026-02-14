@@ -20,7 +20,7 @@ export default function PdfToPowerPoint() {
     const formData = new FormData();
     formData.append('pdf', file);
     try {
-      const res = await fetch(`${import.meta.env.VITE_PDFTOPOWERPOINT_URL}/convert`, { method: 'POST', body: formData });
+      const res = await fetch(`${import.meta.env.VITE_PYTHON_API_URL}/api/pdf/to-powerpoint`, { method: 'POST', body: formData });
       if (res.ok) {
         const blob = await res.blob();
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);

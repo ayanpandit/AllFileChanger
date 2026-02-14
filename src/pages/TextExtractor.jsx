@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
-const API_URL = import.meta.env.VITE_TEXTEXTRACTOR_URL || 'http://localhost:5022';
+const API_URL = import.meta.env.VITE_PYTHON_API_URL + '/api/doc';
 
 export default function TextExtractor() {
   const [file, setFile] = useState(null);

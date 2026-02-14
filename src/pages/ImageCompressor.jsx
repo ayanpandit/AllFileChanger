@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 
 export default function ImageCompressor() {
   // Backend URL from environment variables
-  const COMPRESSION_API_URL = import.meta.env.VITE_IMAGECOMPRESSOR_URL || 'http://localhost:5001';
+  const COMPRESSION_API_URL = import.meta.env.VITE_NODE_API_URL + '/api/image';
   
   const [file, setFile] = useState(null);
   const [quality, setQuality] = useState(70);

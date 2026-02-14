@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
 // API Configuration from environment variables
-const IMAGE_RESIZER_API_URL = import.meta.env.VITE_IMAGERESIZER_URL || 'http://localhost:5003';
+const IMAGE_RESIZER_API_URL = import.meta.env.VITE_NODE_API_URL + '/api/image';
 
 export default function ImageResize() {
   const navigate = useNavigate();
@@ -163,7 +163,7 @@ export default function ImageResize() {
     setErrorMessage('');
 
     try {
-      const response = await fetch(`${IMAGE_RESIZER_API_URL}/rotate`, {
+      const response = await fetch(`${IMAGE_RESIZER_API_URL}/resize/rotate`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -199,7 +199,7 @@ export default function ImageResize() {
     }
 
     try {
-      const response = await fetch(`${IMAGE_RESIZER_API_URL}/download/${sessionId}`);
+      const response = await fetch(`${IMAGE_RESIZER_API_URL}/resize/download/${sessionId}`);
       if (!response.ok) throw new Error('Download failed');
 
       const blob = await response.blob();

@@ -69,7 +69,7 @@ function ImageEditor() {
     formData.append('rotation', editSettings.rotation);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_IMAGEEDITOR_URL}/edit`, {
+      const response = await fetch(`${import.meta.env.VITE_NODE_API_URL}/api/image/edit`, {
         method: 'POST',
         body: formData,
       });

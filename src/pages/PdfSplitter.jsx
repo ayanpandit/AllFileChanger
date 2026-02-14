@@ -39,7 +39,7 @@ function PdfSplitter() {
     formData.append('range', pageRange);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_PDFSPLITTER_URL}/split`, {
+      const response = await fetch(`${import.meta.env.VITE_PYTHON_API_URL}/api/pdf/split`, {
         method: 'POST',
         body: formData,
       });

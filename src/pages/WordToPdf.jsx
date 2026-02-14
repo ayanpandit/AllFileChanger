@@ -25,7 +25,7 @@ function WordToPdf() {
     const formData = new FormData();
     formData.append('file', selectedFile);
     try {
-      const response = await fetch(`${import.meta.env.VITE_WORDTOPDF_URL}/convert`, { method: 'POST', body: formData });
+      const response = await fetch(`${import.meta.env.VITE_PYTHON_API_URL}/api/doc/word-to-pdf`, { method: 'POST', body: formData });
       if (response.ok) {
         const blob = await response.blob();
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);

@@ -1,0 +1,33 @@
+# docker-compose.yml – spin up both backends locally or in CI
+version: "3.9"
+
+services:
+  node-backend:
+    build: ./backend/node-server
+    ports:
+      - "${NODE_PORT:-5001}:5001"
+    environment:
+      - NODE_ENV=production
+      - PORT=5001
+      - CORS_ORIGIN=${CORS_ORIGIN:-*}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:5001/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  python-backend:
+    build: ./backend/python-server
+    ports:
+      - "${PYTHON_PORT:-5050}:5050"
+    environment:
+      - FLASK_ENV=production
+      - PORT=5050
+      - CORS_ORIGIN=${CORS_ORIGIN:-*}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5050/health')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3

@@ -116,7 +116,7 @@ export default function ImageToPdf() {
       const formData = new FormData();
       files.forEach(file => formData.append('images', file));
 
-      const API_URL = import.meta.env.VITE_IMGTOPDF_URL || 'http://localhost:5005';
+      const API_URL = import.meta.env.VITE_PYTHON_API_URL + '/api/pdf';
 
       // Step 1: Convert images to PDF and get session ID
       const response = await fetch(`${API_URL}/image-to-pdf`, {

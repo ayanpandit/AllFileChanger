@@ -21,7 +21,7 @@ function PdfToExcel() {
     const formData = new FormData();
     formData.append('pdf', selectedFile);
     try {
-      const response = await fetch(`${import.meta.env.VITE_PDFTOEXCEL_URL}/convert`, { method: 'POST', body: formData });
+      const response = await fetch(`${import.meta.env.VITE_PYTHON_API_URL}/api/pdf/to-excel`, { method: 'POST', body: formData });
       if (response.ok) {
         const blob = await response.blob();
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);

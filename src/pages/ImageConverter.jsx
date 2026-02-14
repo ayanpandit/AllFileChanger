@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
 // API Configuration from environment variables
-const IMAGE_CONVERTER_API_URL = import.meta.env.VITE_IMAGECONVERTER_URL || 'http://localhost:5002';
+const IMAGE_CONVERTER_API_URL = import.meta.env.VITE_NODE_API_URL + '/api/image';
 
 // SEO Structured Data
 const structuredData = {

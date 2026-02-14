@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 
-const API_URL = import.meta.env.VITE_POWERPOINTCONVERTER_URL || 'http://localhost:5021';
+const API_URL = import.meta.env.VITE_PYTHON_API_URL + '/api/doc';
 
 export default function PPTtoPDF() {
   const [file, setFile] = useState(null);
@@ -40,7 +40,7 @@ export default function PPTtoPDF() {
       const formData = new FormData();
       formData.append('file', file);
       formData.append('format', format);
-      const response = await fetch(`${API_URL}/convert`, { method: 'POST', body: formData });
+      const response = await fetch(`${API_URL}/ppt-convert`, { method: 'POST', body: formData });
       if (!response.ok) throw new Error('Conversion failed');
 
       const blob = await response.blob();

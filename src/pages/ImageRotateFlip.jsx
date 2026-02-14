@@ -159,11 +159,11 @@ const ImageRotateFlip = () => {
     formData.append('flipY', flipY === -1);
 
     try {
-      const API_URL = import.meta.env.VITE_IMAGEROTATEFLIP_URL || 'http://localhost:5004';
+      const API_URL = import.meta.env.VITE_NODE_API_URL + '/api/image';
       console.log('🔗 Using API URL:', API_URL);
       
       // Send to backend for processing
-      const response = await fetch(`${API_URL}/process`, {
+      const response = await fetch(`${API_URL}/rotate-flip`, {
         method: 'POST',
         body: formData,
       });
@@ -177,7 +177,7 @@ const ImageRotateFlip = () => {
       console.log('✅ Processed:', data);
 
       // Download the processed image
-      const downloadResponse = await fetch(`${API_URL}/download/${data.sessionId}`);
+      const downloadResponse = await fetch(`${API_URL}/rotate-flip/download/${data.sessionId}`);
       if (!downloadResponse.ok) throw new Error('Download failed');
 
       const blob = await downloadResponse.blob();

@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
-const API_URL = import.meta.env.VITE_OCRSCANNER_URL || 'http://localhost:5023';
+const API_URL = import.meta.env.VITE_PYTHON_API_URL + '/api/doc';
 
 export default function OcrScanner() {
   const [file, setFile] = useState(null);
