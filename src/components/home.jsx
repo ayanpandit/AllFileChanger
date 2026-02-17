@@ -453,7 +453,7 @@ export default function Home() {
 
       {/* ── Latest from Our Blog ─────────────────────────────────── */}
       <BlogSection
-        count={3}
+        count={6}
         title="📝 Latest from Our Blog"
         subtitle="Expert guides and tips on image compression, PDF conversion, and file optimization for better performance and SEO."
       />

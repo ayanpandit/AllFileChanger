@@ -189,7 +189,7 @@ export default function PageContent({
       )}
 
       {/* ═══════════════════════  BLOG ARTICLES  ═════════════════════ */}
-      <BlogSection category={toolCategory} count={3} />
+      <BlogSection category={toolCategory} count={6} />
 
       {/* ═══════════════════════  FOOTER  ════════════════════════════ */}
       <footer className="bg-gray-900 dark:bg-black border-t border-gray-800 transition-colors duration-500">
