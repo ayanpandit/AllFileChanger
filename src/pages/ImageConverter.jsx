@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import PageContent from '../components/PageContent';
 import { imageConverterData } from '../data/pageContentData';
+/* RAILWAY COLD-START – remove this import when you buy a paid plan */
+import { fetchWithWakeUp } from '../utils/backendWakeUp';
 
 // API Configuration from environment variables
 const IMAGE_CONVERTER_API_URL = import.meta.env.VITE_NODE_API_URL + '/api/image';
@@ -330,7 +332,8 @@ export default function ImageConverter() {
         formData.append('format', format);
         formData.append('quality', quality);
 
-        const response = await fetch(`${IMAGE_CONVERTER_API_URL}/convert`, {
+        /* RAILWAY COLD-START – replace fetchWithWakeUp with fetch when you buy a paid plan */
+        const response = await fetchWithWakeUp(`${IMAGE_CONVERTER_API_URL}/convert`, {
           method: 'POST',
           body: formData,
         });
@@ -375,7 +378,8 @@ export default function ImageConverter() {
         formData.append('format', format);
         formData.append('quality', quality);
 
-        const response = await fetch(`${IMAGE_CONVERTER_API_URL}/convert-batch`, {
+        /* RAILWAY COLD-START – replace fetchWithWakeUp with fetch when you buy a paid plan */
+        const response = await fetchWithWakeUp(`${IMAGE_CONVERTER_API_URL}/convert-batch`, {
           method: 'POST',
           body: formData,
         });

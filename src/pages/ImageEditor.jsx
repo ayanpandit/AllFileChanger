@@ -3,6 +3,8 @@ import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 import PageContent from '../components/PageContent';
 import { imageEditorData } from '../data/pageContentData';
+/* RAILWAY COLD-START – remove this import when you buy a paid plan */
+import { fetchWithWakeUp } from '../utils/backendWakeUp';
 
 function ImageEditor() {
   const navigate = useNavigate();
@@ -71,7 +73,8 @@ function ImageEditor() {
     formData.append('rotation', editSettings.rotation);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_NODE_API_URL}/api/image/edit`, {
+      /* RAILWAY COLD-START – replace fetchWithWakeUp with fetch when you buy a paid plan */
+      const response = await fetchWithWakeUp(`${import.meta.env.VITE_NODE_API_URL}/api/image/edit`, {
         method: 'POST',
         body: formData,
       });

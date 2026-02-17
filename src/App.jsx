@@ -4,6 +4,15 @@ import { HelmetProvider } from 'react-helmet-async';
 import ScrollToTop from './components/ScrollToTop';
 import './App.css';
 import Navbar from './components/navbar';
+
+/* ═══════════════════════════════════════════════════════════════════════════
+ *  RAILWAY COLD-START WORKAROUND – START
+ *  Remove this import when you switch to a paid Railway plan.
+ * ═══════════════════════════════════════════════════════════════════════════ */
+import { wakeUpBackends } from './utils/backendWakeUp';
+/* ═══════════════════════════════════════════════════════════════════════════
+ *  RAILWAY COLD-START WORKAROUND – END
+ * ═══════════════════════════════════════════════════════════════════════════ */
 import Home from './components/home';
 import ImageToPdf from './pages/ImageToPdf';
 import ImageCompressor from './pages/ImageCompressor';
@@ -48,6 +57,17 @@ function App() {
       document.documentElement.classList.add('dark');
     }
   }, []);
+
+  /* ═══════════════════════════════════════════════════════════════════════
+   *  RAILWAY COLD-START WORKAROUND – START
+   *  Remove this useEffect when you switch to a paid Railway plan.
+   * ═══════════════════════════════════════════════════════════════════════ */
+  useEffect(() => {
+    wakeUpBackends();
+  }, []);
+  /* ═══════════════════════════════════════════════════════════════════════
+   *  RAILWAY COLD-START WORKAROUND – END
+   * ═══════════════════════════════════════════════════════════════════════ */
 
   const toggleDarkMode = () => {
     const newMode = !darkMode;

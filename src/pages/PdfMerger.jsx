@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import SEO from '../components/SEO';
 import PageContent from '../components/PageContent';
 import { pdfMergerData } from '../data/pageContentData';
+/* RAILWAY COLD-START – remove this import when you buy a paid plan */
+import { fetchWithWakeUp } from '../utils/backendWakeUp';
 
 function PdfMerger() {
   const navigate = useNavigate();
@@ -105,7 +107,8 @@ function PdfMerger() {
     });
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_PYTHON_API_URL}/api/pdf/merge`, {
+      /* RAILWAY COLD-START – replace fetchWithWakeUp with fetch when you buy a paid plan */
+      const response = await fetchWithWakeUp(`${import.meta.env.VITE_PYTHON_API_URL}/api/pdf/merge`, {
         method: 'POST',
         body: formData,
       });

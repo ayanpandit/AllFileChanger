@@ -3,6 +3,8 @@ import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 import PageContent from '../components/PageContent';
 import { imageCropData } from '../data/pageContentData';
+/* RAILWAY COLD-START – remove this import when you buy a paid plan */
+import { fetchWithWakeUp } from '../utils/backendWakeUp';
 
 function ImageCrop() {
   const navigate = useNavigate();
@@ -69,7 +71,8 @@ function ImageCrop() {
     formData.append('height', cropDimensions.height);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_NODE_API_URL}/api/image/crop`, {
+      /* RAILWAY COLD-START – replace fetchWithWakeUp with fetch when you buy a paid plan */
+      const response = await fetchWithWakeUp(`${import.meta.env.VITE_NODE_API_URL}/api/image/crop`, {
         method: 'POST',
         body: formData,
       });

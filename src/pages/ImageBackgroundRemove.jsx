@@ -3,6 +3,8 @@ import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 import PageContent from '../components/PageContent';
 import { imageBgRemoveData } from '../data/pageContentData';
+/* RAILWAY COLD-START – remove this import when you buy a paid plan */
+import { fetchWithWakeUp } from '../utils/backendWakeUp';
 
 function ImageBackgroundRemove() {
   const navigate = useNavigate();
@@ -59,7 +61,8 @@ function ImageBackgroundRemove() {
     formData.append('image', selectedFile);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_NODE_API_URL}/api/image/remove-background`, {
+      /* RAILWAY COLD-START – replace fetchWithWakeUp with fetch when you buy a paid plan */
+      const response = await fetchWithWakeUp(`${import.meta.env.VITE_NODE_API_URL}/api/image/remove-background`, {
         method: 'POST',
         body: formData,
       });

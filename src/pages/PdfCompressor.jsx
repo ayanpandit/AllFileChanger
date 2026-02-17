@@ -3,6 +3,8 @@ import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 import PageContent from '../components/PageContent';
 import { pdfCompressorData } from '../data/pageContentData';
+/* RAILWAY COLD-START – remove this import when you buy a paid plan */
+import { fetchWithWakeUp } from '../utils/backendWakeUp';
 
 function PdfCompressor() {
   const navigate = useNavigate();
@@ -58,7 +60,8 @@ function PdfCompressor() {
     formData.append('level', compressionLevel);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_PYTHON_API_URL}/api/pdf/compress`, {
+      /* RAILWAY COLD-START – replace fetchWithWakeUp with fetch when you buy a paid plan */
+      const response = await fetchWithWakeUp(`${import.meta.env.VITE_PYTHON_API_URL}/api/pdf/compress`, {
         method: 'POST',
         body: formData,
       });

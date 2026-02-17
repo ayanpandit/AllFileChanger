@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import PageContent from '../components/PageContent';
 import { imageRotateFlipData } from '../data/pageContentData';
+/* RAILWAY COLD-START – remove this import when you buy a paid plan */
+import { fetchWithWakeUp } from '../utils/backendWakeUp';
 
 const ImageRotateFlip = () => {
   const canvasRef = useRef(null);
@@ -165,7 +167,8 @@ const ImageRotateFlip = () => {
       console.log('🔗 Using API URL:', API_URL);
       
       // Send to backend for processing
-      const response = await fetch(`${API_URL}/rotate-flip`, {
+      /* RAILWAY COLD-START – replace fetchWithWakeUp with fetch when you buy a paid plan */
+      const response = await fetchWithWakeUp(`${API_URL}/rotate-flip`, {
         method: 'POST',
         body: formData,
       });
@@ -179,7 +182,8 @@ const ImageRotateFlip = () => {
       console.log('✅ Processed:', data);
 
       // Download the processed image
-      const downloadResponse = await fetch(`${API_URL}/rotate-flip/download/${data.sessionId}`);
+      /* RAILWAY COLD-START – replace fetchWithWakeUp with fetch when you buy a paid plan */
+      const downloadResponse = await fetchWithWakeUp(`${API_URL}/rotate-flip/download/${data.sessionId}`);
       if (!downloadResponse.ok) throw new Error('Download failed');
 
       const blob = await downloadResponse.blob();

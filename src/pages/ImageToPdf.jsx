@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import SEO from '../components/SEO';
 import PageContent from '../components/PageContent';
 import { imageToPdfData } from '../data/pageContentData';
+/* RAILWAY COLD-START – remove this import when you buy a paid plan */
+import { fetchWithWakeUp } from '../utils/backendWakeUp';
 
 export default function ImageToPdf() {
   const navigate = useNavigate();
@@ -121,7 +123,8 @@ export default function ImageToPdf() {
       const API_URL = import.meta.env.VITE_PYTHON_API_URL + '/api/pdf';
 
       // Convert images to PDF – backend returns the file directly
-      const response = await fetch(`${API_URL}/image-to-pdf`, {
+      /* RAILWAY COLD-START – replace fetchWithWakeUp with fetch when you buy a paid plan */
+      const response = await fetchWithWakeUp(`${API_URL}/image-to-pdf`, {
         method: 'POST',
         body: formData,
       });

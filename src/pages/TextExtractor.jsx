@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import PageContent from '../components/PageContent';
 import { textExtractorData } from '../data/pageContentData';
+/* RAILWAY COLD-START – remove this import when you buy a paid plan */
+import { fetchWithWakeUp } from '../utils/backendWakeUp';
 
 const API_URL = import.meta.env.VITE_PYTHON_API_URL + '/api/doc';
 
@@ -38,7 +40,8 @@ export default function TextExtractor() {
     try {
       const formData = new FormData();
       formData.append('file', file);
-      const response = await fetch(`${API_URL}/extract`, { method: 'POST', body: formData });
+      /* RAILWAY COLD-START – replace fetchWithWakeUp with fetch when you buy a paid plan */
+      const response = await fetchWithWakeUp(`${API_URL}/extract`, { method: 'POST', body: formData });
       if (!response.ok) throw new Error('Extraction failed');
 
       const blob = await response.blob();

@@ -3,6 +3,8 @@ import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 import PageContent from '../components/PageContent';
 import { pdfSplitterData } from '../data/pageContentData';
+/* RAILWAY COLD-START – remove this import when you buy a paid plan */
+import { fetchWithWakeUp } from '../utils/backendWakeUp';
 
 function PdfSplitter() {
   const navigate = useNavigate();
@@ -41,7 +43,8 @@ function PdfSplitter() {
     formData.append('range', pageRange);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_PYTHON_API_URL}/api/pdf/split`, {
+      /* RAILWAY COLD-START – replace fetchWithWakeUp with fetch when you buy a paid plan */
+      const response = await fetchWithWakeUp(`${import.meta.env.VITE_PYTHON_API_URL}/api/pdf/split`, {
         method: 'POST',
         body: formData,
       });

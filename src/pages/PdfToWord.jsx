@@ -3,6 +3,8 @@ import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 import PageContent from '../components/PageContent';
 import { pdfToWordData } from '../data/pageContentData';
+/* RAILWAY COLD-START – remove this import when you buy a paid plan */
+import { fetchWithWakeUp } from '../utils/backendWakeUp';
 
 function PdfToWord() {
   const navigate = useNavigate();
@@ -33,7 +35,8 @@ function PdfToWord() {
     formData.append('pdf', selectedFile);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_PYTHON_API_URL}/api/pdf/to-word`, { method: 'POST', body: formData });
+      /* RAILWAY COLD-START – replace fetchWithWakeUp with fetch when you buy a paid plan */
+      const response = await fetchWithWakeUp(`${import.meta.env.VITE_PYTHON_API_URL}/api/pdf/to-word`, { method: 'POST', body: formData });
       if (response.ok) {
         const blob = await response.blob();
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);

@@ -3,6 +3,8 @@ import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
 import PageContent from '../components/PageContent';
 import { pdfUnlockData } from '../data/pageContentData';
+/* RAILWAY COLD-START – remove this import when you buy a paid plan */
+import { fetchWithWakeUp } from '../utils/backendWakeUp';
 
 export default function PdfUnlock() {
   const navigate = useNavigate();
@@ -24,7 +26,8 @@ export default function PdfUnlock() {
     formData.append('pdf', file);
     formData.append('password', password);
     try {
-      const res = await fetch(`${import.meta.env.VITE_PYTHON_API_URL}/api/pdf/unlock`, { method: 'POST', body: formData });
+      /* RAILWAY COLD-START – replace fetchWithWakeUp with fetch when you buy a paid plan */
+      const res = await fetchWithWakeUp(`${import.meta.env.VITE_PYTHON_API_URL}/api/pdf/unlock`, { method: 'POST', body: formData });
       if (res.ok) {
         const blob = await res.blob();
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);

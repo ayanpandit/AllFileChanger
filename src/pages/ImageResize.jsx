@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import PageContent from '../components/PageContent';
 import { imageResizeData } from '../data/pageContentData';
+/* RAILWAY COLD-START – remove this import when you buy a paid plan */
+import { fetchWithWakeUp } from '../utils/backendWakeUp';
 
 // API Configuration from environment variables
 const IMAGE_RESIZER_API_URL = import.meta.env.VITE_NODE_API_URL + '/api/image';
@@ -124,7 +126,8 @@ export default function ImageResize() {
       if (width) formData.append('width', width);
       if (height) formData.append('height', height);
 
-      const response = await fetch(`${IMAGE_RESIZER_API_URL}/resize`, {
+      /* RAILWAY COLD-START – replace fetchWithWakeUp with fetch when you buy a paid plan */
+      const response = await fetchWithWakeUp(`${IMAGE_RESIZER_API_URL}/resize`, {
         method: 'POST',
         body: formData,
         headers: {
@@ -165,7 +168,8 @@ export default function ImageResize() {
     setErrorMessage('');
 
     try {
-      const response = await fetch(`${IMAGE_RESIZER_API_URL}/resize/rotate`, {
+      /* RAILWAY COLD-START – replace fetchWithWakeUp with fetch when you buy a paid plan */
+      const response = await fetchWithWakeUp(`${IMAGE_RESIZER_API_URL}/resize/rotate`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -201,7 +205,8 @@ export default function ImageResize() {
     }
 
     try {
-      const response = await fetch(`${IMAGE_RESIZER_API_URL}/resize/download/${sessionId}`);
+      /* RAILWAY COLD-START – replace fetchWithWakeUp with fetch when you buy a paid plan */
+      const response = await fetchWithWakeUp(`${IMAGE_RESIZER_API_URL}/resize/download/${sessionId}`);
       if (!response.ok) throw new Error('Download failed');
 
       const blob = await response.blob();

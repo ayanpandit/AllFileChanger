@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import PageContent from '../components/PageContent';
 import { imageCompressorData } from '../data/pageContentData';
+/* RAILWAY COLD-START – remove this import when you buy a paid plan */
+import { fetchWithWakeUp } from '../utils/backendWakeUp';
 
 export default function ImageCompressor() {
   // Backend URL from environment variables
@@ -84,7 +86,8 @@ export default function ImageCompressor() {
     }
 
     try {
-      const res = await fetch(`${COMPRESSION_API_URL}/compress`, {
+      /* RAILWAY COLD-START – replace fetchWithWakeUp with fetch when you buy a paid plan */
+      const res = await fetchWithWakeUp(`${COMPRESSION_API_URL}/compress`, {
         method: 'POST',
         body: formData,
       });
