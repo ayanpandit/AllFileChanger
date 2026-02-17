@@ -1,20 +1,16 @@
 User-agent: *
 Allow: /
 
-# Important pages for indexing - High Priority
-Allow: /image-to-pdf
-Allow: /image-compressor
-Allow: /pdf-merger
-Allow: /jpg-to-pdf
-Allow: /png-to-pdf
-
-# Block specific patterns
+# Block server/API endpoints and build artifacts
 Disallow: /api/
 Disallow: /uploads/
 Disallow: /assets/
+Disallow: /_redirects
+Disallow: /routing-test.html
+Disallow: /200.html
+Disallow: /404.html
+Disallow: /static.json
+Disallow: /meta.json
 
 # Sitemap location
 Sitemap: https://www.allfilechanger.shop/sitemap.xml
-
-# Crawl rate - Allow faster crawling for better indexing
-Crawl-delay: 0

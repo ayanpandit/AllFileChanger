@@ -13,7 +13,7 @@ const imageToolLinks = [
   { name: 'Crop Images', desc: 'Crop to perfect size', icon: '✂️', path: '/image-crop' },
   { name: 'Rotate & Flip', desc: 'Rotate or flip images', icon: '🌀', path: '/image-rotate-flip' },
   { name: 'Add Watermark', desc: 'Protect with watermarks', icon: '💧', path: '/image-watermark' },
-  { name: 'Remove Background', desc: 'Remove image backgrounds', icon: '🖼️', path: '/remove-background' },
+  { name: 'Remove Background', desc: 'Remove image backgrounds', icon: '🖼️', path: '/image-background-remove' },
 ];
 
 const pdfToolLinks = [
@@ -246,7 +246,7 @@ export const imageBgRemoveData = {
     { q: 'Can I add a new background after removing the old one?', a: 'Yes! Download the transparent PNG, then use any image editor (or our Image Editor tool) to place it on a new background of your choice.' },
     { q: 'Does it work with product photos?', a: 'Absolutely! Background removal is perfect for e-commerce product photos. Get clean, professional product images ready for any marketplace.' },
   ],
-  relatedTools: pick(imageToolLinks, '/remove-background'),
+  relatedTools: pick(imageToolLinks, '/image-background-remove'),
 };
 
 export const imageEditorData = {

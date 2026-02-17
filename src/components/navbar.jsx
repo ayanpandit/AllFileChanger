@@ -49,6 +49,7 @@ export default function Navbar({ darkMode, toggleDarkMode }) {
       { name: '📑 Document Merger', path: '/document-merger' },
       { name: '🔄 Format Converter', path: '/format-converter' },
     ]},
+    { name: 'Blog', path: '/blog' },
   ];
 
   const isActivePath = (path) => {

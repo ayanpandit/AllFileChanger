@@ -139,6 +139,22 @@ export default function PageContent({
         </section>
       )}
 
+      {/* FAQ Schema JSON-LD for SEO */}
+      {faqs.length > 0 && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": faqs.map(faq => ({
+            "@type": "Question",
+            "name": faq.q,
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": faq.a
+            }
+          }))
+        })}} />
+      )}
+
       {/* ═══════════════════════  RELATED TOOLS  ═════════════════════ */}
       {relatedTools.length > 0 && (
         <section className="py-12 sm:py-16 lg:py-20 bg-gray-50 dark:bg-gray-950 transition-colors duration-500">
@@ -190,7 +206,7 @@ export default function PageContent({
                   { name: 'Image to PDF', path: '/image-to-pdf' },
                   { name: 'Resize Images', path: '/image-resize' },
                   { name: 'Crop Images', path: '/image-crop' },
-                  { name: 'Remove Background', path: '/remove-background' },
+                  { name: 'Remove Background', path: '/image-background-remove' },
                 ].map((l, i) => (
                   <li key={i}><Link to={l.path} className="text-xs sm:text-sm text-gray-400 hover:text-blue-400 transition-colors">{l.name}</Link></li>
                 ))}
@@ -239,7 +255,10 @@ export default function PageContent({
             </p>
             <div className="flex gap-6">
               <Link to="/" className="text-xs text-gray-500 hover:text-gray-300 transition-colors">Home</Link>
-              <a href="mailto:support@allfilechanger.shop" className="text-xs text-gray-500 hover:text-gray-300 transition-colors">Contact</a>
+              <Link to="/about" className="text-xs text-gray-500 hover:text-gray-300 transition-colors">About</Link>
+              <Link to="/privacy" className="text-xs text-gray-500 hover:text-gray-300 transition-colors">Privacy</Link>
+              <Link to="/terms" className="text-xs text-gray-500 hover:text-gray-300 transition-colors">Terms</Link>
+              <Link to="/contact" className="text-xs text-gray-500 hover:text-gray-300 transition-colors">Contact</Link>
             </div>
           </div>
         </div>

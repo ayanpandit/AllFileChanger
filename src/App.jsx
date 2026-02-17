@@ -30,6 +30,12 @@ import TextExtractor from './pages/TextExtractor';
 import OcrScanner from './pages/OcrScanner';
 import DocumentMerger from './pages/DocumentMerger';
 import FormatConverter from './pages/FormatConverter';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
+import Contact from './pages/Contact';
+import About from './pages/About';
+import Blog from './pages/Blog';
+import BlogPost from './pages/BlogPost';
 import NotFound from './pages/NotFound';
 
 function App() {
@@ -83,6 +89,7 @@ function App() {
               <Route path="/image-crop" element={<ImageCrop />} />
               <Route path="/image-watermark" element={<ImageWatermark />} />
               <Route path="/image-background-remove" element={<ImageBackgroundRemove />} />
+              <Route path="/remove-background" element={<ImageBackgroundRemove />} />
               <Route path="/image-editor" element={<ImageEditor />} />
               
               {/* PDF Tools */}
@@ -108,6 +115,16 @@ function App() {
               <Route path="/document-merger" element={<DocumentMerger />} />
               <Route path="/doc-merge" element={<DocumentMerger />} />
               <Route path="/format-converter" element={<FormatConverter />} />
+              
+              {/* Blog */}
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:slug" element={<BlogPost />} />
+              
+              {/* Legal & Trust Pages */}
+              <Route path="/privacy" element={<PrivacyPolicy />} />
+              <Route path="/terms" element={<TermsOfService />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/about" element={<About />} />
               
               {/* Catch all 404 route */}
               <Route path="*" element={<NotFound />} />
