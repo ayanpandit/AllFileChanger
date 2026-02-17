@@ -46,6 +46,7 @@ function pick(pool, exclude, count = 4) {
 // ═══════════════════════════════════════════════════════════════════════════
 
 export const imageCompressorData = {
+  toolCategory: 'Image Tools',
   howItWorks: [
     { step: '1', title: 'Upload Your Image', desc: 'Drag and drop or click to upload any JPG, PNG, or WebP image. Supports files up to 50 MB.' },
     { step: '2', title: 'Set Compression', desc: 'Choose a quality level or set a target file size. Our smart algorithm optimizes for the best visual quality.' },
@@ -78,6 +79,7 @@ export const imageCompressorData = {
 };
 
 export const imageConverterData = {
+  toolCategory: 'Image Tools',
   howItWorks: [
     { step: '1', title: 'Upload Your Image', desc: 'Drag and drop or select any image file. Supports JPG, PNG, WebP, GIF, BMP, TIFF, AVIF, and HEIC formats.' },
     { step: '2', title: 'Choose Output Format', desc: 'Select your desired output format from our wide range of supported types including modern formats like WebP and AVIF.' },
@@ -108,6 +110,7 @@ export const imageConverterData = {
 };
 
 export const imageResizeData = {
+  toolCategory: 'Image Tools',
   howItWorks: [
     { step: '1', title: 'Upload Image', desc: 'Upload any image from your device. Supports all popular formats including JPG, PNG, WebP, and more.' },
     { step: '2', title: 'Set Dimensions', desc: 'Enter exact pixel dimensions, choose a percentage scale, or select from popular preset sizes for social media.' },
@@ -138,6 +141,7 @@ export const imageResizeData = {
 };
 
 export const imageCropData = {
+  toolCategory: 'Image Tools',
   howItWorks: [
     { step: '1', title: 'Upload Image', desc: 'Upload any image file from your device. All common formats are supported.' },
     { step: '2', title: 'Select Crop Area', desc: 'Use the interactive crop tool to select exactly the area you want to keep. Choose free-form or fixed aspect ratios.' },
@@ -166,6 +170,7 @@ export const imageCropData = {
 };
 
 export const imageRotateFlipData = {
+  toolCategory: 'Image Tools',
   howItWorks: [
     { step: '1', title: 'Upload Image', desc: 'Upload any image you want to rotate or flip. All major image formats are supported.' },
     { step: '2', title: 'Rotate or Flip', desc: 'Rotate by 90°, 180°, 270°, or any custom angle. Flip horizontally or vertically with one click.' },
@@ -194,6 +199,7 @@ export const imageRotateFlipData = {
 };
 
 export const imageWatermarkData = {
+  toolCategory: 'Image Tools',
   howItWorks: [
     { step: '1', title: 'Upload Image', desc: 'Upload the image you want to watermark. Supports JPG, PNG, WebP and more.' },
     { step: '2', title: 'Add Watermark', desc: 'Add text or image watermark. Customize position, size, opacity, and rotation to your liking.' },
@@ -222,6 +228,7 @@ export const imageWatermarkData = {
 };
 
 export const imageBgRemoveData = {
+  toolCategory: 'Image Tools',
   howItWorks: [
     { step: '1', title: 'Upload Image', desc: 'Upload a photo with a background you want to remove. Works best with clear subjects.' },
     { step: '2', title: 'AI Removes Background', desc: 'Our AI instantly detects the subject and removes the background. Review the transparent result.' },
@@ -250,6 +257,7 @@ export const imageBgRemoveData = {
 };
 
 export const imageEditorData = {
+  toolCategory: 'Image Tools',
   howItWorks: [
     { step: '1', title: 'Upload Image', desc: 'Upload any image to start editing. All popular formats supported.' },
     { step: '2', title: 'Edit & Adjust', desc: 'Apply brightness, contrast, saturation, blur, sharpen, and other adjustments with real-time preview.' },
@@ -278,6 +286,7 @@ export const imageEditorData = {
 };
 
 export const imageToPdfData = {
+  toolCategory: 'Image Tools',
   howItWorks: [
     { step: '1', title: 'Upload Images', desc: 'Upload one or more images (JPG, PNG, WebP, etc.). Drag to reorder them in your preferred sequence.' },
     { step: '2', title: 'Arrange Order', desc: 'Drag and drop to rearrange the page order. Each image becomes one page in the final PDF.' },
@@ -311,6 +320,7 @@ export const imageToPdfData = {
 // ═══════════════════════════════════════════════════════════════════════════
 
 export const pdfMergerData = {
+  toolCategory: 'PDF Tools',
   howItWorks: [
     { step: '1', title: 'Upload PDFs', desc: 'Upload two or more PDF files. Drag and drop multiple files at once for convenience.' },
     { step: '2', title: 'Arrange Order', desc: 'Drag to reorder the PDFs in your preferred sequence. The files will be merged in this exact order.' },
@@ -341,6 +351,7 @@ export const pdfMergerData = {
 };
 
 export const pdfSplitterData = {
+  toolCategory: 'PDF Tools',
   howItWorks: [
     { step: '1', title: 'Upload PDF', desc: 'Upload the PDF file you want to split. Supports files with any number of pages.' },
     { step: '2', title: 'Choose Pages', desc: 'Select which pages to extract — individual pages, page ranges, or split every page into a separate file.' },
@@ -369,6 +380,7 @@ export const pdfSplitterData = {
 };
 
 export const pdfCompressorData = {
+  toolCategory: 'PDF Tools',
   howItWorks: [
     { step: '1', title: 'Upload PDF', desc: 'Upload the PDF file you want to compress. Supports all standard PDF files up to 100 MB.' },
     { step: '2', title: 'Choose Compression', desc: 'Select compression level — light (minimal quality loss), medium (balanced), or strong (maximum reduction).' },
@@ -397,6 +409,7 @@ export const pdfCompressorData = {
 };
 
 export const pdfToWordData = {
+  toolCategory: 'PDF Tools',
   howItWorks: [
     { step: '1', title: 'Upload PDF', desc: 'Upload the PDF document you want to convert to an editable Word file.' },
     { step: '2', title: 'AI Conversion', desc: 'Our engine analyzes the PDF structure, extracts text, tables, and images, and reconstructs them in Word format.' },
@@ -425,6 +438,7 @@ export const pdfToWordData = {
 };
 
 export const pdfToExcelData = {
+  toolCategory: 'PDF Tools',
   howItWorks: [
     { step: '1', title: 'Upload PDF', desc: 'Upload a PDF containing tables or tabular data that you want to extract to Excel.' },
     { step: '2', title: 'Table Extraction', desc: 'Our engine detects and extracts tables from your PDF, converting them to Excel spreadsheet format.' },
@@ -453,6 +467,7 @@ export const pdfToExcelData = {
 };
 
 export const pdfToPowerPointData = {
+  toolCategory: 'PDF Tools',
   howItWorks: [
     { step: '1', title: 'Upload PDF', desc: 'Upload the PDF you want to convert to a PowerPoint presentation.' },
     { step: '2', title: 'Conversion', desc: 'Each PDF page is converted to a PowerPoint slide with layout and content preserved.' },
@@ -481,6 +496,7 @@ export const pdfToPowerPointData = {
 };
 
 export const pdfProtectData = {
+  toolCategory: 'PDF Tools',
   howItWorks: [
     { step: '1', title: 'Upload PDF', desc: 'Upload the PDF file you want to protect with a password.' },
     { step: '2', title: 'Set Password', desc: 'Enter a strong password. This password will be required to open the protected PDF.' },
@@ -509,6 +525,7 @@ export const pdfProtectData = {
 };
 
 export const pdfUnlockData = {
+  toolCategory: 'PDF Tools',
   howItWorks: [
     { step: '1', title: 'Upload Locked PDF', desc: 'Upload the password-protected PDF file you need to unlock.' },
     { step: '2', title: 'Enter Password', desc: 'Enter the password for the protected PDF. We need the correct password to decrypt the file.' },
@@ -537,6 +554,7 @@ export const pdfUnlockData = {
 };
 
 export const wordToPdfData = {
+  toolCategory: 'Document Tools',
   howItWorks: [
     { step: '1', title: 'Upload Word File', desc: 'Upload your Word document (.doc or .docx format) by dragging and dropping or clicking to browse.' },
     { step: '2', title: 'Automatic Conversion', desc: 'Our engine converts your Word document to a high-quality PDF preserving all formatting and layout.' },
@@ -569,6 +587,7 @@ export const wordToPdfData = {
 // ═══════════════════════════════════════════════════════════════════════════
 
 export const wordConverterData = {
+  toolCategory: 'Document Tools',
   howItWorks: [
     { step: '1', title: 'Upload Word File', desc: 'Upload your Word document (.doc or .docx) for conversion to other formats.' },
     { step: '2', title: 'Choose Format', desc: 'Select the output format — PDF, TXT, HTML, RTF, ODT, and more.' },
@@ -596,6 +615,7 @@ export const wordConverterData = {
 };
 
 export const excelConverterData = {
+  toolCategory: 'Document Tools',
   howItWorks: [
     { step: '1', title: 'Upload Spreadsheet', desc: 'Upload your Excel file (.xls or .xlsx) for conversion.' },
     { step: '2', title: 'Choose Format', desc: 'Select the output format — CSV, PDF, ODS, HTML, or other supported formats.' },
@@ -623,6 +643,7 @@ export const excelConverterData = {
 };
 
 export const pptConverterData = {
+  toolCategory: 'Document Tools',
   howItWorks: [
     { step: '1', title: 'Upload Presentation', desc: 'Upload your PowerPoint file (.ppt or .pptx) for conversion.' },
     { step: '2', title: 'Choose Format', desc: 'Select the output format — PDF, images, ODP, or other supported formats.' },
@@ -649,6 +670,7 @@ export const pptConverterData = {
 };
 
 export const textExtractorData = {
+  toolCategory: 'Document Tools',
   howItWorks: [
     { step: '1', title: 'Upload Document', desc: 'Upload a PDF, Word, or other document from which you want to extract text.' },
     { step: '2', title: 'Text Extraction', desc: 'Our engine parses the document and extracts all readable text content.' },
@@ -677,6 +699,7 @@ export const textExtractorData = {
 };
 
 export const ocrScannerData = {
+  toolCategory: 'Document Tools',
   howItWorks: [
     { step: '1', title: 'Upload Image/PDF', desc: 'Upload a scanned document, photo of text, or image-based PDF that contains text you want to extract.' },
     { step: '2', title: 'OCR Processing', desc: 'Our Tesseract OCR engine analyzes the image and recognizes text characters with high accuracy.' },
@@ -705,6 +728,7 @@ export const ocrScannerData = {
 };
 
 export const documentMergerData = {
+  toolCategory: 'Document Tools',
   howItWorks: [
     { step: '1', title: 'Upload Documents', desc: 'Upload multiple documents of the same type (Word, Excel, or PowerPoint files).' },
     { step: '2', title: 'Arrange Order', desc: 'Drag and drop to arrange the documents in your preferred merge order.' },
@@ -733,6 +757,7 @@ export const documentMergerData = {
 };
 
 export const formatConverterData = {
+  toolCategory: 'Document Tools',
   howItWorks: [
     { step: '1', title: 'Upload Document', desc: 'Upload any document file — Word, Excel, PowerPoint, PDF, or other supported format.' },
     { step: '2', title: 'Choose Target Format', desc: 'Select the output format you need from our extensive list of supported document types.' },

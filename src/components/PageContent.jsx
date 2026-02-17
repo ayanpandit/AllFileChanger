@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import BlogSection from './BlogSection';
 
 /* ════════════════════════════════════════════════════════════════════════════
    PageContent – Reusable rich-content sections for every tool page.
@@ -23,6 +24,9 @@ export default function PageContent({
 
   /* ── Related Tools ─────────────────────────────────────────────────── */
   relatedTools = [],         // [{ name: '', desc: '', icon: '', path: '' }, …]
+
+  /* ── Blog (auto-detected from category) ────────────────────────────── */
+  toolCategory = null,       // 'Image Tools' | 'PDF Tools' | 'Document Tools'
 }) {
   const [openFaq, setOpenFaq] = useState(null);
 
@@ -183,6 +187,9 @@ export default function PageContent({
           </div>
         </section>
       )}
+
+      {/* ═══════════════════════  BLOG ARTICLES  ═════════════════════ */}
+      <BlogSection category={toolCategory} count={3} />
 
       {/* ═══════════════════════  FOOTER  ════════════════════════════ */}
       <footer className="bg-gray-900 dark:bg-black border-t border-gray-800 transition-colors duration-500">

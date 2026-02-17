@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import SEO from './SEO';
-import { blogPosts } from '../data/blogData';
+import BlogSection from './BlogSection';
 
 import logo from '../assets/logo.png';
 
@@ -452,68 +452,11 @@ export default function Home() {
       </section>
 
       {/* ── Latest from Our Blog ─────────────────────────────────── */}
-      <section className="py-16 bg-white dark:bg-gray-950 transition-all duration-500">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-3 transition-colors duration-500">
-              📝 Latest from Our Blog
-            </h2>
-            <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto transition-colors duration-500">
-              Expert guides and tips on image compression, PDF conversion, and file optimization for better performance and SEO.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {blogPosts.slice(0, 3).map(post => {
-              const categoryBadge = {
-                blue: 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300',
-                red: 'bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300',
-                purple: 'bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300',
-                orange: 'bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-300',
-                green: 'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300',
-                teal: 'bg-teal-100 text-teal-700 dark:bg-teal-900/40 dark:text-teal-300',
-              };
-              return (
-                <Link
-                  key={post.slug}
-                  to={`/blog/${post.slug}`}
-                  className="group bg-gray-50 dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1 flex flex-col"
-                >
-                  <div className={`${post.illustrationBg} p-8 flex items-center justify-center`}>
-                    <span className="text-5xl transform group-hover:scale-110 transition-transform duration-300">
-                      {post.illustrationIcon}
-                    </span>
-                  </div>
-                  <div className="p-5 flex flex-col flex-grow">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${categoryBadge[post.categoryColor]}`}>
-                        {post.categoryIcon} {post.category}
-                      </span>
-                      <span className="text-xs text-gray-500 dark:text-gray-400">⏱ {post.readTime}</span>
-                    </div>
-                    <h3 className="text-lg font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300 mb-2 leading-snug">
-                      {post.shortTitle}
-                    </h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed flex-grow line-clamp-2 mb-3">
-                      {post.description}
-                    </p>
-                    <span className="text-sm text-blue-600 dark:text-blue-400 font-semibold group-hover:underline">
-                      Read Article →
-                    </span>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-          <div className="text-center mt-8">
-            <Link
-              to="/blog"
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-3 rounded-xl font-semibold hover:opacity-90 transition shadow-lg"
-            >
-              View All Articles →
-            </Link>
-          </div>
-        </div>
-      </section>
+      <BlogSection
+        count={3}
+        title="📝 Latest from Our Blog"
+        subtitle="Expert guides and tips on image compression, PDF conversion, and file optimization for better performance and SEO."
+      />
 
       {/* Simple Footer */}
       <footer className="bg-gray-100 dark:bg-gray-900 transition-all duration-500 py-12">
