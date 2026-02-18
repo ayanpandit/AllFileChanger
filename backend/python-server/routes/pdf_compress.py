@@ -3,7 +3,7 @@
 from flask import Blueprint, request, send_file, jsonify
 from PyPDF2 import PdfReader, PdfWriter
 from PIL import Image
-import io, re
+import io, re, gc
 
 bp = Blueprint('pdf_compress', __name__)
 
@@ -132,7 +132,13 @@ def compress_pdf():
                 # Even stream-compression didn't help → return original
                 out = io.BytesIO(raw)
 
+        # MEMORY MANAGEMENT: free intermediate objects
+        del raw, reader, writer
+        gc.collect()
+
         return send_file(out, mimetype='application/pdf',
                          as_attachment=True, download_name='compressed.pdf')
     except Exception as e:
         return jsonify(error='Failed to compress PDF', details=str(e)), 500
+    finally:
+        gc.collect()

@@ -2,7 +2,7 @@
 
 from flask import Blueprint, request, send_file, jsonify
 from docx2pdf import convert
-import io, os, tempfile, logging
+import io, os, tempfile, logging, gc
 
 bp = Blueprint('word_to_pdf', __name__)
 logger = logging.getLogger(__name__)
@@ -33,4 +33,6 @@ def word_to_pdf():
     finally:
         for p in (word_path, pdf_path):
             if p and os.path.exists(p):
-                os.unlink(p)
+                try: os.unlink(p)
+                except: pass
+        gc.collect()

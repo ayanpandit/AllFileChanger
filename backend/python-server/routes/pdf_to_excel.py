@@ -3,7 +3,7 @@
 from flask import Blueprint, request, send_file, jsonify
 import pandas as pd
 import tabula
-import io, os, tempfile, logging
+import io, os, tempfile, logging, gc
 
 bp = Blueprint('pdf_to_excel', __name__)
 logger = logging.getLogger(__name__)
@@ -27,6 +27,9 @@ def pdf_to_excel():
             for i, tbl in enumerate(tables):
                 tbl.to_excel(writer, sheet_name=f'Table_{i+1}', index=False)
 
+        # MEMORY MANAGEMENT: free DataFrames
+        del tables
+
         with open(xlsx_path, 'rb') as f:
             out = io.BytesIO(f.read())
         out.seek(0)
@@ -41,3 +44,4 @@ def pdf_to_excel():
         for p in (pdf_path, xlsx_path):
             if p and os.path.exists(p):
                 os.unlink(p)
+        gc.collect()

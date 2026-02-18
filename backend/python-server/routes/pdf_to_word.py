@@ -2,7 +2,7 @@
 
 from flask import Blueprint, request, send_file, jsonify
 from pdf2docx import Converter
-import io, os, tempfile, logging
+import io, os, tempfile, logging, gc
 
 bp = Blueprint('pdf_to_word', __name__)
 logger = logging.getLogger(__name__)
@@ -22,6 +22,7 @@ def pdf_to_word():
         cv = Converter(pdf_path)
         cv.convert(docx_path)
         cv.close()
+        del cv  # MEMORY MANAGEMENT: free converter
 
         with open(docx_path, 'rb') as f:
             out = io.BytesIO(f.read())
@@ -37,3 +38,4 @@ def pdf_to_word():
         for p in (pdf_path, docx_path):
             if p and os.path.exists(p):
                 os.unlink(p)
+        gc.collect()

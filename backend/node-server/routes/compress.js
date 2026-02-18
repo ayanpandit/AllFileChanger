@@ -1,10 +1,10 @@
 const express = require('express');
 const sharp = require('sharp');
-const { singleUpload } = require('../middleware/upload');
+const { singleUpload, autoLoadBuffer } = require('../middleware/upload');
 
 const router = express.Router();
 
-router.post('/compress', singleUpload.single('image'), async (req, res) => {
+router.post('/compress', singleUpload.single('image'), autoLoadBuffer, async (req, res) => {
   try {
     if (!req.file) return res.status(400).json({ error: 'No image uploaded' });
 
@@ -51,14 +51,20 @@ router.post('/compress', singleUpload.single('image'), async (req, res) => {
           if (buf.length <= targetBytes) { best = buf; break; }
         }
       }
-      compressed = best || (await compressToFormat(workingBuffer, outputFormat, 20));
+      // MEMORY MANAGEMENT: free working buffer
+      workingBuffer = null;
+      compressed = best || (await compressToFormat(req.file.buffer, outputFormat, 20));
     } else {
       compressed = await compressToFormat(req.file.buffer, outputFormat, quality);
     }
 
+    // MEMORY MANAGEMENT: free input buffer before sending
+    req.file.buffer = null;
+
     const mime = outputFormat === 'png' ? 'image/png' : outputFormat === 'webp' ? 'image/webp' : 'image/jpeg';
     res.set({ 'Content-Type': mime, 'Original-Size': req.file.size, 'Compressed-Size': compressed.length });
     res.send(compressed);
+    compressed = null; // free after send
   } catch (err) {
     console.error('Compress error:', err.message);
     res.status(500).json({ error: err.message });

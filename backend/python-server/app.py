@@ -7,9 +7,9 @@ Run:  python app.py                             (development)
       gunicorn app:app -b 0.0.0.0:5050 -w 4    (production)
 """
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
-import os, logging, atexit, shutil, tempfile, signal, sys
+import os, logging, atexit, shutil, tempfile, signal, sys, gc, threading, psutil
 
 # ── Logging ─────────────────────────────────────────────────────────────────
 LOG_LEVEL = os.environ.get('LOG_LEVEL', 'INFO').upper()
@@ -21,7 +21,7 @@ logger = logging.getLogger('allfilechanger')
 
 # ── App factory ─────────────────────────────────────────────────────────────
 app = Flask(__name__)
-app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024  # 100 MB
+app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # MEMORY MANAGEMENT: 50 MB (reduced from 100 MB)
 
 # ── CORS – restrict in production ──────────────────────────────────────────
 cors_origins = os.environ.get('CORS_ORIGIN', '*')
@@ -38,6 +38,51 @@ def cleanup_temp():
         logger.info('Cleaned up temp directory')
 
 atexit.register(cleanup_temp)
+
+# ── MEMORY MANAGEMENT: Force GC after every request ─────────────────────────
+@app.after_request
+def after_request_cleanup(response):
+    """Run garbage collection after every request to free memory immediately."""
+    gc.collect()
+    return response
+
+# ── MEMORY MANAGEMENT: Periodic memory monitoring & emergency cleanup ────────
+MEMORY_WARN_MB = 400
+MEMORY_CRITICAL_MB = 480
+
+def memory_monitor():
+    """Background thread that monitors memory and force-cleans if critical."""
+    while True:
+        try:
+            proc = psutil.Process(os.getpid())
+            rss_mb = proc.memory_info().rss / (1024 * 1024)
+            
+            if rss_mb > MEMORY_CRITICAL_MB:
+                logger.warning(f'🚨 CRITICAL MEMORY: {rss_mb:.0f}MB — force cleanup')
+                # Clean temp files
+                if os.path.exists(TEMP_DIR):
+                    for f in os.listdir(TEMP_DIR):
+                        try:
+                            fp = os.path.join(TEMP_DIR, f)
+                            if os.path.isfile(fp):
+                                os.unlink(fp)
+                            elif os.path.isdir(fp):
+                                shutil.rmtree(fp, ignore_errors=True)
+                        except Exception:
+                            pass
+                # Force GC
+                gc.collect()
+                logger.info(f'Memory after cleanup: {proc.memory_info().rss / (1024 * 1024):.0f}MB')
+            elif rss_mb > MEMORY_WARN_MB:
+                logger.warning(f'⚠️ HIGH MEMORY: {rss_mb:.0f}MB')
+                gc.collect()
+        except Exception:
+            pass
+        
+        threading.Event().wait(15)  # check every 15 seconds
+
+monitor_thread = threading.Thread(target=memory_monitor, daemon=True)
+monitor_thread.start()
 
 # ── Register Blueprints ─────────────────────────────────────────────────────
 from routes.img_to_pdf       import bp as img_to_pdf_bp
@@ -79,10 +124,30 @@ app.register_blueprint(format_converter_bp, url_prefix='/api/doc')
 # ── Health / Root ───────────────────────────────────────────────────────────
 @app.route('/health')
 def health():
+    try:
+        proc = psutil.Process(os.getpid())
+        mem = proc.memory_info()
+        mem_info = {
+            'rss_mb': round(mem.rss / (1024 * 1024)),
+            'vms_mb': round(mem.vms / (1024 * 1024))
+        }
+    except Exception:
+        mem_info = {}
+    
+    # Count temp files
+    temp_files = 0
+    try:
+        if os.path.exists(TEMP_DIR):
+            temp_files = sum(1 for _ in os.scandir(TEMP_DIR))
+    except Exception:
+        pass
+    
     return jsonify(
         status='healthy',
         service='allfilechanger-python-backend',
         environment=os.environ.get('FLASK_ENV', 'production'),
+        memory=mem_info,
+        temp_files=temp_files
     )
 
 @app.route('/')

@@ -1,7 +1,7 @@
 """Format Converter – generic document conversion via LibreOffice."""
 
 from flask import Blueprint, request, send_file, jsonify
-import io, os, tempfile, subprocess, shutil, logging
+import io, os, tempfile, subprocess, shutil, logging, gc
 
 bp = Blueprint('format_converter', __name__)
 logger = logging.getLogger(__name__)
@@ -55,3 +55,4 @@ def convert_format():
     finally:
         if temp_dir and os.path.exists(temp_dir):
             shutil.rmtree(temp_dir, ignore_errors=True)
+        gc.collect()

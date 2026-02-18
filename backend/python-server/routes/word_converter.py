@@ -2,7 +2,7 @@
 
 from flask import Blueprint, request, send_file, jsonify
 from docx import Document
-import io, os, tempfile, logging
+import io, os, tempfile, logging, gc
 
 bp = Blueprint('word_converter', __name__)
 logger = logging.getLogger(__name__)
@@ -33,6 +33,7 @@ def convert_word():
         elif fmt == 'txt':
             doc = Document(temp_path)
             text = '\n'.join(p.text for p in doc.paragraphs)
+            del doc  # MEMORY MANAGEMENT: free Document
             out = io.BytesIO(text.encode('utf-8'))
             out.seek(0)
             return send_file(out, mimetype='text/plain',
@@ -45,4 +46,6 @@ def convert_word():
     finally:
         for p in (temp_path, output_path):
             if p and os.path.exists(p):
-                os.unlink(p)
+                try: os.unlink(p)
+                except: pass
+        gc.collect()

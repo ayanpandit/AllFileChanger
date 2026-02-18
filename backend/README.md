@@ -1,13 +1,12 @@
 # AllFileChanger – Unified Backend
 
-## Architecture
-
+g
 All 25 micro-services have been consolidated into **2 backends**:
 
 ```
 backend/
 ├── node-server/          # Node.js – image processing (port 5001)
-│   ├── server.js
+│   ├── server.jsß
 │   ├── package.json
 │   ├── Dockerfile
 │   ├── middleware/upload.js

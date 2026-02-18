@@ -2,7 +2,7 @@
 
 from flask import Blueprint, request, send_file, jsonify
 import pandas as pd
-import io
+import io, gc
 
 bp = Blueprint('excel_converter', __name__)
 
@@ -13,7 +13,9 @@ def convert_excel():
             return jsonify(error='No file provided'), 400
 
         fmt = request.form.get('format', 'csv')
-        df = pd.read_excel(io.BytesIO(request.files['file'].read()))
+        raw = request.files['file'].read()
+        df = pd.read_excel(io.BytesIO(raw))
+        del raw  # MEMORY MANAGEMENT: free raw bytes
         out = io.BytesIO()
 
         if fmt == 'csv':
@@ -28,7 +30,10 @@ def convert_excel():
         else:
             return jsonify(error='Unsupported format'), 400
 
+        del df  # MEMORY MANAGEMENT: free DataFrame
         out.seek(0)
         return send_file(out, mimetype=mime, as_attachment=True, download_name=name)
     except Exception as e:
         return jsonify(error='Failed to convert Excel file', details=str(e)), 500
+    finally:
+        gc.collect()

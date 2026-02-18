@@ -1,10 +1,10 @@
 const express = require('express');
 const sharp = require('sharp');
-const { watermarkUpload } = require('../middleware/upload');
+const { watermarkUpload, autoLoadBatchBuffers } = require('../middleware/upload');
 
 const router = express.Router();
 
-router.post('/watermark', watermarkUpload.fields([{ name: 'image', maxCount: 1 }, { name: 'watermark', maxCount: 1 }]), async (req, res) => {
+router.post('/watermark', watermarkUpload.fields([{ name: 'image', maxCount: 1 }, { name: 'watermark', maxCount: 1 }]), autoLoadBatchBuffers, async (req, res) => {
   try {
     if (!req.files || !req.files.image) {
       return res.status(400).json({ error: 'No image provided' });
@@ -40,6 +40,10 @@ router.post('/watermark', watermarkUpload.fields([{ name: 'image', maxCount: 1 }
     } else {
       return res.status(400).json({ error: 'Provide either text or watermark image' });
     }
+
+    // MEMORY MANAGEMENT: free input buffers
+    if (req.files.image) req.files.image[0].buffer = null;
+    if (req.files.watermark) req.files.watermark[0].buffer = null;
 
     res.set({
       'Content-Type': req.files.image[0].mimetype,

@@ -2,18 +2,20 @@
 
 from flask import Blueprint, request, send_file, jsonify
 from PyPDF2 import PdfReader, PdfWriter
-import io
+import io, gc
 
 bp = Blueprint('pdf_unlock', __name__)
 
 @bp.route('/unlock', methods=['POST'])
 def unlock_pdf():
+    input_buf = None
     try:
         if 'pdf' not in request.files:
             return jsonify(error='No PDF file provided'), 400
 
         password = request.form.get('password', '')
-        reader = PdfReader(io.BytesIO(request.files['pdf'].read()))
+        input_buf = io.BytesIO(request.files['pdf'].read())
+        reader = PdfReader(input_buf)
 
         if reader.is_encrypted:
             if not password:
@@ -27,9 +29,19 @@ def unlock_pdf():
 
         out = io.BytesIO()
         writer.write(out)
-        out.seek(0)
 
+        # MEMORY MANAGEMENT: free input data
+        del reader, writer
+        input_buf.close()
+        input_buf = None
+
+        out.seek(0)
         return send_file(out, mimetype='application/pdf',
                          as_attachment=True, download_name='unlocked.pdf')
     except Exception as e:
         return jsonify(error='Failed to unlock PDF', details=str(e)), 500
+    finally:
+        if input_buf:
+            try: input_buf.close()
+            except: pass
+        gc.collect()

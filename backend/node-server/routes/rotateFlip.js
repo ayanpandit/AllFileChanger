@@ -1,6 +1,6 @@
 const express = require('express');
 const sharp = require('sharp');
-const { singleUpload } = require('../middleware/upload');
+const { singleUpload, autoLoadBuffer } = require('../middleware/upload');
 const { createSession, getSession, deleteSession, bufferToBase64, MIME_MAP } = require('../utils/sessions');
 
 const router = express.Router();
@@ -14,7 +14,7 @@ function applyFormat(pipeline, format, quality = 95) {
 }
 
 // ── POST /rotate-flip ─────────────────────────────────────────────────────
-router.post('/rotate-flip', singleUpload.single('image'), async (req, res) => {
+router.post('/rotate-flip', singleUpload.single('image'), autoLoadBuffer, async (req, res) => {
   const t0 = Date.now();
   try {
     if (!req.file) return res.status(400).json({ error: 'No image uploaded' });
@@ -40,6 +40,9 @@ router.post('/rotate-flip', singleUpload.single('image'), async (req, res) => {
     const sessionId = createSession({
       buffer: buf, format: outMeta.format, originalName: req.file.originalname
     });
+
+    // MEMORY MANAGEMENT: free input buffer
+    req.file.buffer = null;
 
     res.json({
       success: true,

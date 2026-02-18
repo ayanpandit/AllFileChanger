@@ -1,7 +1,7 @@
 const express = require('express');
 const sharp = require('sharp');
 const archiver = require('archiver');
-const { largeUpload, batchUpload } = require('../middleware/upload');
+const { largeUpload, batchUpload, autoLoadBuffer, autoLoadBatchBuffers } = require('../middleware/upload');
 
 const router = express.Router();
 
@@ -41,7 +41,7 @@ async function convertImage(buffer, format, quality) {
 }
 
 // ── Single convert ─────────────────────────────────────────────────────────
-router.post('/convert', largeUpload.single('image'), async (req, res) => {
+router.post('/convert', largeUpload.single('image'), autoLoadBuffer, async (req, res) => {
   const t0 = Date.now();
   try {
     if (!req.file) return res.status(400).json({ error: 'No image uploaded' });
@@ -55,13 +55,18 @@ router.post('/convert', largeUpload.single('image'), async (req, res) => {
       const w = Math.min(meta.width, 2000);
       const scale = w / meta.width;
       const h = Math.floor(meta.height * scale);
-      const png = await sharp(req.file.buffer).resize(w, h, { kernel: 'lanczos3', fit: 'inside' }).png({ quality: 100 }).toBuffer();
+      let png = await sharp(req.file.buffer).resize(w, h, { kernel: 'lanczos3', fit: 'inside' }).png({ quality: 100 }).toBuffer();
+      // MEMORY MANAGEMENT: free input buffer
+      req.file.buffer = null;
       const svg = `<?xml version="1.0" encoding="UTF-8"?>\n<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"><image width="${w}" height="${h}" preserveAspectRatio="xMidYMid meet" xlink:href="data:image/png;base64,${png.toString('base64')}"/></svg>`;
+      png = null; // free png buffer
       res.set({ 'Content-Type': 'image/svg+xml', 'Content-Disposition': 'attachment; filename="converted.svg"' });
       return res.send(svg);
     }
 
     const result = await convertImage(req.file.buffer, format, quality);
+    // MEMORY MANAGEMENT: free input buffer immediately
+    req.file.buffer = null;
     if (!result) return res.status(400).json({ error: 'Unsupported format', supported: Object.keys(getFormatConfig('jpg', 90) ? {} : {}) });
 
     res.set({
@@ -72,6 +77,7 @@ router.post('/convert', largeUpload.single('image'), async (req, res) => {
       'X-Conversion-Time': `${Date.now() - t0}ms`
     });
     res.send(result.buffer);
+    result.buffer = null; // free after send
   } catch (err) {
     console.error('Convert error:', err.message);
     res.status(500).json({ error: err.message });
@@ -79,7 +85,7 @@ router.post('/convert', largeUpload.single('image'), async (req, res) => {
 });
 
 // ── Batch convert → ZIP ────────────────────────────────────────────────────
-router.post('/convert-batch', batchUpload.array('images', 50), async (req, res) => {
+router.post('/convert-batch', batchUpload.array('images', 10), autoLoadBatchBuffers, async (req, res) => {
   try {
     if (!req.files || req.files.length === 0) return res.status(400).json({ error: 'No images uploaded' });
 
@@ -95,9 +101,12 @@ router.post('/convert-batch', batchUpload.array('images', 50), async (req, res) 
     for (let i = 0; i < req.files.length; i++) {
       try {
         const result = await convertImage(req.files[i].buffer, format, quality);
+        // MEMORY MANAGEMENT: free input buffer after conversion
+        req.files[i].buffer = null;
         if (result) {
           const name = req.files[i].originalname.replace(/\.[^/.]+$/, '') + `_${i + 1}.${config.ext}`;
           archive.append(result.buffer, { name });
+          result.buffer = null; // free after appending to archive
         }
       } catch (e) { console.error(`Batch item ${i + 1} failed:`, e.message); }
     }

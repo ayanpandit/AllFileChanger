@@ -1,10 +1,10 @@
 const express = require('express');
 const sharp = require('sharp');
-const { singleUpload } = require('../middleware/upload');
+const { singleUpload, autoLoadBuffer } = require('../middleware/upload');
 
 const router = express.Router();
 
-router.post('/crop', singleUpload.single('image'), async (req, res) => {
+router.post('/crop', singleUpload.single('image'), autoLoadBuffer, async (req, res) => {
   try {
     if (!req.file) return res.status(400).json({ error: 'No image provided' });
 
@@ -16,6 +16,9 @@ router.post('/crop', singleUpload.single('image'), async (req, res) => {
     const buf = await sharp(req.file.buffer)
       .extract({ left: parseInt(x), top: parseInt(y), width: parseInt(width), height: parseInt(height) })
       .toBuffer();
+
+    // MEMORY MANAGEMENT: free input buffer
+    req.file.buffer = null;
 
     res.set({
       'Content-Type': req.file.mimetype,

@@ -2,7 +2,7 @@
 
 from flask import Blueprint, request, send_file, jsonify
 from pptx import Presentation
-import io, os, tempfile, subprocess, shutil, logging
+import io, os, tempfile, subprocess, shutil, logging, gc
 
 bp = Blueprint('ppt_converter', __name__)
 logger = logging.getLogger(__name__)
@@ -67,3 +67,4 @@ def convert_ppt():
     finally:
         if temp_dir and os.path.exists(temp_dir):
             shutil.rmtree(temp_dir, ignore_errors=True)
+        gc.collect()

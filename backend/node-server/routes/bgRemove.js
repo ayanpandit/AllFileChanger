@@ -1,12 +1,12 @@
 const express = require('express');
 const sharp = require('sharp');
-const { singleUpload } = require('../middleware/upload');
+const { singleUpload, autoLoadBuffer } = require('../middleware/upload');
 
 const router = express.Router();
 
 // NOTE: This is a basic implementation using color-distance thresholding.
 // For AI-powered removal, integrate remove.bg API or Python rembg.
-router.post('/remove-background', singleUpload.single('image'), async (req, res) => {
+router.post('/remove-background', singleUpload.single('image'), autoLoadBuffer, async (req, res) => {
   try {
     if (!req.file) return res.status(400).json({ error: 'No image provided' });
 
@@ -43,6 +43,9 @@ router.post('/remove-background', singleUpload.single('image'), async (req, res)
         data[i + 3] = 0; // set alpha to 0
       }
     }
+
+    // MEMORY MANAGEMENT: free input buffer before creating output
+    req.file.buffer = null;
 
     const buf = await sharp(data, { raw: { width, height, channels } })
       .png()
